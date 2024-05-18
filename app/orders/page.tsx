@@ -96,7 +96,7 @@ export default function Orders() {
               </Link>
               {/* Dashboard */}
               <Link
-                href="dashboard"
+                href="/dashboard"
                 className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
               >
                 <Home className="h-5 w-5" />
@@ -104,7 +104,7 @@ export default function Orders() {
               </Link>
               {/* Orders */}
               <Link
-                href="orders"
+                href="/orders"
                 className="flex items-center gap-4 px-2.5 text-foreground"
               >
                 <ShoppingCart className="h-5 w-5" />
@@ -112,7 +112,7 @@ export default function Orders() {
               </Link>
               {/* Products */}
               <Link
-                href="products"
+                href="/products"
                 className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
               >
                 <Package className="h-5 w-5" />
@@ -120,7 +120,7 @@ export default function Orders() {
               </Link>
               {/* Customers */}
               <Link
-                href="customers"
+                href="/customers"
                 className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
               >
                 <Users2 className="h-5 w-5" />
@@ -128,7 +128,7 @@ export default function Orders() {
               </Link>
               {/* Settings */}
               <Link
-                href="settings"
+                href="/settings"
                 className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
               >
                 <LineChart className="h-5 w-5" />
@@ -142,13 +142,13 @@ export default function Orders() {
           <BreadcrumbList>
             <BreadcrumbItem>
               <BreadcrumbLink asChild>
-                <Link href="dashboard">Dashboard</Link>
+                <Link href="/dashboard">Dashboard</Link>
               </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
               <BreadcrumbLink asChild>
-                <Link href="orders">Orders</Link>
+                <Link href="/orders">Orders</Link>
               </BreadcrumbLink>
             </BreadcrumbItem>
           </BreadcrumbList>
@@ -202,7 +202,10 @@ export default function Orders() {
                 </CardDescription>
               </CardHeader>
               <CardFooter>
-                <Button>Create New Order</Button>
+                <Link href="/orders/neworder">
+                  <Button>Create New Order</Button>
+                  <span className="sr-only">Create new order</span>
+                </Link>
               </CardFooter>
             </Card>
             <Card x-chunk="dashboard-05-chunk-1">

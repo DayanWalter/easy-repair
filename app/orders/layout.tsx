@@ -94,7 +94,7 @@ export default function DashboardLayout({
           <Tooltip>
             <TooltipTrigger asChild>
               <Link
-                href="dashboard"
+                href="/dashboard"
                 className="flex h-9 w-9 items-center justify-center rounded-lg  text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
               >
                 <Home className="h-5 w-5" />
@@ -107,7 +107,7 @@ export default function DashboardLayout({
           <Tooltip>
             <TooltipTrigger asChild>
               <Link
-                href="orders"
+                href="/orders"
                 className="flex h-9 w-9 items-center justify-center rounded-lg bg-accent  text-accent-foreground  transition-colors hover:text-foreground md:h-8 md:w-8"
               >
                 <ShoppingCart className="h-5 w-5" />
@@ -120,7 +120,7 @@ export default function DashboardLayout({
           <Tooltip>
             <TooltipTrigger asChild>
               <Link
-                href="products"
+                href="/products"
                 className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
               >
                 <Package className="h-5 w-5" />
@@ -133,7 +133,7 @@ export default function DashboardLayout({
           <Tooltip>
             <TooltipTrigger asChild>
               <Link
-                href="customers"
+                href="/customers"
                 className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
               >
                 <Users2 className="h-5 w-5" />
@@ -146,7 +146,7 @@ export default function DashboardLayout({
           <Tooltip>
             <TooltipTrigger asChild>
               <Link
-                href="analytics"
+                href="/analytics"
                 className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
               >
                 <LineChart className="h-5 w-5" />
