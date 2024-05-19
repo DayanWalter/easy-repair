@@ -56,6 +56,15 @@ import {
   PaginationItem,
 } from "@/components/ui/pagination";
 import { Progress } from "@/components/ui/progress";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import {
@@ -72,6 +81,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { Checkbox } from "@/components/ui/checkbox";
 
 export default function NewOrder() {
   return (
@@ -199,83 +209,84 @@ export default function NewOrder() {
       </header>
       <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
         <div className="grid auto-rows-max items-start gap-4 md:gap-8 lg:col-span-2">
-          <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4">
+          <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
+            {/* Customer */}
             <Card className="" x-chunk="dashboard-05-chunk-0">
               <CardHeader className="pb-3">
-                <CardTitle>Customer</CardTitle>
+                <CardTitle>Kunde</CardTitle>
                 <CardDescription className="max-w-lg text-balance leading-relaxed">
-                  Introducing Our Dynamic Orders Dashboard for Seamless
-                  Management and Insightful Analysis.
+                  Id: 123456
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <Label htmlFor="customer_name">Name:</Label>
-              </CardContent>
-              <CardFooter>
-                <Button>Add customer</Button>
-              </CardFooter>
-            </Card>
-
-            <Card x-chunk="dashboard-05-chunk-1">
-              <CardHeader className="pb-2">
-                <CardDescription>This Week</CardDescription>
-                <CardTitle className="text-4xl">$1,329</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="text-xs text-muted-foreground">
-                  +25% from last week
+                <div className="grid gap-2">
+                  <div className="grid w-full max-w-sm items-center gap-1.5">
+                    <Label htmlFor="name">Name</Label>
+                    <Input type="name" id="name" placeholder="Name" disabled />
+                  </div>{" "}
+                  <div className="grid w-full max-w-sm items-center gap-1.5">
+                    <Label htmlFor="phone">Phone</Label>
+                    <Input
+                      type="phone"
+                      id="phone"
+                      placeholder="Phone"
+                      disabled
+                    />
+                  </div>{" "}
+                  <div className="grid w-full max-w-sm items-center gap-1.5">
+                    <Label htmlFor="email">Email</Label>
+                    <Input
+                      type="email"
+                      id="email"
+                      placeholder="Email"
+                      disabled
+                    />
+                  </div>{" "}
                 </div>
               </CardContent>
               <CardFooter>
-                <Progress value={25} aria-label="25% increase" />
+                <Button>Search customer</Button>
               </CardFooter>
             </Card>
-
-            <Card x-chunk="dashboard-05-chunk-2">
-              <CardHeader className="pb-2">
-                <CardDescription>This Month</CardDescription>
-                <CardTitle className="text-4xl">$5,329</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="text-xs text-muted-foreground">
-                  +10% from last month
-                </div>
-              </CardContent>
-              <CardFooter>
-                <Progress value={12} aria-label="12% increase" />
-              </CardFooter>
-            </Card>
-            <Card x-chunk="dashboard-05-chunk-1">
-              <CardHeader className="pb-2">
-                <CardDescription>This Week</CardDescription>
-                <CardTitle className="text-4xl">$1,329</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="text-xs text-muted-foreground">
-                  +25% from last week
-                </div>
-              </CardContent>
-              <CardFooter>
-                <Progress value={25} aria-label="25% increase" />
-              </CardFooter>
-            </Card>
+            {/* Auftraggeber */}
             <Card className="" x-chunk="dashboard-05-chunk-0">
               <CardHeader className="pb-3">
-                <CardTitle>Customer</CardTitle>
-                <CardDescription className="max-w-lg text-balance leading-relaxed">
-                  Introducing Our Dynamic Orders Dashboard for Seamless
-                  Management and Insightful Analysis.
-                </CardDescription>
+                <CardTitle>Auftraggeber</CardTitle>
               </CardHeader>
-              <CardFooter>
-                <Button>Create New Order</Button>
-              </CardFooter>
-            </Card>
+              <CardContent>
+                <Select>
+                  <SelectTrigger className="w-[180px]">
+                    <SelectValue placeholder="Select a state" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      <SelectLabel>States</SelectLabel>
+                      <SelectItem value="state1">State1</SelectItem>
+                      <SelectItem value="state2">State2</SelectItem>
+                      <SelectItem value="state3">State3</SelectItem>
+                      <SelectItem value="state4">State4</SelectItem>
+                      <SelectItem value="state5">State5</SelectItem>
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
 
+                <div className="flex items-center space-x-2">
+                  <Checkbox id="terms" />
+                  <label
+                    htmlFor="terms"
+                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
+                    Device present again?
+                  </label>
+                </div>
+              </CardContent>
+              <CardFooter></CardFooter>
+            </Card>
+            {/* Status */}
             <Card x-chunk="dashboard-05-chunk-1">
               <CardHeader className="pb-2">
+                <CardTitle>Status</CardTitle>
                 <CardDescription>This Week</CardDescription>
-                <CardTitle className="text-4xl">$1,329</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="text-xs text-muted-foreground">
@@ -286,25 +297,206 @@ export default function NewOrder() {
                 <Progress value={25} aria-label="25% increase" />
               </CardFooter>
             </Card>
-
-            <Card x-chunk="dashboard-05-chunk-2">
+            {/* Kommunikation */}
+            <Card x-chunk="dashboard-05-chunk-1" className="sm:col-span-2">
               <CardHeader className="pb-2">
-                <CardDescription>This Month</CardDescription>
-                <CardTitle className="text-4xl">$5,329</CardTitle>
+                <CardTitle>Kommunikation</CardTitle>
+                <CardDescription>This Week</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="text-xs text-muted-foreground">
-                  +10% from last month
+                  +25% from last week
                 </div>
               </CardContent>
               <CardFooter>
-                <Progress value={12} aria-label="12% increase" />
+                <Progress value={25} aria-label="25% increase" />
               </CardFooter>
             </Card>
+            {/* Artikel */}
             <Card x-chunk="dashboard-05-chunk-1">
               <CardHeader className="pb-2">
+                <CardTitle>Artikel</CardTitle>
                 <CardDescription>This Week</CardDescription>
-                <CardTitle className="text-4xl">$1,329</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="text-xs text-muted-foreground">
+                  +25% from last week
+                </div>
+              </CardContent>
+              <CardFooter>
+                <Progress value={25} aria-label="25% increase" />
+              </CardFooter>
+            </Card>
+            {/* Zugänge */}
+            <Card x-chunk="dashboard-05-chunk-1">
+              <CardHeader className="pb-2">
+                <CardTitle>Zugänge</CardTitle>
+                <CardDescription>This Week</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="text-xs text-muted-foreground">
+                  +25% from last week
+                </div>
+              </CardContent>
+              <CardFooter>
+                <Progress value={25} aria-label="25% increase" />
+              </CardFooter>
+            </Card>
+            {/* Datum */}
+            <Card x-chunk="dashboard-05-chunk-1">
+              <CardHeader className="pb-2">
+                <CardTitle>Datum</CardTitle>
+                <CardDescription>This Week</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="text-xs text-muted-foreground">
+                  +25% from last week
+                </div>
+              </CardContent>
+              <CardFooter>
+                <Progress value={25} aria-label="25% increase" />
+              </CardFooter>
+            </Card>
+            {/* Fehlerbeschreibung */}
+            <Card x-chunk="dashboard-05-chunk-1">
+              <CardHeader className="pb-2">
+                <CardTitle>Fehlerbeschreibung</CardTitle>
+                <CardDescription>This Week</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="text-xs text-muted-foreground">
+                  +25% from last week
+                </div>
+              </CardContent>
+              <CardFooter>
+                <Progress value={25} aria-label="25% increase" />
+              </CardFooter>
+            </Card>
+            {/* Diagnose */}
+            <Card x-chunk="dashboard-05-chunk-1">
+              <CardHeader className="pb-2">
+                <CardTitle>Diagnose</CardTitle>
+                <CardDescription>This Week</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="text-xs text-muted-foreground">
+                  +25% from last week
+                </div>
+              </CardContent>
+              <CardFooter>
+                <Progress value={25} aria-label="25% increase" />
+              </CardFooter>
+            </Card>
+            {/* Angebot */}
+            <Card x-chunk="dashboard-05-chunk-1">
+              <CardHeader className="pb-2">
+                <CardTitle>Angebot</CardTitle>
+                <CardDescription>This Week</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="text-xs text-muted-foreground">
+                  +25% from last week
+                </div>
+              </CardContent>
+              <CardFooter>
+                <Progress value={25} aria-label="25% increase" />
+              </CardFooter>
+            </Card>
+            {/* Reparatur */}
+            <Card x-chunk="dashboard-05-chunk-1">
+              <CardHeader className="pb-2">
+                <CardTitle>Reparatur</CardTitle>
+                <CardDescription>This Week</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="text-xs text-muted-foreground">
+                  +25% from last week
+                </div>
+              </CardContent>
+              <CardFooter>
+                <Progress value={25} aria-label="25% increase" />
+              </CardFooter>
+            </Card>
+            {/* Anmerkungen */}
+            <Card x-chunk="dashboard-05-chunk-1">
+              <CardHeader className="pb-2">
+                <CardTitle>Kommunikation</CardTitle>
+                <CardDescription>This Week</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="text-xs text-muted-foreground">
+                  +25% from last week
+                </div>
+              </CardContent>
+              <CardFooter>
+                <Progress value={25} aria-label="25% increase" />
+              </CardFooter>
+            </Card>
+            {/* Mitarbeiter */}
+            <Card x-chunk="dashboard-05-chunk-1">
+              <CardHeader className="pb-2">
+                <CardTitle>Mitarbeiter</CardTitle>
+                <CardDescription>This Week</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="text-xs text-muted-foreground">
+                  +25% from last week
+                </div>
+              </CardContent>
+              <CardFooter>
+                <Progress value={25} aria-label="25% increase" />
+              </CardFooter>
+            </Card>
+            {/* Zeit */}
+            <Card x-chunk="dashboard-05-chunk-1">
+              <CardHeader className="pb-2">
+                <CardTitle>Zeit</CardTitle>
+                <CardDescription>This Week</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="text-xs text-muted-foreground">
+                  +25% from last week
+                </div>
+              </CardContent>
+              <CardFooter>
+                <Progress value={25} aria-label="25% increase" />
+              </CardFooter>
+            </Card>
+            {/* Lohnkosten */}
+            <Card x-chunk="dashboard-05-chunk-1">
+              <CardHeader className="pb-2">
+                <CardTitle>Lohnkosten</CardTitle>
+                <CardDescription>This Week</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="text-xs text-muted-foreground">
+                  +25% from last week
+                </div>
+              </CardContent>
+              <CardFooter>
+                <Progress value={25} aria-label="25% increase" />
+              </CardFooter>
+            </Card>
+            {/* Materialkosten */}
+            <Card x-chunk="dashboard-05-chunk-1">
+              <CardHeader className="pb-2">
+                <CardTitle>Materialkosten</CardTitle>
+                <CardDescription>This Week</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="text-xs text-muted-foreground">
+                  +25% from last week
+                </div>
+              </CardContent>
+              <CardFooter>
+                <Progress value={25} aria-label="25% increase" />
+              </CardFooter>
+            </Card>
+            {/* Gesamtkosten */}
+            <Card x-chunk="dashboard-05-chunk-1">
+              <CardHeader className="pb-2">
+                <CardTitle>Gesamtkosten</CardTitle>
+                <CardDescription>This Week</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="text-xs text-muted-foreground">
