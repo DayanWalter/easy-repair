@@ -82,6 +82,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Textarea } from "@/components/ui/textarea";
 
 export default function NewOrder() {
   return (
@@ -361,76 +362,66 @@ export default function NewOrder() {
             <Card x-chunk="dashboard-05-chunk-1">
               <CardHeader className="pb-2">
                 <CardTitle>Fehlerbeschreibung</CardTitle>
-                <CardDescription>This Week</CardDescription>
+                <CardDescription>
+                  Beschreiben Sie das aufgetretene Problem.
+                </CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="text-xs text-muted-foreground">
-                  +25% from last week
-                </div>
+                <Textarea />
               </CardContent>
-              <CardFooter>
-                <Progress value={25} aria-label="25% increase" />
-              </CardFooter>
+              <CardFooter></CardFooter>
             </Card>
             {/* Diagnose */}
             <Card x-chunk="dashboard-05-chunk-1">
               <CardHeader className="pb-2">
                 <CardTitle>Diagnose</CardTitle>
-                <CardDescription>This Week</CardDescription>
+                <CardDescription>
+                  Geben Sie die Ursache des Problems an.
+                </CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="text-xs text-muted-foreground">
-                  +25% from last week
-                </div>
+                <Textarea />
               </CardContent>
-              <CardFooter>
-                <Progress value={25} aria-label="25% increase" />
-              </CardFooter>
+              <CardFooter></CardFooter>
             </Card>
             {/* Angebot */}
             <Card x-chunk="dashboard-05-chunk-1">
               <CardHeader className="pb-2">
                 <CardTitle>Angebot</CardTitle>
-                <CardDescription>This Week</CardDescription>
+                <CardDescription>
+                  Beschreiben Sie die vorgeschlagenen Maßnahmen und die Kosten.
+                </CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="text-xs text-muted-foreground">
-                  +25% from last week
-                </div>
+                <Textarea />
               </CardContent>
-              <CardFooter>
-                <Progress value={25} aria-label="25% increase" />
-              </CardFooter>
+              <CardFooter></CardFooter>
             </Card>
             {/* Reparatur */}
             <Card x-chunk="dashboard-05-chunk-1">
               <CardHeader className="pb-2">
                 <CardTitle>Reparatur</CardTitle>
-                <CardDescription>This Week</CardDescription>
+                <CardDescription>
+                  Erklären Sie, was zur Behebung des Problems unternommen wurde.
+                </CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="text-xs text-muted-foreground">
-                  +25% from last week
-                </div>
+                <Textarea />
               </CardContent>
-              <CardFooter>
-                <Progress value={25} aria-label="25% increase" />
-              </CardFooter>
+              <CardFooter></CardFooter>
             </Card>
             {/* Anmerkungen */}
             <Card x-chunk="dashboard-05-chunk-1">
               <CardHeader className="pb-2">
-                <CardTitle>Kommunikation</CardTitle>
-                <CardDescription>This Week</CardDescription>
+                <CardTitle>Anmerkungen</CardTitle>
+                <CardDescription>
+                  Teilen Sie zusätzliche relevante Informationen mit.
+                </CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="text-xs text-muted-foreground">
-                  +25% from last week
-                </div>
+                <Textarea />
               </CardContent>
-              <CardFooter>
-                <Progress value={25} aria-label="25% increase" />
-              </CardFooter>
+              <CardFooter></CardFooter>
             </Card>
             {/* Mitarbeiter */}
             <Card x-chunk="dashboard-05-chunk-1">
