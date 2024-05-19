@@ -49,6 +49,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   Pagination,
   PaginationContent,
@@ -207,7 +208,9 @@ export default function NewOrder() {
                   Management and Insightful Analysis.
                 </CardDescription>
               </CardHeader>
-              <CardContent>This is content</CardContent>
+              <CardContent>
+                <Label htmlFor="customer_name">Name:</Label>
+              </CardContent>
               <CardFooter>
                 <Button>Add customer</Button>
               </CardFooter>
