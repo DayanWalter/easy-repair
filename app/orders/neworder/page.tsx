@@ -265,16 +265,35 @@ export default function NewOrder() {
             <Card x-chunk="dashboard-05-chunk-1">
               <CardHeader className="pb-2">
                 <CardTitle>Status</CardTitle>
-                <CardDescription>This Week</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="text-xs text-muted-foreground">
-                  +25% from last week
+                <div className="grid gap-2">
+                  <Select>
+                    <SelectTrigger className="">
+                      <SelectValue placeholder="Wählen Sie einen Status" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        <SelectLabel>Status</SelectLabel>
+                        <SelectItem value="status1">Status1</SelectItem>
+                        <SelectItem value="status2">Status2</SelectItem>
+                        <SelectItem value="status3">Status3</SelectItem>
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                  <div className="flex items-center space-x-2">
+                    <Checkbox id="terms" />
+                    <label
+                      htmlFor="terms"
+                      className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                    >
+                      Gerät erneut da
+                    </label>
+                  </div>
+                  <Input placeholder="Alte Auftragsnummer" />
                 </div>
               </CardContent>
-              <CardFooter>
-                <Progress value={25} aria-label="25% increase" />
-              </CardFooter>
+              <CardFooter></CardFooter>
             </Card>
             {/* Kommunikation */}
             <Card x-chunk="dashboard-05-chunk-1" className="xl:col-span-2">
