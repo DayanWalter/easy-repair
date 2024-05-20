@@ -318,18 +318,18 @@ export default function NewOrder() {
                 <CardTitle>Artikel</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="grid grid-cols-3 gap-2">
+                <div className="grid grid-cols-3 gap-3">
                   <div>
-                    Gerät
-                    <Input />
+                    <Label htmlFor="device">Gerät</Label>
+                    <Input id="device" />
                   </div>
                   <div>
-                    Hersteller
-                    <Input />
+                    <Label htmlFor="manufacturer">Hersteller</Label>
+                    <Input id="manufacturer" />
                   </div>
                   <div>
-                    Zubehör
-                    <Input />
+                    <Label htmlFor="accessory">Zubehör</Label>
+                    <Input id="accessory" />
                   </div>
                 </div>
               </CardContent>
