@@ -83,6 +83,7 @@ import {
 } from "@/components/ui/tooltip";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Textarea } from "@/components/ui/textarea";
+import { CommunicationTable } from "@/components/communication-table";
 
 export default function NewOrder() {
   return (
@@ -296,19 +297,20 @@ export default function NewOrder() {
               <CardFooter></CardFooter>
             </Card>
             {/* Kommunikation */}
-            <Card x-chunk="dashboard-05-chunk-1" className="xl:col-span-2">
+            <Card
+              x-chunk="dashboard-05-chunk-1"
+              className="xl:col-span-2 xl:row-span-2"
+            >
               <CardHeader className="pb-2">
                 <CardTitle>Kommunikation</CardTitle>
-                <CardDescription>This Week</CardDescription>
+                <CardDescription>
+                  Dies ist der Kommunikationsverlauf
+                </CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="text-xs text-muted-foreground">
-                  +25% from last week
-                </div>
+                <CommunicationTable />
               </CardContent>
-              <CardFooter>
-                <Progress value={25} aria-label="25% increase" />
-              </CardFooter>
+              <CardFooter></CardFooter>
             </Card>
             {/* Artikel */}
             <Card className="xl:col-span-2" x-chunk="dashboard-05-chunk-1">
