@@ -1,5 +1,18 @@
+"use client";
+import * as React from "react";
+
 import Image from "next/image";
 import Link from "next/link";
+import { format } from "date-fns";
+import { Calendar as CalendarIcon } from "lucide-react";
+
+import { cn } from "@/lib/utils";
+import { Calendar } from "@/components/ui/calendar";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import {
   ChevronLeft,
   ChevronRight,
@@ -86,6 +99,10 @@ import { Textarea } from "@/components/ui/textarea";
 import { CommunicationTable } from "@/components/communication-table";
 
 export default function NewOrder() {
+  const [getDate, setGetDate] = React.useState<Date>();
+  const [doneDate, setDoneDate] = React.useState<Date>();
+  const [pickupDate, setPickupDate] = React.useState<Date>();
+
   return (
     <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14">
       <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
@@ -341,13 +358,15 @@ export default function NewOrder() {
                 <CardTitle>Zugänge</CardTitle>
               </CardHeader>
               <CardContent>
-                <div>
-                  <Label htmlFor="password">Passwort</Label>
-                  <Input id="password" />
-                </div>
-                <div>
-                  <Label htmlFor="accounts">Weitere</Label>
-                  <Input id="accounts" />
+                <div className="grid gap-2">
+                  <div>
+                    <Label htmlFor="password">Passwort</Label>
+                    <Input id="password" />
+                  </div>
+                  <div>
+                    <Label htmlFor="accounts">Weitere</Label>
+                    <Input id="accounts" />
+                  </div>
                 </div>
               </CardContent>
               <CardFooter></CardFooter>
@@ -356,16 +375,99 @@ export default function NewOrder() {
             <Card x-chunk="dashboard-05-chunk-1">
               <CardHeader className="pb-2">
                 <CardTitle>Datum</CardTitle>
-                <CardDescription>This Week</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="text-xs text-muted-foreground">
-                  +25% from last week
+                <div className="grid gap-2">
+                  <div className="grid gap-2">
+                    <Label htmlFor="device">Annahme</Label>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <Button
+                          variant={"outline"}
+                          className={cn(
+                            "justify-start text-left font-normal",
+                            !getDate && "text-muted-foreground",
+                          )}
+                        >
+                          <CalendarIcon className="mr-2 h-4 w-4" />
+                          {getDate ? (
+                            format(getDate, "PPP")
+                          ) : (
+                            <span>Angenommen am...</span>
+                          )}
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0">
+                        <Calendar
+                          mode="single"
+                          selected={getDate}
+                          onSelect={setGetDate}
+                          initialFocus
+                        />
+                      </PopoverContent>
+                    </Popover>
+                  </div>
+                  <div className="grid gap-2">
+                    <Label htmlFor="manufacturer">Fertiggestellt</Label>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <Button
+                          variant={"outline"}
+                          className={cn(
+                            "justify-start text-left font-normal",
+                            !doneDate && "text-muted-foreground",
+                          )}
+                        >
+                          <CalendarIcon className="mr-2 h-4 w-4" />
+                          {doneDate ? (
+                            format(doneDate, "PPP")
+                          ) : (
+                            <span>Fertiggestellt am...</span>
+                          )}
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0">
+                        <Calendar
+                          mode="single"
+                          selected={doneDate}
+                          onSelect={setDoneDate}
+                          initialFocus
+                        />
+                      </PopoverContent>
+                    </Popover>
+                  </div>
+                  <div className="grid gap-2">
+                    <Label htmlFor="accessory">Abgeholt</Label>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <Button
+                          variant={"outline"}
+                          className={cn(
+                            "justify-start text-left font-normal",
+                            !pickupDate && "text-muted-foreground",
+                          )}
+                        >
+                          <CalendarIcon className="mr-2 h-4 w-4" />
+                          {pickupDate ? (
+                            format(pickupDate, "PPP")
+                          ) : (
+                            <span>Abgeholt am...</span>
+                          )}
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0">
+                        <Calendar
+                          mode="single"
+                          selected={pickupDate}
+                          onSelect={setPickupDate}
+                          initialFocus
+                        />
+                      </PopoverContent>
+                    </Popover>
+                  </div>
                 </div>
               </CardContent>
-              <CardFooter>
-                <Progress value={25} aria-label="25% increase" />
-              </CardFooter>
+              <CardFooter></CardFooter>
             </Card>
             {/* Fehlerbeschreibung */}
             <Card x-chunk="dashboard-05-chunk-1">
