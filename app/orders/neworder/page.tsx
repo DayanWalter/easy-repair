@@ -339,16 +339,18 @@ export default function NewOrder() {
             <Card x-chunk="dashboard-05-chunk-1">
               <CardHeader className="pb-2">
                 <CardTitle>Zugänge</CardTitle>
-                <CardDescription>This Week</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="text-xs text-muted-foreground">
-                  +25% from last week
+                <div>
+                  <Label htmlFor="password">Passwort</Label>
+                  <Input id="password" />
+                </div>
+                <div>
+                  <Label htmlFor="accounts">Weitere</Label>
+                  <Input id="accounts" />
                 </div>
               </CardContent>
-              <CardFooter>
-                <Progress value={25} aria-label="25% increase" />
-              </CardFooter>
+              <CardFooter></CardFooter>
             </Card>
             {/* Datum */}
             <Card x-chunk="dashboard-05-chunk-1">
