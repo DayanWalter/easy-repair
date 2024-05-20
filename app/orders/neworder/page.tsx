@@ -211,8 +211,8 @@ export default function NewOrder() {
       <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
         <div className="grid auto-rows-max items-start gap-4 md:gap-8 lg:col-span-2">
           <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
-            {/* Customer */}
-            <Card className="" x-chunk="dashboard-05-chunk-0">
+            {/* Kunde */}
+            <Card className="xl:row-span-2" x-chunk="dashboard-05-chunk-0">
               <CardHeader className="pb-3">
                 <CardTitle>Kunde</CardTitle>
                 <CardDescription className="max-w-lg text-balance leading-relaxed">
@@ -221,32 +221,23 @@ export default function NewOrder() {
               </CardHeader>
               <CardContent>
                 <div className="grid gap-2">
-                  <div className="grid w-full max-w-sm items-center gap-1.5">
-                    <Label htmlFor="name">Name</Label>
-                    <Input type="name" id="name" placeholder="Name" disabled />
-                  </div>{" "}
-                  <div className="grid w-full max-w-sm items-center gap-1.5">
-                    <Label htmlFor="phone">Phone</Label>
-                    <Input
-                      type="phone"
-                      id="phone"
-                      placeholder="Phone"
-                      disabled
-                    />
-                  </div>{" "}
-                  <div className="grid w-full max-w-sm items-center gap-1.5">
-                    <Label htmlFor="email">Email</Label>
-                    <Input
-                      type="email"
-                      id="email"
-                      placeholder="Email"
-                      disabled
-                    />
-                  </div>{" "}
+                  <Input
+                    type="name"
+                    id="name"
+                    placeholder="John Doe"
+                    disabled
+                  />
+                  <Input type="phone" id="phone" placeholder="65865" disabled />
+                  <Input
+                    type="email"
+                    id="email"
+                    placeholder="John@Doe.com"
+                    disabled
+                  />
                 </div>
               </CardContent>
               <CardFooter>
-                <Button>Search customer</Button>
+                <Button>Kunden suchen</Button>
               </CardFooter>
             </Card>
             {/* Auftraggeber */}
@@ -255,30 +246,17 @@ export default function NewOrder() {
                 <CardTitle>Auftraggeber</CardTitle>
               </CardHeader>
               <CardContent>
-                <Select>
-                  <SelectTrigger className="w-[180px]">
-                    <SelectValue placeholder="Select a state" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectGroup>
-                      <SelectLabel>States</SelectLabel>
-                      <SelectItem value="state1">State1</SelectItem>
-                      <SelectItem value="state2">State2</SelectItem>
-                      <SelectItem value="state3">State3</SelectItem>
-                      <SelectItem value="state4">State4</SelectItem>
-                      <SelectItem value="state5">State5</SelectItem>
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-
-                <div className="flex items-center space-x-2">
-                  <Checkbox id="terms" />
-                  <label
-                    htmlFor="terms"
-                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    Device present again?
-                  </label>
+                <div className="grid gap-2">
+                  <Input />
+                  <div className="flex items-center space-x-2">
+                    <Checkbox id="terms" />
+                    <label
+                      htmlFor="terms"
+                      className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                    >
+                      Auftrag erteilt
+                    </label>
+                  </div>
                 </div>
               </CardContent>
               <CardFooter></CardFooter>
@@ -299,7 +277,7 @@ export default function NewOrder() {
               </CardFooter>
             </Card>
             {/* Kommunikation */}
-            <Card x-chunk="dashboard-05-chunk-1" className="sm:col-span-2">
+            <Card x-chunk="dashboard-05-chunk-1" className="xl:col-span-2">
               <CardHeader className="pb-2">
                 <CardTitle>Kommunikation</CardTitle>
                 <CardDescription>This Week</CardDescription>
@@ -314,7 +292,7 @@ export default function NewOrder() {
               </CardFooter>
             </Card>
             {/* Artikel */}
-            <Card x-chunk="dashboard-05-chunk-1">
+            <Card className="xl:col-span-2" x-chunk="dashboard-05-chunk-1">
               <CardHeader className="pb-2">
                 <CardTitle>Artikel</CardTitle>
                 <CardDescription>This Week</CardDescription>
