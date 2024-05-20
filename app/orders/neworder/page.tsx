@@ -368,7 +368,6 @@ export default function NewOrder() {
               </CardContent>
               <CardFooter></CardFooter>
             </Card>
-
             {/* Datum */}
             <Card className="" x-chunk="dashboard-05-chunk-1">
               <CardHeader className="pb-2">
@@ -536,78 +535,85 @@ export default function NewOrder() {
             <Card x-chunk="dashboard-05-chunk-1">
               <CardHeader className="pb-2">
                 <CardTitle>Mitarbeiter</CardTitle>
-                <CardDescription>This Week</CardDescription>
+                <CardDescription>
+                  Welcher Mitarbeiter hat den Auftrag erledigt?
+                </CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="text-xs text-muted-foreground">
-                  +25% from last week
-                </div>
+                <Select>
+                  <SelectTrigger className="">
+                    <SelectValue placeholder="Wählen Sie einen Mitarbeiter" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      <SelectLabel>Status</SelectLabel>
+                      <SelectItem value="mitarbeiter1">Mitarbeiter1</SelectItem>
+                      <SelectItem value="mitarbeiter2">Mitarbeiter2</SelectItem>
+                      <SelectItem value="mitarbeiter3">Mitarbeiter3</SelectItem>
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
               </CardContent>
-              <CardFooter>
-                <Progress value={25} aria-label="25% increase" />
-              </CardFooter>
+              <CardFooter></CardFooter>
             </Card>
             {/* Zeit */}
             <Card x-chunk="dashboard-05-chunk-1">
               <CardHeader className="pb-2">
                 <CardTitle>Zeit</CardTitle>
-                <CardDescription>This Week</CardDescription>
+                <CardDescription>
+                  Wie lange hat die Reparatur gedauert?
+                </CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="text-xs text-muted-foreground">
-                  +25% from last week
-                </div>
+                <Input />
               </CardContent>
-              <CardFooter>
-                <Progress value={25} aria-label="25% increase" />
-              </CardFooter>
+              <CardFooter></CardFooter>
             </Card>
             {/* Lohnkosten */}
             <Card x-chunk="dashboard-05-chunk-1">
               <CardHeader className="pb-2">
                 <CardTitle>Lohnkosten</CardTitle>
-                <CardDescription>This Week</CardDescription>
+                <CardDescription>Wie hoch sind die Lohnkosten?</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="text-xs text-muted-foreground">
-                  +25% from last week
-                </div>
+                <Input placeholder="80.00€" />
               </CardContent>
-              <CardFooter>
-                <Progress value={25} aria-label="25% increase" />
-              </CardFooter>
+              <CardFooter></CardFooter>
             </Card>
             {/* Materialkosten */}
             <Card x-chunk="dashboard-05-chunk-1">
               <CardHeader className="pb-2">
                 <CardTitle>Materialkosten</CardTitle>
-                <CardDescription>This Week</CardDescription>
+                <CardDescription>
+                  Wie hoch sind die Materialkosten?
+                </CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="text-xs text-muted-foreground">
-                  +25% from last week
-                </div>
+                <Input placeholder="120.00€" />
               </CardContent>
-              <CardFooter>
-                <Progress value={25} aria-label="25% increase" />
-              </CardFooter>
+              <CardFooter></CardFooter>
             </Card>
             {/* Gesamtkosten */}
             <Card x-chunk="dashboard-05-chunk-1">
               <CardHeader className="pb-2">
                 <CardTitle>Gesamtkosten</CardTitle>
-                <CardDescription>This Week</CardDescription>
+                <CardDescription>
+                  Wie hoch sind die Gesamtkosten?
+                </CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="text-xs text-muted-foreground">
-                  +25% from last week
-                </div>
+                <Input disabled placeholder="200.00€" />
               </CardContent>
-              <CardFooter>
-                <Progress value={25} aria-label="25% increase" />
-              </CardFooter>
+              <CardFooter></CardFooter>
             </Card>
           </div>
+          <Button
+            size={"lg"}
+            variant={"destructive"}
+            className="max-w-[250px] justify-self-end"
+          >
+            Auftrag erstellen
+          </Button>
         </div>
       </main>
     </div>
