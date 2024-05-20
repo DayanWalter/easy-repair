@@ -230,7 +230,7 @@ export default function NewOrder() {
         <div className="grid auto-rows-max items-start gap-4 md:gap-8 lg:col-span-2">
           <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
             {/* Kunde */}
-            <Card className="xl:row-span-2" x-chunk="dashboard-05-chunk-0">
+            <Card className="" x-chunk="dashboard-05-chunk-0">
               <CardHeader className="pb-3">
                 <CardTitle>Kunde</CardTitle>
                 <CardDescription className="max-w-lg text-balance leading-relaxed">
@@ -314,10 +314,7 @@ export default function NewOrder() {
               <CardFooter></CardFooter>
             </Card>
             {/* Kommunikation */}
-            <Card
-              x-chunk="dashboard-05-chunk-1"
-              className="xl:col-span-2 xl:row-span-2"
-            >
+            <Card x-chunk="dashboard-05-chunk-1" className="xl:col-span-2">
               <CardHeader className="pb-2">
                 <CardTitle>Kommunikation</CardTitle>
                 <CardDescription>
@@ -329,31 +326,8 @@ export default function NewOrder() {
               </CardContent>
               <CardFooter></CardFooter>
             </Card>
-            {/* Artikel */}
-            <Card className="xl:col-span-2" x-chunk="dashboard-05-chunk-1">
-              <CardHeader className="pb-2">
-                <CardTitle>Artikel</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-3 gap-3">
-                  <div>
-                    <Label htmlFor="device">Gerät</Label>
-                    <Input id="device" />
-                  </div>
-                  <div>
-                    <Label htmlFor="manufacturer">Hersteller</Label>
-                    <Input id="manufacturer" />
-                  </div>
-                  <div>
-                    <Label htmlFor="accessory">Zubehör</Label>
-                    <Input id="accessory" />
-                  </div>
-                </div>
-              </CardContent>
-              <CardFooter></CardFooter>
-            </Card>
             {/* Zugänge */}
-            <Card x-chunk="dashboard-05-chunk-1">
+            <Card className="xl:col-span-1" x-chunk="dashboard-05-chunk-1">
               <CardHeader className="pb-2">
                 <CardTitle>Zugänge</CardTitle>
               </CardHeader>
@@ -371,8 +345,32 @@ export default function NewOrder() {
               </CardContent>
               <CardFooter></CardFooter>
             </Card>
+            {/* Artikel */}
+            <Card className="xl:col-span-3" x-chunk="dashboard-05-chunk-1">
+              <CardHeader className="pb-2">
+                <CardTitle>Artikel</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="grid gap-3">
+                  <div>
+                    <Label htmlFor="device">Gerät</Label>
+                    <Input id="device" />
+                  </div>
+                  <div>
+                    <Label htmlFor="manufacturer">Hersteller</Label>
+                    <Input id="manufacturer" />
+                  </div>
+                  <div>
+                    <Label htmlFor="accessory">Zubehör</Label>
+                    <Input id="accessory" />
+                  </div>
+                </div>
+              </CardContent>
+              <CardFooter></CardFooter>
+            </Card>
+
             {/* Datum */}
-            <Card x-chunk="dashboard-05-chunk-1">
+            <Card className="" x-chunk="dashboard-05-chunk-1">
               <CardHeader className="pb-2">
                 <CardTitle>Datum</CardTitle>
               </CardHeader>
@@ -470,7 +468,7 @@ export default function NewOrder() {
               <CardFooter></CardFooter>
             </Card>
             {/* Fehlerbeschreibung */}
-            <Card x-chunk="dashboard-05-chunk-1">
+            <Card className="" x-chunk="dashboard-05-chunk-1">
               <CardHeader className="pb-2">
                 <CardTitle>Fehlerbeschreibung</CardTitle>
                 <CardDescription>
