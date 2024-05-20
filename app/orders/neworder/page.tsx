@@ -316,16 +316,24 @@ export default function NewOrder() {
             <Card className="xl:col-span-2" x-chunk="dashboard-05-chunk-1">
               <CardHeader className="pb-2">
                 <CardTitle>Artikel</CardTitle>
-                <CardDescription>This Week</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="text-xs text-muted-foreground">
-                  +25% from last week
+                <div className="grid grid-cols-3 gap-2">
+                  <div>
+                    Gerät
+                    <Input />
+                  </div>
+                  <div>
+                    Hersteller
+                    <Input />
+                  </div>
+                  <div>
+                    Zubehör
+                    <Input />
+                  </div>
                 </div>
               </CardContent>
-              <CardFooter>
-                <Progress value={25} aria-label="25% increase" />
-              </CardFooter>
+              <CardFooter></CardFooter>
             </Card>
             {/* Zugänge */}
             <Card x-chunk="dashboard-05-chunk-1">
