@@ -98,11 +98,8 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Textarea } from "@/components/ui/textarea";
 import { CommunicationTable } from "@/components/communication-table";
 
-export default function NewOrder() {
-  const [getDate, setGetDate] = React.useState<Date>();
-  const [doneDate, setDoneDate] = React.useState<Date>();
-  const [pickupDate, setPickupDate] = React.useState<Date>();
-
+export default function NewCustomer() {
+  const customerId = 5;
   return (
     <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14">
       <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
@@ -228,392 +225,39 @@ export default function NewOrder() {
       </header>
       <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
         <div className="grid auto-rows-max items-start gap-4 md:gap-8 lg:col-span-2">
-          <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
+          <div className="grid xl:grid-cols-2">
             {/* Kunde */}
             <Card className="" x-chunk="dashboard-05-chunk-0">
               <CardHeader className="pb-3">
-                <CardTitle>Kunde</CardTitle>
+                <CardTitle>Customer</CardTitle>
                 <CardDescription className="max-w-lg text-balance leading-relaxed">
-                  Id: 123456
+                  Id: {customerId}
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="grid gap-2">
+                  <Label htmlFor="name">Name</Label>
+                  <Input type="name" id="name" placeholder="John Doe" />
+
+                  <Label htmlFor="phone">Phone</Label>
+                  <Input type="phone" id="phone" placeholder="65865" />
+
+                  <Label htmlFor="adress">Adress</Label>
                   <Input
-                    type="name"
-                    id="name"
-                    placeholder="John Doe"
-                    disabled
+                    type="adress"
+                    id="adress"
+                    placeholder="Eberwaldstr. 78"
                   />
-                  <Input type="phone" id="phone" placeholder="65865" disabled />
-                  <Input
-                    type="email"
-                    id="email"
-                    placeholder="John@Doe.com"
-                    disabled
-                  />
+
+                  <Label htmlFor="email">Email</Label>
+                  <Input type="email" id="email" placeholder="John@Doe.com" />
                 </div>
               </CardContent>
               <CardFooter>
-                <Button>Kunden suchen</Button>
+                <Button>Create Customer</Button>
               </CardFooter>
             </Card>
-            {/* Auftraggeber */}
-            <Card className="" x-chunk="dashboard-05-chunk-0">
-              <CardHeader className="pb-3">
-                <CardTitle>Auftraggeber</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="grid gap-2">
-                  <Input />
-                  <div className="flex items-center space-x-2">
-                    <Checkbox id="terms" />
-                    <label
-                      htmlFor="terms"
-                      className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                    >
-                      Auftrag erteilt
-                    </label>
-                  </div>
-                </div>
-              </CardContent>
-              <CardFooter></CardFooter>
-            </Card>
-            {/* Status */}
-            <Card x-chunk="dashboard-05-chunk-1">
-              <CardHeader className="pb-2">
-                <CardTitle>Status</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="grid gap-2">
-                  <Select>
-                    <SelectTrigger className="">
-                      <SelectValue placeholder="Wählen Sie einen Status" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectGroup>
-                        <SelectLabel>Status</SelectLabel>
-                        <SelectItem value="status1">Status1</SelectItem>
-                        <SelectItem value="status2">Status2</SelectItem>
-                        <SelectItem value="status3">Status3</SelectItem>
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select>
-                  <div className="flex items-center space-x-2">
-                    <Checkbox id="terms" />
-                    <label
-                      htmlFor="terms"
-                      className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                    >
-                      Gerät erneut da
-                    </label>
-                  </div>
-                  <Input placeholder="Alte Auftragsnummer" />
-                </div>
-              </CardContent>
-              <CardFooter></CardFooter>
-            </Card>
-            {/* Kommunikation */}
-            <Card x-chunk="dashboard-05-chunk-1" className="xl:col-span-2">
-              <CardHeader className="pb-2">
-                <CardTitle>Kommunikation</CardTitle>
-                <CardDescription>
-                  Dies ist der Kommunikationsverlauf
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <CommunicationTable />
-              </CardContent>
-              <CardFooter></CardFooter>
-            </Card>
-            {/* Zugänge */}
-            <Card className="xl:col-span-1" x-chunk="dashboard-05-chunk-1">
-              <CardHeader className="pb-2">
-                <CardTitle>Zugänge</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="grid gap-2">
-                  <div>
-                    <Label htmlFor="password">Passwort</Label>
-                    <Input id="password" />
-                  </div>
-                  <div>
-                    <Label htmlFor="accounts">Weitere</Label>
-                    <Input id="accounts" />
-                  </div>
-                </div>
-              </CardContent>
-              <CardFooter></CardFooter>
-            </Card>
-            {/* Artikel */}
-            <Card className="xl:col-span-3" x-chunk="dashboard-05-chunk-1">
-              <CardHeader className="pb-2">
-                <CardTitle>Artikel</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="grid gap-3">
-                  <div>
-                    <Label htmlFor="device">Gerät</Label>
-                    <Input id="device" />
-                  </div>
-                  <div>
-                    <Label htmlFor="manufacturer">Hersteller</Label>
-                    <Input id="manufacturer" />
-                  </div>
-                  <div>
-                    <Label htmlFor="accessory">Zubehör</Label>
-                    <Input id="accessory" />
-                  </div>
-                </div>
-              </CardContent>
-              <CardFooter></CardFooter>
-            </Card>
-            {/* Datum */}
-            <Card className="" x-chunk="dashboard-05-chunk-1">
-              <CardHeader className="pb-2">
-                <CardTitle>Datum</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="grid gap-2">
-                  <div className="grid gap-2">
-                    <Label htmlFor="device">Annahme</Label>
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <Button
-                          variant={"outline"}
-                          className={cn(
-                            "justify-start text-left font-normal",
-                            !getDate && "text-muted-foreground",
-                          )}
-                        >
-                          <CalendarIcon className="mr-2 h-4 w-4" />
-                          {getDate ? (
-                            format(getDate, "PPP")
-                          ) : (
-                            <span>Angenommen am...</span>
-                          )}
-                        </Button>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-auto p-0">
-                        <Calendar
-                          mode="single"
-                          selected={getDate}
-                          onSelect={setGetDate}
-                          initialFocus
-                        />
-                      </PopoverContent>
-                    </Popover>
-                  </div>
-                  <div className="grid gap-2">
-                    <Label htmlFor="manufacturer">Fertiggestellt</Label>
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <Button
-                          variant={"outline"}
-                          className={cn(
-                            "justify-start text-left font-normal",
-                            !doneDate && "text-muted-foreground",
-                          )}
-                        >
-                          <CalendarIcon className="mr-2 h-4 w-4" />
-                          {doneDate ? (
-                            format(doneDate, "PPP")
-                          ) : (
-                            <span>Fertiggestellt am...</span>
-                          )}
-                        </Button>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-auto p-0">
-                        <Calendar
-                          mode="single"
-                          selected={doneDate}
-                          onSelect={setDoneDate}
-                          initialFocus
-                        />
-                      </PopoverContent>
-                    </Popover>
-                  </div>
-                  <div className="grid gap-2">
-                    <Label htmlFor="accessory">Abgeholt</Label>
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <Button
-                          variant={"outline"}
-                          className={cn(
-                            "justify-start text-left font-normal",
-                            !pickupDate && "text-muted-foreground",
-                          )}
-                        >
-                          <CalendarIcon className="mr-2 h-4 w-4" />
-                          {pickupDate ? (
-                            format(pickupDate, "PPP")
-                          ) : (
-                            <span>Abgeholt am...</span>
-                          )}
-                        </Button>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-auto p-0">
-                        <Calendar
-                          mode="single"
-                          selected={pickupDate}
-                          onSelect={setPickupDate}
-                          initialFocus
-                        />
-                      </PopoverContent>
-                    </Popover>
-                  </div>
-                </div>
-              </CardContent>
-              <CardFooter></CardFooter>
-            </Card>
-            {/* Fehlerbeschreibung */}
-            <Card className="" x-chunk="dashboard-05-chunk-1">
-              <CardHeader className="pb-2">
-                <CardTitle>Fehlerbeschreibung</CardTitle>
-                <CardDescription>
-                  Beschreiben Sie das aufgetretene Problem.
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Textarea />
-              </CardContent>
-              <CardFooter></CardFooter>
-            </Card>
-            {/* Diagnose */}
-            <Card x-chunk="dashboard-05-chunk-1">
-              <CardHeader className="pb-2">
-                <CardTitle>Diagnose</CardTitle>
-                <CardDescription>
-                  Geben Sie die Ursache des Problems an.
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Textarea />
-              </CardContent>
-              <CardFooter></CardFooter>
-            </Card>
-            {/* Angebot */}
-            <Card x-chunk="dashboard-05-chunk-1">
-              <CardHeader className="pb-2">
-                <CardTitle>Angebot</CardTitle>
-                <CardDescription>
-                  Beschreiben Sie die vorgeschlagenen Maßnahmen und die Kosten.
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Textarea />
-              </CardContent>
-              <CardFooter></CardFooter>
-            </Card>
-            {/* Reparatur */}
-            <Card x-chunk="dashboard-05-chunk-1">
-              <CardHeader className="pb-2">
-                <CardTitle>Reparatur</CardTitle>
-                <CardDescription>
-                  Erklären Sie, was zur Behebung des Problems unternommen wurde.
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Textarea />
-              </CardContent>
-              <CardFooter></CardFooter>
-            </Card>
-            {/* Anmerkungen */}
-            <Card x-chunk="dashboard-05-chunk-1">
-              <CardHeader className="pb-2">
-                <CardTitle>Anmerkungen</CardTitle>
-                <CardDescription>
-                  Teilen Sie zusätzliche relevante Informationen mit.
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Textarea />
-              </CardContent>
-              <CardFooter></CardFooter>
-            </Card>
-            {/* Mitarbeiter */}
-            <Card x-chunk="dashboard-05-chunk-1">
-              <CardHeader className="pb-2">
-                <CardTitle>Mitarbeiter</CardTitle>
-                <CardDescription>
-                  Welcher Mitarbeiter hat den Auftrag erledigt?
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Select>
-                  <SelectTrigger className="">
-                    <SelectValue placeholder="Wählen Sie einen Mitarbeiter" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectGroup>
-                      <SelectLabel>Status</SelectLabel>
-                      <SelectItem value="mitarbeiter1">Mitarbeiter1</SelectItem>
-                      <SelectItem value="mitarbeiter2">Mitarbeiter2</SelectItem>
-                      <SelectItem value="mitarbeiter3">Mitarbeiter3</SelectItem>
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-              </CardContent>
-              <CardFooter></CardFooter>
-            </Card>
-            {/* Zeit */}
-            <Card x-chunk="dashboard-05-chunk-1">
-              <CardHeader className="pb-2">
-                <CardTitle>Zeit</CardTitle>
-                <CardDescription>
-                  Wie lange hat die Reparatur gedauert?
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Input />
-              </CardContent>
-              <CardFooter></CardFooter>
-            </Card>
-            {/* Lohnkosten */}
-            <Card x-chunk="dashboard-05-chunk-1">
-              <CardHeader className="pb-2">
-                <CardTitle>Lohnkosten</CardTitle>
-                <CardDescription>Wie hoch sind die Lohnkosten?</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Input placeholder="80.00€" />
-              </CardContent>
-              <CardFooter></CardFooter>
-            </Card>
-            {/* Materialkosten */}
-            <Card x-chunk="dashboard-05-chunk-1">
-              <CardHeader className="pb-2">
-                <CardTitle>Materialkosten</CardTitle>
-                <CardDescription>
-                  Wie hoch sind die Materialkosten?
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Input placeholder="120.00€" />
-              </CardContent>
-              <CardFooter></CardFooter>
-            </Card>
-            {/* Gesamtkosten */}
-            <Card x-chunk="dashboard-05-chunk-1">
-              <CardHeader className="pb-2">
-                <CardTitle>Gesamtkosten</CardTitle>
-                <CardDescription>
-                  Wie hoch sind die Gesamtkosten?
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Input disabled placeholder="200.00€" />
-              </CardContent>
-              <CardFooter></CardFooter>
-            </Card>
           </div>
-          <Button
-            size={"lg"}
-            variant={"destructive"}
-            className="max-w-[250px] justify-self-end"
-          >
-            Auftrag erstellen
-          </Button>
         </div>
       </main>
     </div>
