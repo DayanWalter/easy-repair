@@ -240,7 +240,10 @@ export default function Customers() {
                 </CardDescription>
               </CardHeader>
               <CardFooter>
-                <Button>Create New Customer</Button>
+                <Link href="/customers/newcustomer">
+                  <Button>Create New Customer</Button>
+                  <span className="sr-only">Create new customer</span>
+                </Link>
               </CardFooter>
             </Card>
           </div>
