@@ -97,11 +97,19 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import { Textarea } from "@/components/ui/textarea";
 import { CommunicationTable } from "@/components/communication-table";
+import { Metadata } from "next";
 
-export default function Order() {
+type Props = {
+  params: {
+    orderId: string;
+  };
+};
+
+export default function Order({ params }: Props) {
   const [getDate, setGetDate] = React.useState<Date>();
   const [doneDate, setDoneDate] = React.useState<Date>();
   const [pickupDate, setPickupDate] = React.useState<Date>();
+  const [customer, setCustomer] = React.useState();
 
   return (
     <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14">
@@ -184,7 +192,9 @@ export default function Order() {
             <BreadcrumbSeparator />
             <BreadcrumbItem>
               <BreadcrumbLink asChild>
-                <Link href="/orders/neworder">New Order</Link>
+                <Link href={`/orders/${params.orderId}`}>
+                  Order: {params.orderId}
+                </Link>
               </BreadcrumbLink>
             </BreadcrumbItem>
           </BreadcrumbList>
@@ -612,7 +622,7 @@ export default function Order() {
             variant={"destructive"}
             className="max-w-[250px] justify-self-end"
           >
-            Auftrag erstellen
+            Change order
           </Button>
         </div>
       </main>
