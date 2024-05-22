@@ -286,7 +286,11 @@ export default function Customers() {
                         {customer.customer_reg_date}
                       </TableCell>
                       <TableCell className="flex justify-end gap-1">
-                        <Button size="sm">Update</Button>
+                        <Link href={`/customers/${customer.customer_id}`}>
+                          <Button size="sm">Edit</Button>
+                          <span className="sr-only">Edit</span>
+                        </Link>
+
                         <Button variant="destructive" size="sm">
                           Delete
                         </Button>
