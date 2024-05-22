@@ -72,7 +72,20 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 
-export default function Customers() {
+import { customers } from "@/database/customers";
+
+type Props = {
+  params: {
+    customerId: number;
+  };
+};
+
+export default function Customer({ params }: Props) {
+  const customer = customers.find(
+    (c) => c.customer_id === Number(params.customerId),
+  );
+  console.log(customer);
+
   return (
     <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14">
       <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
