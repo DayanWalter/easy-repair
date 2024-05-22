@@ -1,0 +1,42 @@
+export const customers = [
+  {
+    customer_id: 1,
+    customer_name: "Liam Johnson",
+    customer_adress: "Wernershagener Weg 87",
+    customer_phone: "65865",
+    customer_email: "liam@example.com",
+    customer_reg_date: "15-06-2025",
+  },
+  {
+    customer_id: 2,
+    customer_name: "Emma Schmidt",
+    customer_adress: "Musterstraße 12",
+    customer_phone: "12345",
+    customer_email: "emma.schmidt@example.com",
+    customer_reg_date: "10-04-2025",
+  },
+  {
+    customer_id: 3,
+    customer_name: "Noah Müller",
+    customer_adress: "Hauptstraße 34",
+    customer_phone: "67890",
+    customer_email: "noah.mueller@example.com",
+    customer_reg_date: "21-05-2025",
+  },
+  {
+    customer_id: 4,
+    customer_name: "Sophia Fischer",
+    customer_adress: "Nebenweg 56",
+    customer_phone: "54321",
+    customer_email: "sophia.fischer@example.com",
+    customer_reg_date: "03-03-2025",
+  },
+  {
+    customer_id: 5,
+    customer_name: "Lucas Wagner",
+    customer_adress: "Bergstraße 78",
+    customer_phone: "98765",
+    customer_email: "lucas.wagner@example.com",
+    customer_reg_date: "30-01-2025",
+  },
+];

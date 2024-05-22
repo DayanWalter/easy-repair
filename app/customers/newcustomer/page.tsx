@@ -98,8 +98,28 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Textarea } from "@/components/ui/textarea";
 import { CommunicationTable } from "@/components/communication-table";
 
+import { customers } from "@/database/customers";
+
 export default function NewCustomer() {
-  const customerId = 5;
+  const customerId = customers.length;
+
+  const [newCustomer, setNewCustomer] = React.useState({
+    customer_id: customerId,
+    customer_name: "",
+    customer_adress: "",
+    customer_phone: "",
+    customer_email: "",
+    customer_reg_date: Date.now(),
+  });
+
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    setNewCustomer((prevState) => ({
+      ...prevState,
+      [id]: value,
+    }));
+  };
+  console.log(newCustomer);
   return (
     <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14">
       <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
@@ -205,7 +225,7 @@ export default function NewCustomer() {
             >
               {/* Placeholder */}
               <Image
-                src="/placeholder-user.jpg"
+                src="/btc.png"
                 width={36}
                 height={36}
                 alt="Avatar"
@@ -236,21 +256,41 @@ export default function NewCustomer() {
               </CardHeader>
               <CardContent>
                 <div className="grid gap-2">
-                  <Label htmlFor="name">Name</Label>
-                  <Input type="name" id="name" placeholder="John Doe" />
-
-                  <Label htmlFor="phone">Phone</Label>
-                  <Input type="phone" id="phone" placeholder="65865" />
-
-                  <Label htmlFor="adress">Adress</Label>
+                  <Label htmlFor="customer_name">Name</Label>
                   <Input
-                    type="adress"
-                    id="adress"
-                    placeholder="Eberwaldstr. 78"
+                    type="text"
+                    id="customer_name"
+                    placeholder="John Doe"
+                    defaultValue={newCustomer.customer_name}
+                    onChange={handleChange}
                   />
 
-                  <Label htmlFor="email">Email</Label>
-                  <Input type="email" id="email" placeholder="John@Doe.com" />
+                  <Label htmlFor="customer_phone">Phone</Label>
+                  <Input
+                    type="text"
+                    id="customer_phone"
+                    placeholder="65865"
+                    defaultValue={newCustomer.customer_phone}
+                    onChange={handleChange}
+                  />
+
+                  <Label htmlFor="customer_adress">Adress</Label>
+                  <Input
+                    type="text"
+                    id="customer_adress"
+                    placeholder="Eberwaldstr. 78"
+                    defaultValue={newCustomer.customer_adress}
+                    onChange={handleChange}
+                  />
+
+                  <Label htmlFor="customer_email">Email</Label>
+                  <Input
+                    type="email"
+                    id="customer_email"
+                    placeholder="John@Doe.com"
+                    defaultValue={newCustomer.customer_email}
+                    onChange={handleChange}
+                  />
                 </div>
               </CardContent>
               <CardFooter>

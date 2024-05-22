@@ -218,7 +218,7 @@ export default function Order({ params }: Props) {
             >
               {/* Placeholder */}
               <Image
-                src="/placeholder-user.jpg"
+                src="/btc.png"
                 width={36}
                 height={36}
                 alt="Avatar"

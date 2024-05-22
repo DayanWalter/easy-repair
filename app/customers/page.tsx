@@ -72,44 +72,9 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 
+import { customers } from "@/database/customers";
+
 export default function Customers() {
-  const customers = [
-    {
-      customer_name: "Liam Johnson",
-      customer_adress: "Wernershagener Weg 87",
-      customer_phone: "65865",
-      customer_email: "liam@example.com",
-      customer_reg_date: "15-06-2025",
-    },
-    {
-      customer_name: "Emma Schmidt",
-      customer_adress: "Musterstraße 12",
-      customer_phone: "12345",
-      customer_email: "emma.schmidt@example.com",
-      customer_reg_date: "10-04-2025",
-    },
-    {
-      customer_name: "Noah Müller",
-      customer_adress: "Hauptstraße 34",
-      customer_phone: "67890",
-      customer_email: "noah.mueller@example.com",
-      customer_reg_date: "21-05-2025",
-    },
-    {
-      customer_name: "Sophia Fischer",
-      customer_adress: "Nebenweg 56",
-      customer_phone: "54321",
-      customer_email: "sophia.fischer@example.com",
-      customer_reg_date: "03-03-2025",
-    },
-    {
-      customer_name: "Lucas Wagner",
-      customer_adress: "Bergstraße 78",
-      customer_phone: "98765",
-      customer_email: "lucas.wagner@example.com",
-      customer_reg_date: "30-01-2025",
-    },
-  ];
   return (
     <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14">
       <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
@@ -209,7 +174,7 @@ export default function Customers() {
             >
               {/* Placeholder */}
               <Image
-                src="/placeholder-user.jpg"
+                src="/btc.png"
                 width={36}
                 height={36}
                 alt="Avatar"
@@ -302,7 +267,7 @@ export default function Customers() {
                 <TableBody>
                   {/* Customer */}
                   {customers.map((customer) => (
-                    <TableRow key={customer.customer_phone}>
+                    <TableRow key={customer.customer_id}>
                       <TableCell>
                         <div className="font-medium">
                           {customer.customer_name}
