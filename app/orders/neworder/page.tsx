@@ -258,18 +258,18 @@ export default function NewOrder() {
                 <Button>Kunden suchen</Button>
               </CardFooter>
             </Card>
-            {/* Auftraggeber */}
+            {/* Auftragsnummer */}
             <Card className="" x-chunk="dashboard-05-chunk-0">
               <CardHeader className="pb-3">
-                <CardTitle>Auftraggeber</CardTitle>
+                <CardTitle>Auftragsnummer</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="grid gap-2">
                   <Input />
                   <div className="flex items-center space-x-2">
-                    <Checkbox id="terms" />
+                    <Checkbox id="accepted" />
                     <label
-                      htmlFor="terms"
+                      htmlFor="accepted"
                       className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                     >
                       Auftrag erteilt
@@ -293,16 +293,27 @@ export default function NewOrder() {
                     <SelectContent>
                       <SelectGroup>
                         <SelectLabel>Status</SelectLabel>
-                        <SelectItem value="status1">Status1</SelectItem>
-                        <SelectItem value="status2">Status2</SelectItem>
-                        <SelectItem value="status3">Status3</SelectItem>
+                        <SelectItem value="annahme">Annahme</SelectItem>
+                        <SelectItem value="technik">Technik</SelectItem>
+                        <SelectItem value="technikWartend">
+                          Technik wartend
+                        </SelectItem>
+                        <SelectItem value="kundenAnrufen">
+                          Kunden anrufen
+                        </SelectItem>
+                        <SelectItem value="geraetWirdAbgeholt">
+                          Gerät wird abgeholt
+                        </SelectItem>
+                        <SelectItem value="teileBestellt">
+                          Teile bestellt
+                        </SelectItem>
                       </SelectGroup>
                     </SelectContent>
                   </Select>
                   <div className="flex items-center space-x-2">
-                    <Checkbox id="terms" />
+                    <Checkbox id="again" />
                     <label
-                      htmlFor="terms"
+                      htmlFor="again"
                       className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                     >
                       Gerät erneut da
