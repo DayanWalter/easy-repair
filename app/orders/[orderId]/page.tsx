@@ -115,7 +115,7 @@ export default function Order({ params }: Props) {
     (c) => c.customer_id === Number(initOrder?.order_customer_id),
   );
   const [order, setOrder] = React.useState(initOrder);
-  console.log(customer);
+  // console.log(customer);
   console.log(order);
 
   const [getDate, setGetDate] = React.useState<Date>();
@@ -132,6 +132,18 @@ export default function Order({ params }: Props) {
       }
       return prevOrder;
     });
+  };
+  const handleStateChange = (e) => {
+    setOrder((prevOrder) => {
+      if (prevOrder) {
+        return {
+          ...prevOrder,
+          order_state: e,
+        };
+      }
+      return prevOrder;
+    });
+    console.log(e);
   };
 
   return (
@@ -294,7 +306,7 @@ export default function Order({ params }: Props) {
               </CardContent>
               <CardFooter></CardFooter>
             </Card>
-            {/* Auftragsnummer */}
+            {/* Auftragsnummer -done */}
             <Card className="" x-chunk="dashboard-05-chunk-0">
               <CardHeader className="pb-3">
                 <CardTitle>Auftragsnummer</CardTitle>
@@ -326,25 +338,25 @@ export default function Order({ params }: Props) {
               </CardHeader>
               <CardContent>
                 <div className="grid gap-2">
-                  <Select>
-                    <SelectTrigger className="">
-                      <SelectValue placeholder="Wählen Sie einen Status" />
+                  <Select onValueChange={handleStateChange}>
+                    <SelectTrigger>
+                      <SelectValue placeholder={order?.order_state} />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectGroup>
                         <SelectLabel>Status</SelectLabel>
-                        <SelectItem value="annahme">Annahme</SelectItem>
-                        <SelectItem value="technik">Technik</SelectItem>
-                        <SelectItem value="technikWartend">
+                        <SelectItem value="Annahme">Annahme</SelectItem>
+                        <SelectItem value="Technik">Technik</SelectItem>
+                        <SelectItem value="Technik wartend">
                           Technik wartend
                         </SelectItem>
-                        <SelectItem value="kundenAnrufen">
+                        <SelectItem value="Kunden anrufen">
                           Kunden anrufen
                         </SelectItem>
-                        <SelectItem value="geraetWirdAbgeholt">
+                        <SelectItem value="Gerät wird abgeholt">
                           Gerät wird abgeholt
                         </SelectItem>
-                        <SelectItem value="teileBestellt">
+                        <SelectItem value="Teile bestellt">
                           Teile bestellt
                         </SelectItem>
                       </SelectGroup>
