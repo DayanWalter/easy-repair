@@ -122,7 +122,7 @@ export default function Order({ params }: Props) {
   const [doneDate, setDoneDate] = React.useState<Date>();
   const [pickupDate, setPickupDate] = React.useState<Date>();
 
-  const handleCheckboxChange = () => {
+  const handleAcceptedChange = () => {
     setOrder((prevOrder) => {
       if (prevOrder) {
         return {
@@ -144,6 +144,28 @@ export default function Order({ params }: Props) {
       return prevOrder;
     });
     console.log(e);
+  };
+  const handleAgainChange = () => {
+    setOrder((prevOrder) => {
+      if (prevOrder) {
+        return {
+          ...prevOrder,
+          order_again: !prevOrder.order_again,
+        };
+      }
+      return prevOrder;
+    });
+  };
+  const handleOldOrderNumber = (e) => {
+    setOrder((prevOrder) => {
+      if (prevOrder) {
+        return {
+          ...prevOrder,
+          order_old_order_id: e.target.value,
+        };
+      }
+      return prevOrder;
+    });
   };
 
   return (
@@ -318,7 +340,7 @@ export default function Order({ params }: Props) {
                     <Checkbox
                       id="accepted"
                       checked={order?.order_verified}
-                      onClick={handleCheckboxChange}
+                      onClick={handleAcceptedChange}
                     />
                     <label
                       htmlFor="accepted"
@@ -363,7 +385,11 @@ export default function Order({ params }: Props) {
                     </SelectContent>
                   </Select>
                   <div className="flex items-center space-x-2">
-                    <Checkbox id="again" />
+                    <Checkbox
+                      id="again"
+                      checked={order?.order_again}
+                      onClick={handleAgainChange}
+                    />
                     <label
                       htmlFor="again"
                       className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -371,7 +397,11 @@ export default function Order({ params }: Props) {
                       Gerät erneut da
                     </label>
                   </div>
-                  <Input placeholder="Alte Auftragsnummer" />
+                  <Input
+                    placeholder="Alte Auftragsnummer"
+                    value={order?.order_old_order_id}
+                    onChange={handleOldOrderNumber}
+                  />
                 </div>
               </CardContent>
               <CardFooter></CardFooter>

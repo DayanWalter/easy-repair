@@ -6,5 +6,7 @@ export const orders = [
     order_verified: false,
     // Status
     order_state: "Technik",
+    order_again: true,
+    order_old_order_id: "456",
   },
 ];
