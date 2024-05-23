@@ -114,13 +114,25 @@ export default function Order({ params }: Props) {
   const customer = customers.find(
     (c) => c.customer_id === Number(initOrder?.order_customer_id),
   );
-  console.log(customer);
   const [order, setOrder] = React.useState(initOrder);
+  console.log(customer);
   console.log(order);
 
   const [getDate, setGetDate] = React.useState<Date>();
   const [doneDate, setDoneDate] = React.useState<Date>();
   const [pickupDate, setPickupDate] = React.useState<Date>();
+
+  const handleCheckboxChange = () => {
+    setOrder((prevOrder) => {
+      if (prevOrder) {
+        return {
+          ...prevOrder,
+          order_verified: !prevOrder.order_verified,
+        };
+      }
+      return prevOrder;
+    });
+  };
 
   return (
     <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14">
@@ -250,7 +262,7 @@ export default function Order({ params }: Props) {
       <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
         <div className="grid auto-rows-max items-start gap-4 md:gap-8 lg:col-span-2">
           <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
-            {/* Kunde */}
+            {/* Kunde - done*/}
             <Card className="" x-chunk="dashboard-05-chunk-0">
               <CardHeader className="pb-3">
                 <CardTitle>Kunde</CardTitle>
@@ -294,9 +306,7 @@ export default function Order({ params }: Props) {
                     <Checkbox
                       id="accepted"
                       checked={order?.order_verified}
-                      onClick={() => {
-                        setOrder();
-                      }}
+                      onClick={handleCheckboxChange}
                     />
                     <label
                       htmlFor="accepted"
