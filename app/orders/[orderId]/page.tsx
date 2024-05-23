@@ -98,6 +98,8 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Textarea } from "@/components/ui/textarea";
 import { CommunicationTable } from "@/components/communication-table";
 import { Metadata } from "next";
+import { orders } from "@/database/orders";
+import { customers } from "@/database/customers";
 
 type Props = {
   params: {
@@ -106,10 +108,19 @@ type Props = {
 };
 
 export default function Order({ params }: Props) {
+  // Find order via params
+  const initOrder = orders.find((o) => o.order_id === Number(params.orderId));
+  // Search customer from initOrder via customer_id
+  const customer = customers.find(
+    (c) => c.customer_id === Number(initOrder?.order_customer_id),
+  );
+  console.log(customer);
+  const [order, setOrder] = React.useState(initOrder);
+  console.log(order);
+
   const [getDate, setGetDate] = React.useState<Date>();
   const [doneDate, setDoneDate] = React.useState<Date>();
   const [pickupDate, setPickupDate] = React.useState<Date>();
-  const [customer, setCustomer] = React.useState();
 
   return (
     <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14">
@@ -244,7 +255,7 @@ export default function Order({ params }: Props) {
               <CardHeader className="pb-3">
                 <CardTitle>Kunde</CardTitle>
                 <CardDescription className="max-w-lg text-balance leading-relaxed">
-                  Id: 123456
+                  Id: {customer?.customer_id}
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -252,34 +263,43 @@ export default function Order({ params }: Props) {
                   <Input
                     type="name"
                     id="name"
-                    placeholder="John Doe"
+                    placeholder={customer?.customer_name}
                     disabled
                   />
-                  <Input type="phone" id="phone" placeholder="65865" disabled />
+                  <Input
+                    type="phone"
+                    id="phone"
+                    placeholder={customer?.customer_phone}
+                    disabled
+                  />
                   <Input
                     type="email"
                     id="email"
-                    placeholder="John@Doe.com"
+                    placeholder={customer?.customer_email}
                     disabled
                   />
                 </div>
               </CardContent>
-              <CardFooter>
-                <Button>Kunden suchen</Button>
-              </CardFooter>
+              <CardFooter></CardFooter>
             </Card>
-            {/* Auftraggeber */}
+            {/* Auftragsnummer */}
             <Card className="" x-chunk="dashboard-05-chunk-0">
               <CardHeader className="pb-3">
-                <CardTitle>Auftraggeber</CardTitle>
+                <CardTitle>Auftragsnummer</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="grid gap-2">
-                  <Input />
+                  <Input placeholder={String(order?.order_id)} disabled />
                   <div className="flex items-center space-x-2">
-                    <Checkbox id="terms" />
+                    <Checkbox
+                      id="accepted"
+                      checked={order?.order_verified}
+                      onClick={() => {
+                        setOrder();
+                      }}
+                    />
                     <label
-                      htmlFor="terms"
+                      htmlFor="accepted"
                       className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                     >
                       Auftrag erteilt
@@ -303,16 +323,27 @@ export default function Order({ params }: Props) {
                     <SelectContent>
                       <SelectGroup>
                         <SelectLabel>Status</SelectLabel>
-                        <SelectItem value="status1">Status1</SelectItem>
-                        <SelectItem value="status2">Status2</SelectItem>
-                        <SelectItem value="status3">Status3</SelectItem>
+                        <SelectItem value="annahme">Annahme</SelectItem>
+                        <SelectItem value="technik">Technik</SelectItem>
+                        <SelectItem value="technikWartend">
+                          Technik wartend
+                        </SelectItem>
+                        <SelectItem value="kundenAnrufen">
+                          Kunden anrufen
+                        </SelectItem>
+                        <SelectItem value="geraetWirdAbgeholt">
+                          Gerät wird abgeholt
+                        </SelectItem>
+                        <SelectItem value="teileBestellt">
+                          Teile bestellt
+                        </SelectItem>
                       </SelectGroup>
                     </SelectContent>
                   </Select>
                   <div className="flex items-center space-x-2">
-                    <Checkbox id="terms" />
+                    <Checkbox id="again" />
                     <label
-                      htmlFor="terms"
+                      htmlFor="again"
                       className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                     >
                       Gerät erneut da

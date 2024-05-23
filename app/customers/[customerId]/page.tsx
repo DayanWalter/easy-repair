@@ -73,8 +73,8 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 
-import { customers } from "@/database/customers";
 import { Label } from "@/components/ui/label";
+import { customers } from "@/database/customers";
 
 type Props = {
   params: {

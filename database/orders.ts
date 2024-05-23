@@ -1,0 +1,7 @@
+export const orders = [
+  {
+    order_id: 1,
+    order_customer_id: 2,
+    order_verified: false,
+  },
+];
