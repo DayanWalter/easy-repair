@@ -133,7 +133,7 @@ export default function Order({ params }: Props) {
       return prevOrder;
     });
   };
-  const handleStateChange = (e) => {
+  const handleStateChange = (e: string) => {
     setOrder((prevOrder) => {
       if (prevOrder) {
         return {
@@ -143,7 +143,6 @@ export default function Order({ params }: Props) {
       }
       return prevOrder;
     });
-    console.log(e);
   };
   const handleAgainChange = () => {
     setOrder((prevOrder) => {
@@ -156,7 +155,7 @@ export default function Order({ params }: Props) {
       return prevOrder;
     });
   };
-  const handleOldOrderNumber = (e) => {
+  const handleOldOrderNumber = (e: React.ChangeEvent<HTMLInputElement>) => {
     setOrder((prevOrder) => {
       if (prevOrder) {
         return {
@@ -353,7 +352,7 @@ export default function Order({ params }: Props) {
               </CardContent>
               <CardFooter></CardFooter>
             </Card>
-            {/* Status */}
+            {/* Status - done*/}
             <Card x-chunk="dashboard-05-chunk-1">
               <CardHeader className="pb-2">
                 <CardTitle>Status</CardTitle>
