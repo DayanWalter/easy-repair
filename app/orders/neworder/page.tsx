@@ -96,7 +96,6 @@ import {
 } from "@/components/ui/tooltip";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Textarea } from "@/components/ui/textarea";
-import { CommunicationTable } from "@/components/communication-table";
 
 export default function NewOrder() {
   const [getDate, setGetDate] = React.useState<Date>();
@@ -332,9 +331,7 @@ export default function NewOrder() {
                   Dies ist der Kommunikationsverlauf
                 </CardDescription>
               </CardHeader>
-              <CardContent>
-                <CommunicationTable />
-              </CardContent>
+              <CardContent></CardContent>
               <CardFooter></CardFooter>
             </Card>
             {/* Zugänge */}

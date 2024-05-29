@@ -96,7 +96,6 @@ import {
 } from "@/components/ui/tooltip";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Textarea } from "@/components/ui/textarea";
-import { CommunicationTable } from "@/components/communication-table";
 import { Metadata } from "next";
 import { orders } from "@/database/orders";
 import { customers } from "@/database/customers";
@@ -122,7 +121,7 @@ export default function Order({ params }: Props) {
   const [doneDate, setDoneDate] = React.useState<Date>();
   const [pickupDate, setPickupDate] = React.useState<Date>();
 
-  const handleAcceptedChange = () => {
+  const handleVerifiedChange = () => {
     setOrder((prevOrder) => {
       if (prevOrder) {
         return {
@@ -155,7 +154,7 @@ export default function Order({ params }: Props) {
       return prevOrder;
     });
   };
-  const handleOldOrderNumber = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleOldOrderId = (e: React.ChangeEvent<HTMLInputElement>) => {
     setOrder((prevOrder) => {
       if (prevOrder) {
         return {
@@ -339,7 +338,7 @@ export default function Order({ params }: Props) {
                     <Checkbox
                       id="accepted"
                       checked={order?.order_verified}
-                      onClick={handleAcceptedChange}
+                      onClick={handleVerifiedChange}
                     />
                     <label
                       htmlFor="accepted"
@@ -399,13 +398,19 @@ export default function Order({ params }: Props) {
                   <Input
                     placeholder="Alte Auftragsnummer"
                     value={order?.order_old_order_id}
-                    onChange={handleOldOrderNumber}
+                    onChange={handleOldOrderId}
                   />
                 </div>
               </CardContent>
               <CardFooter></CardFooter>
             </Card>
             {/* Kommunikation */}
+            {/* {
+            id: "bhqecj4p",
+            message: "Holt später ab",
+            who: "Kunde",
+            date: "2024-02-15",
+            }, */}
             <Card x-chunk="dashboard-05-chunk-1" className="xl:col-span-2">
               <CardHeader className="pb-2">
                 <CardTitle>Kommunikation</CardTitle>
@@ -413,9 +418,7 @@ export default function Order({ params }: Props) {
                   Dies ist der Kommunikationsverlauf
                 </CardDescription>
               </CardHeader>
-              <CardContent>
-                <CommunicationTable />
-              </CardContent>
+              <CardContent></CardContent>
               <CardFooter></CardFooter>
             </Card>
             {/* Zugänge */}
