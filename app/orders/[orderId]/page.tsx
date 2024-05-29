@@ -110,7 +110,7 @@ export default function Order({ params }: Props) {
   // Find order via params
   const initOrder = orders.find((o) => o.order_id === Number(params.orderId));
   // Search customer from initOrder via customer_id
-  const customer = customers.find(
+  const comm = customers.find(
     (c) => c.customer_id === Number(initOrder?.order_customer_id),
   );
   const [order, setOrder] = React.useState(initOrder);
@@ -299,7 +299,7 @@ export default function Order({ params }: Props) {
               <CardHeader className="pb-3">
                 <CardTitle>Kunde</CardTitle>
                 <CardDescription className="max-w-lg text-balance leading-relaxed">
-                  Id: {customer?.customer_id}
+                  Id: {comm?.customer_id}
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -307,19 +307,19 @@ export default function Order({ params }: Props) {
                   <Input
                     type="name"
                     id="name"
-                    placeholder={customer?.customer_name}
+                    placeholder={comm?.customer_name}
                     disabled
                   />
                   <Input
                     type="phone"
                     id="phone"
-                    placeholder={customer?.customer_phone}
+                    placeholder={comm?.customer_phone}
                     disabled
                   />
                   <Input
                     type="email"
                     id="email"
-                    placeholder={customer?.customer_email}
+                    placeholder={comm?.customer_email}
                     disabled
                   />
                 </div>
@@ -418,7 +418,51 @@ export default function Order({ params }: Props) {
                   Dies ist der Kommunikationsverlauf
                 </CardDescription>
               </CardHeader>
-              <CardContent></CardContent>
+              <CardContent>
+                <div className="flex flex-col gap-1">
+                  <Input placeholder="Message" />
+                  <Input placeholder="Who" />
+                  <Button>Add Message</Button>
+                </div>
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Content</TableHead>
+                      <TableHead>Date</TableHead>
+                      <TableHead className="flex items-center justify-end">
+                        Edit
+                      </TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {/* Communication */}
+                    {order?.order_communication.map((comm) => (
+                      <TableRow key={comm.id}>
+                        <TableCell>
+                          <div className="text-sm font-medium md:inline">
+                            {comm.message}
+                          </div>
+                          <div className="text-muted-foreground">
+                            {comm.who}
+                          </div>
+                        </TableCell>
+                        <TableCell>{comm.date}</TableCell>
+
+                        <TableCell className="flex justify-end gap-1 ">
+                          <Link href={`/customers/${comm.id}`}>
+                            <Button size="sm">Edit</Button>
+                            <span className="sr-only">Edit</span>
+                          </Link>
+
+                          <Button variant="destructive" size="sm">
+                            Delete
+                          </Button>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </CardContent>
               <CardFooter></CardFooter>
             </Card>
             {/* Zugänge */}
