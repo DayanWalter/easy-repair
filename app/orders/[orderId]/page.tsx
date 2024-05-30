@@ -405,13 +405,10 @@ export default function Order({ params }: Props) {
               <CardFooter></CardFooter>
             </Card>
             {/* Kommunikation */}
-            {/* {
-            id: "bhqecj4p",
-            message: "Holt später ab",
-            who: "Kunde",
-            date: "2024-02-15",
-            }, */}
-            <Card x-chunk="dashboard-05-chunk-1" className="xl:col-span-2">
+            <Card
+              x-chunk="dashboard-05-chunk-1"
+              className="h-72 overflow-auto xl:col-span-2 "
+            >
               <CardHeader className="pb-2">
                 <CardTitle>Kommunikation</CardTitle>
                 <CardDescription>
@@ -419,18 +416,14 @@ export default function Order({ params }: Props) {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="flex flex-col gap-1">
-                  <Input placeholder="Message" />
-                  <Input placeholder="Who" />
-                  <Button>Add Message</Button>
-                </div>
+                <Button>New message</Button>
+                {/* Communication-table */}
                 <Table>
                   <TableHeader>
                     <TableRow>
                       <TableHead>Content</TableHead>
-                      <TableHead>Date</TableHead>
                       <TableHead className="flex items-center justify-end">
-                        Edit
+                        Date
                       </TableHead>
                     </TableRow>
                   </TableHeader>
@@ -446,17 +439,8 @@ export default function Order({ params }: Props) {
                             {comm.who}
                           </div>
                         </TableCell>
-                        <TableCell>{comm.date}</TableCell>
-
-                        <TableCell className="flex justify-end gap-1 ">
-                          <Link href={`/customers/${comm.id}`}>
-                            <Button size="sm">Edit</Button>
-                            <span className="sr-only">Edit</span>
-                          </Link>
-
-                          <Button variant="destructive" size="sm">
-                            Delete
-                          </Button>
+                        <TableCell className="flex items-center justify-end">
+                          {comm.date}
                         </TableCell>
                       </TableRow>
                     ))}

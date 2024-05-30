@@ -8,6 +8,7 @@ export const orders = [
     order_state: "Technik",
     order_again: true,
     order_old_order_id: "4564",
+    // Communication
     order_communication: [
       {
         id: "5kma53ae",
