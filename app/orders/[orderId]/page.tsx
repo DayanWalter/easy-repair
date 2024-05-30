@@ -165,6 +165,28 @@ export default function Order({ params }: Props) {
       return prevOrder;
     });
   };
+  const handleAccountAccess = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setOrder((prevOrder) => {
+      if (prevOrder) {
+        return {
+          ...prevOrder,
+          order_account_access: e.target.value,
+        };
+      }
+      return prevOrder;
+    });
+  };
+  const handleAccountAccessMore = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setOrder((prevOrder) => {
+      if (prevOrder) {
+        return {
+          ...prevOrder,
+          order_account_access_more: e.target.value,
+        };
+      }
+      return prevOrder;
+    });
+  };
 
   return (
     <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14">
@@ -458,11 +480,21 @@ export default function Order({ params }: Props) {
                 <div className="grid gap-2">
                   <div>
                     <Label htmlFor="password">Passwort</Label>
-                    <Input id="password" />
+                    <Input
+                      id="password"
+                      placeholder="Passwords"
+                      value={order?.order_account_access}
+                      onChange={handleAccountAccess}
+                    />
                   </div>
                   <div>
                     <Label htmlFor="accounts">Weitere</Label>
-                    <Input id="accounts" />
+                    <Input
+                      id="accounts"
+                      placeholder="More"
+                      value={order?.order_account_access_more}
+                      onChange={handleAccountAccessMore}
+                    />
                   </div>
                 </div>
               </CardContent>
