@@ -31,5 +31,8 @@ export const orders = [
     ],
     order_account_access: "",
     order_account_access_more: "",
+    order_article_device: "",
+    order_article_manufaturer: "",
+    order_article_accessory: "",
   },
 ];

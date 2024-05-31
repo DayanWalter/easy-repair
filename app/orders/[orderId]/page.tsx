@@ -187,6 +187,18 @@ export default function Order({ params }: Props) {
       return prevOrder;
     });
   };
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { id, value } = e.target;
+    setOrder((prevOrder) => {
+      if (prevOrder) {
+        return {
+          ...prevOrder,
+          [id]: value,
+        };
+      }
+      return prevOrder;
+    });
+  };
 
   return (
     <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14">
@@ -508,16 +520,30 @@ export default function Order({ params }: Props) {
               <CardContent>
                 <div className="grid gap-3">
                   <div>
-                    <Label htmlFor="device">Gerät</Label>
-                    <Input id="device" />
+                    <Label htmlFor="order_article_device">Gerät</Label>
+                    <Input
+                      id="order_article_device"
+                      onChange={handleInputChange}
+                      value={order?.order_article_device}
+                    />
                   </div>
                   <div>
-                    <Label htmlFor="manufacturer">Hersteller</Label>
-                    <Input id="manufacturer" />
+                    <Label htmlFor="order_article_manufaturer">
+                      Hersteller
+                    </Label>
+                    <Input
+                      id="order_article_manufaturer"
+                      onChange={handleInputChange}
+                      value={order?.order_article_manufaturer}
+                    />
                   </div>
                   <div>
-                    <Label htmlFor="accessory">Zubehör</Label>
-                    <Input id="accessory" />
+                    <Label htmlFor="order_article_accessory">Zubehör</Label>
+                    <Input
+                      id="order_article_accessory"
+                      onChange={handleInputChange}
+                      value={order?.order_article_accessory}
+                    />
                   </div>
                 </div>
               </CardContent>
