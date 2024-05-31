@@ -3,7 +3,7 @@ import * as React from "react";
 
 import Image from "next/image";
 import Link from "next/link";
-import { format } from "date-fns";
+import { format, setDate } from "date-fns";
 import { Calendar as CalendarIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
@@ -194,6 +194,17 @@ export default function Order({ params }: Props) {
         return {
           ...prevOrder,
           [id]: value,
+        };
+      }
+      return prevOrder;
+    });
+  };
+  const handleSetGetDate = (e) => {
+    setOrder((prevOrder) => {
+      if (prevOrder) {
+        return {
+          ...prevOrder,
+          order_date_start: e,
         };
       }
       return prevOrder;
@@ -483,7 +494,7 @@ export default function Order({ params }: Props) {
               </CardContent>
               <CardFooter></CardFooter>
             </Card>
-            {/* Zugänge */}
+            {/* Zugänge - done*/}
             <Card className="xl:col-span-1" x-chunk="dashboard-05-chunk-1">
               <CardHeader className="pb-2">
                 <CardTitle>Zugänge</CardTitle>
@@ -512,7 +523,7 @@ export default function Order({ params }: Props) {
               </CardContent>
               <CardFooter></CardFooter>
             </Card>
-            {/* Artikel */}
+            {/* Artikel - done*/}
             <Card className="xl:col-span-3" x-chunk="dashboard-05-chunk-1">
               <CardHeader className="pb-2">
                 <CardTitle>Artikel</CardTitle>
@@ -564,12 +575,12 @@ export default function Order({ params }: Props) {
                           variant={"outline"}
                           className={cn(
                             "justify-start text-left font-normal",
-                            !getDate && "text-muted-foreground",
+                            !order?.order_date_start && "text-muted-foreground",
                           )}
                         >
                           <CalendarIcon className="mr-2 h-4 w-4" />
-                          {getDate ? (
-                            format(getDate, "PPP")
+                          {order?.order_date_start ? (
+                            format(order?.order_date_start, "PPP")
                           ) : (
                             <span>Angenommen am...</span>
                           )}
@@ -578,8 +589,8 @@ export default function Order({ params }: Props) {
                       <PopoverContent className="w-auto p-0">
                         <Calendar
                           mode="single"
-                          selected={getDate}
-                          onSelect={setGetDate}
+                          selected={order?.order_date_start}
+                          onSelect={handleSetGetDate}
                           initialFocus
                         />
                       </PopoverContent>

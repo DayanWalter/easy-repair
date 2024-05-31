@@ -34,5 +34,8 @@ export const orders = [
     order_article_device: "",
     order_article_manufaturer: "",
     order_article_accessory: "",
+    order_date_start: undefined,
+    order_date_done: undefined,
+    order_date_taken: undefined,
   },
 ];
