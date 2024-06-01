@@ -37,5 +37,6 @@ export const orders = [
     order_date_start: undefined,
     order_date_done: undefined,
     order_date_taken: undefined,
+    order_error_description: "",
   },
 ];

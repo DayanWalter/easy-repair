@@ -232,6 +232,18 @@ export default function Order({ params }: Props) {
       return prevOrder;
     });
   };
+  const handleTextareaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const { id, value } = e.target;
+    setOrder((prevOrder) => {
+      if (prevOrder) {
+        return {
+          ...prevOrder,
+          [id]: value,
+        };
+      }
+      return prevOrder;
+    });
+  };
 
   return (
     <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14">
@@ -680,7 +692,7 @@ export default function Order({ params }: Props) {
               </CardContent>
               <CardFooter></CardFooter>
             </Card>
-            {/* Fehlerbeschreibung */}
+            {/* Fehlerbeschreibung - done*/}
             <Card className="" x-chunk="dashboard-05-chunk-1">
               <CardHeader className="pb-2">
                 <CardTitle>Fehlerbeschreibung</CardTitle>
@@ -689,7 +701,11 @@ export default function Order({ params }: Props) {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <Textarea />
+                <Textarea
+                  id="order_error_description"
+                  onChange={handleTextareaChange}
+                  value={order?.order_error_description}
+                />
               </CardContent>
               <CardFooter></CardFooter>
             </Card>
