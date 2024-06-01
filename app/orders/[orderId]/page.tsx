@@ -718,7 +718,11 @@ export default function Order({ params }: Props) {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <Textarea />
+                <Textarea
+                  id="order_diagnose"
+                  onChange={handleTextareaChange}
+                  value={order?.order_diagnose}
+                />
               </CardContent>
               <CardFooter></CardFooter>
             </Card>
