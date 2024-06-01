@@ -210,6 +210,28 @@ export default function Order({ params }: Props) {
       return prevOrder;
     });
   };
+  const handleSetDoneDate = (e) => {
+    setOrder((prevOrder) => {
+      if (prevOrder) {
+        return {
+          ...prevOrder,
+          order_date_done: e,
+        };
+      }
+      return prevOrder;
+    });
+  };
+  const handleSetTakenDate = (e) => {
+    setOrder((prevOrder) => {
+      if (prevOrder) {
+        return {
+          ...prevOrder,
+          order_date_taken: e,
+        };
+      }
+      return prevOrder;
+    });
+  };
 
   return (
     <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14">
@@ -560,7 +582,7 @@ export default function Order({ params }: Props) {
               </CardContent>
               <CardFooter></CardFooter>
             </Card>
-            {/* Datum */}
+            {/* Datum  - done*/}
             <Card className="" x-chunk="dashboard-05-chunk-1">
               <CardHeader className="pb-2">
                 <CardTitle>Datum</CardTitle>
@@ -568,7 +590,7 @@ export default function Order({ params }: Props) {
               <CardContent>
                 <div className="grid gap-2">
                   <div className="grid gap-2">
-                    <Label htmlFor="device">Annahme</Label>
+                    <Label htmlFor="date_start">Annahme</Label>
                     <Popover>
                       <PopoverTrigger asChild>
                         <Button
@@ -597,19 +619,19 @@ export default function Order({ params }: Props) {
                     </Popover>
                   </div>
                   <div className="grid gap-2">
-                    <Label htmlFor="manufacturer">Fertiggestellt</Label>
+                    <Label htmlFor="date_done">Fertiggestellt</Label>
                     <Popover>
                       <PopoverTrigger asChild>
                         <Button
                           variant={"outline"}
                           className={cn(
                             "justify-start text-left font-normal",
-                            !doneDate && "text-muted-foreground",
+                            !order?.order_date_done && "text-muted-foreground",
                           )}
                         >
                           <CalendarIcon className="mr-2 h-4 w-4" />
-                          {doneDate ? (
-                            format(doneDate, "PPP")
+                          {order?.order_date_done ? (
+                            format(order?.order_date_done, "PPP")
                           ) : (
                             <span>Fertiggestellt am...</span>
                           )}
@@ -618,27 +640,27 @@ export default function Order({ params }: Props) {
                       <PopoverContent className="w-auto p-0">
                         <Calendar
                           mode="single"
-                          selected={doneDate}
-                          onSelect={setDoneDate}
+                          selected={order?.order_date_done}
+                          onSelect={handleSetDoneDate}
                           initialFocus
                         />
                       </PopoverContent>
                     </Popover>
                   </div>
                   <div className="grid gap-2">
-                    <Label htmlFor="accessory">Abgeholt</Label>
+                    <Label htmlFor="date_taken">Abgeholt</Label>
                     <Popover>
                       <PopoverTrigger asChild>
                         <Button
                           variant={"outline"}
                           className={cn(
                             "justify-start text-left font-normal",
-                            !pickupDate && "text-muted-foreground",
+                            !order?.order_date_taken && "text-muted-foreground",
                           )}
                         >
                           <CalendarIcon className="mr-2 h-4 w-4" />
-                          {pickupDate ? (
-                            format(pickupDate, "PPP")
+                          {order?.order_date_taken ? (
+                            format(order?.order_date_taken, "PPP")
                           ) : (
                             <span>Abgeholt am...</span>
                           )}
@@ -647,8 +669,8 @@ export default function Order({ params }: Props) {
                       <PopoverContent className="w-auto p-0">
                         <Calendar
                           mode="single"
-                          selected={pickupDate}
-                          onSelect={setPickupDate}
+                          selected={order?.order_date_taken}
+                          onSelect={handleSetTakenDate}
                           initialFocus
                         />
                       </PopoverContent>
