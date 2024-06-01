@@ -244,6 +244,17 @@ export default function Order({ params }: Props) {
       return prevOrder;
     });
   };
+  const handleEmployeeChange = (e: string) => {
+    setOrder((prevOrder) => {
+      if (prevOrder) {
+        return {
+          ...prevOrder,
+          order_employee: e,
+        };
+      }
+      return prevOrder;
+    });
+  };
 
   return (
     <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14">
@@ -777,7 +788,7 @@ export default function Order({ params }: Props) {
               </CardContent>
               <CardFooter></CardFooter>
             </Card>
-            {/* Mitarbeiter */}
+            {/* Mitarbeiter - done*/}
             <Card x-chunk="dashboard-05-chunk-1">
               <CardHeader className="pb-2">
                 <CardTitle>Mitarbeiter</CardTitle>
@@ -786,16 +797,16 @@ export default function Order({ params }: Props) {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <Select>
-                  <SelectTrigger className="">
-                    <SelectValue placeholder="Wählen Sie einen Mitarbeiter" />
+                <Select onValueChange={handleEmployeeChange}>
+                  <SelectTrigger>
+                    <SelectValue placeholder={order?.order_employee} />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectGroup>
                       <SelectLabel>Status</SelectLabel>
-                      <SelectItem value="mitarbeiter1">Mitarbeiter1</SelectItem>
-                      <SelectItem value="mitarbeiter2">Mitarbeiter2</SelectItem>
-                      <SelectItem value="mitarbeiter3">Mitarbeiter3</SelectItem>
+                      <SelectItem value="Mitarbeiter1">Mitarbeiter1</SelectItem>
+                      <SelectItem value="Mitarbeiter2">Mitarbeiter2</SelectItem>
+                      <SelectItem value="Mitarbeiter3">Mitarbeiter3</SelectItem>
                     </SelectGroup>
                   </SelectContent>
                 </Select>

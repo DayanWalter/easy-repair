@@ -42,5 +42,6 @@ export const orders = [
     order_offer: "",
     order_repair: "",
     order_comment: "",
+    order_employee: "",
   },
 ];
