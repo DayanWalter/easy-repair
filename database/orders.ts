@@ -40,5 +40,6 @@ export const orders = [
     order_error_description: "",
     order_diagnose: "",
     order_offer: "",
+    order_repair: "",
   },
 ];

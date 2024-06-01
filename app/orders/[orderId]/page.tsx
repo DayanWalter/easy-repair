@@ -743,7 +743,7 @@ export default function Order({ params }: Props) {
               </CardContent>
               <CardFooter></CardFooter>
             </Card>
-            {/* Reparatur */}
+            {/* Reparatur -done */}
             <Card x-chunk="dashboard-05-chunk-1">
               <CardHeader className="pb-2">
                 <CardTitle>Reparatur</CardTitle>
@@ -752,7 +752,11 @@ export default function Order({ params }: Props) {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <Textarea />
+                <Textarea
+                  id="order_offer"
+                  onChange={handleTextareaChange}
+                  value={order?.order_repair}
+                />
               </CardContent>
               <CardFooter></CardFooter>
             </Card>
