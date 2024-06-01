@@ -753,14 +753,14 @@ export default function Order({ params }: Props) {
               </CardHeader>
               <CardContent>
                 <Textarea
-                  id="order_offer"
+                  id="order_repair"
                   onChange={handleTextareaChange}
                   value={order?.order_repair}
                 />
               </CardContent>
               <CardFooter></CardFooter>
             </Card>
-            {/* Anmerkungen */}
+            {/* Anmerkungen - done*/}
             <Card x-chunk="dashboard-05-chunk-1">
               <CardHeader className="pb-2">
                 <CardTitle>Anmerkungen</CardTitle>
@@ -769,7 +769,11 @@ export default function Order({ params }: Props) {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <Textarea />
+                <Textarea
+                  id="order_comment"
+                  onChange={handleTextareaChange}
+                  value={order?.order_comment}
+                />
               </CardContent>
               <CardFooter></CardFooter>
             </Card>
