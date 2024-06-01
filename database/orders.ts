@@ -43,5 +43,6 @@ export const orders = [
     order_repair: "",
     order_comment: "",
     order_employee: "",
+    order_repair_time: "",
   },
 ];

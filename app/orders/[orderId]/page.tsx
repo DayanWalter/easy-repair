@@ -813,7 +813,7 @@ export default function Order({ params }: Props) {
               </CardContent>
               <CardFooter></CardFooter>
             </Card>
-            {/* Zeit */}
+            {/* Zeit - done*/}
             <Card x-chunk="dashboard-05-chunk-1">
               <CardHeader className="pb-2">
                 <CardTitle>Zeit</CardTitle>
@@ -822,7 +822,11 @@ export default function Order({ params }: Props) {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <Input />
+                <Input
+                  id="order_repair_time"
+                  onChange={handleInputChange}
+                  value={order?.order_repair_time}
+                />
               </CardContent>
               <CardFooter></CardFooter>
             </Card>
