@@ -830,18 +830,23 @@ export default function Order({ params }: Props) {
               </CardContent>
               <CardFooter></CardFooter>
             </Card>
-            {/* Lohnkosten */}
+            {/* Lohnkosten - done*/}
             <Card x-chunk="dashboard-05-chunk-1">
               <CardHeader className="pb-2">
                 <CardTitle>Lohnkosten</CardTitle>
                 <CardDescription>Wie hoch sind die Lohnkosten?</CardDescription>
               </CardHeader>
               <CardContent>
-                <Input placeholder="80.00€" />
+                <Input
+                  placeholder="80.00€"
+                  id="order_labor_costs"
+                  onChange={handleInputChange}
+                  value={order?.order_labor_costs}
+                />
               </CardContent>
               <CardFooter></CardFooter>
             </Card>
-            {/* Materialkosten */}
+            {/* Materialkosten - done*/}
             <Card x-chunk="dashboard-05-chunk-1">
               <CardHeader className="pb-2">
                 <CardTitle>Materialkosten</CardTitle>
@@ -850,11 +855,16 @@ export default function Order({ params }: Props) {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <Input placeholder="120.00€" />
+                <Input
+                  placeholder="120.00€"
+                  id="order_material_costs"
+                  onChange={handleInputChange}
+                  value={order?.order_material_costs}
+                />
               </CardContent>
               <CardFooter></CardFooter>
             </Card>
-            {/* Gesamtkosten */}
+            {/* Gesamtkosten - done*/}
             <Card x-chunk="dashboard-05-chunk-1">
               <CardHeader className="pb-2">
                 <CardTitle>Gesamtkosten</CardTitle>
@@ -863,7 +873,13 @@ export default function Order({ params }: Props) {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <Input disabled placeholder="200.00€" />
+                <Input
+                  disabled
+                  placeholder="200.00€"
+                  id="order_costs"
+                  onChange={handleInputChange}
+                  value={order?.order_costs}
+                />
               </CardContent>
               <CardFooter></CardFooter>
             </Card>
