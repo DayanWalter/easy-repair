@@ -39,5 +39,6 @@ export const orders = [
     order_date_taken: undefined,
     order_error_description: "",
     order_diagnose: "",
+    order_offer: "",
   },
 ];

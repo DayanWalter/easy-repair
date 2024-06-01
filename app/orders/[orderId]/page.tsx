@@ -709,7 +709,7 @@ export default function Order({ params }: Props) {
               </CardContent>
               <CardFooter></CardFooter>
             </Card>
-            {/* Diagnose */}
+            {/* Diagnose - done*/}
             <Card x-chunk="dashboard-05-chunk-1">
               <CardHeader className="pb-2">
                 <CardTitle>Diagnose</CardTitle>
@@ -726,7 +726,7 @@ export default function Order({ params }: Props) {
               </CardContent>
               <CardFooter></CardFooter>
             </Card>
-            {/* Angebot */}
+            {/* Angebot - done*/}
             <Card x-chunk="dashboard-05-chunk-1">
               <CardHeader className="pb-2">
                 <CardTitle>Angebot</CardTitle>
@@ -735,7 +735,11 @@ export default function Order({ params }: Props) {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <Textarea />
+                <Textarea
+                  id="order_offer"
+                  onChange={handleTextareaChange}
+                  value={order?.order_offer}
+                />
               </CardContent>
               <CardFooter></CardFooter>
             </Card>
