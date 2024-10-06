@@ -16,11 +16,11 @@ import {
 } from "@/components/ui/tooltip";
 
 const navItems = [
-  { href: "dashboard", icon: Home, label: "Dashboard" },
-  { href: "orders", icon: ShoppingCart, label: "Orders" },
-  { href: "products", icon: Package, label: "Products" },
-  { href: "customers", icon: Users2, label: "Customers" },
-  { href: "analytics", icon: LineChart, label: "Analytics" },
+  { href: "/dashboard", icon: Home, label: "Dashboard" },
+  { href: "/orders", icon: ShoppingCart, label: "Orders" },
+  { href: "/products", icon: Package, label: "Products" },
+  { href: "/customers", icon: Users2, label: "Customers" },
+  { href: "/analytics", icon: LineChart, label: "Analytics" },
 ];
 
 const NavItem = ({
