@@ -23,14 +23,7 @@ import {
 } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
+
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -58,23 +51,11 @@ import {
 import { Progress } from "@/components/ui/progress";
 import { Separator } from "@/components/ui/separator";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
 
 import { Label } from "@/components/ui/label";
 import { customers } from "@/database/customers";
+import { Breadcrumb } from "@/components/breadcrumb/breadcrumb";
+import Avatar from "@/components/avatar/avatar";
 
 type Props = {
   params: {
@@ -88,94 +69,22 @@ export default function Customer({ params }: Props) {
   );
   console.log(customer);
   const handleChange = () => {};
+  const breadcrumbItems = [
+    {
+      label: "Customers",
+      href: "/customers",
+    },
+    {
+      label: customer?.customer_name || "",
+      href: `/customers/${customer?.customer_id}`,
+    },
+  ];
   return (
-    <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14">
+    <>
       <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
-        {/* Sheet */}
-        <Sheet>
-          <SheetTrigger asChild>
-            <Button size="icon" variant="outline" className="sm:hidden">
-              <PanelLeft className="h-5 w-5" />
-              <span className="sr-only">Toggle Menu</span>
-            </Button>
-          </SheetTrigger>
-          <SheetContent side="left" className="sm:max-w-xs">
-            <nav className="grid gap-6 text-lg font-medium">
-              {/* Easy Repair Inc */}
-              <Link
-                href="/"
-                className="group flex h-10 w-10 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:text-base"
-              >
-                <Wrench className="h-5 w-5 transition-all group-hover:scale-110" />
-                <span className="sr-only">Easy Repair Inc</span>
-              </Link>
-              {/* Dashboard */}
-              <Link
-                href="dashboard"
-                className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
-              >
-                <Home className="h-5 w-5" />
-                Dashboard
-              </Link>
-              {/* Orders */}
-              <Link
-                href="orders"
-                className="flex items-center gap-4 px-2.5  text-muted-foreground hover:text-foreground"
-              >
-                <ShoppingCart className="h-5 w-5" />
-                Orders
-              </Link>
-              {/* Products */}
-              <Link
-                href="products"
-                className="flex items-center gap-4 px-2.5  text-muted-foreground hover:text-foreground"
-              >
-                <Package className="h-5 w-5" />
-                Products
-              </Link>
-              {/* Customers */}
-              <Link
-                href="customers"
-                className="flex items-center gap-4 px-2.5 text-foreground"
-              >
-                <Users2 className="h-5 w-5" />
-                Customers
-              </Link>
-              {/* Settings */}
-              <Link
-                href="settings"
-                className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
-              >
-                <LineChart className="h-5 w-5" />
-                Settings
-              </Link>
-            </nav>
-          </SheetContent>
-        </Sheet>
         {/* Breadcrumb */}
-        <Breadcrumb className="hidden md:flex">
-          <BreadcrumbList>
-            <BreadcrumbItem>
-              <BreadcrumbLink asChild>
-                <Link href="/dashboard">Dashboard</Link>
-              </BreadcrumbLink>
-            </BreadcrumbItem>
-            <BreadcrumbSeparator />
-            <BreadcrumbItem>
-              <BreadcrumbLink asChild>
-                <Link href="/customers">Customers</Link>
-              </BreadcrumbLink>
-            </BreadcrumbItem>
-            <BreadcrumbSeparator />
-            <BreadcrumbItem>
-              <BreadcrumbLink asChild>
-                <Link href={`${customer?.customer_id}`}>
-                  Id: {customer?.customer_id}
-                </Link>
-              </BreadcrumbLink>
-            </BreadcrumbItem>
-          </BreadcrumbList>
-        </Breadcrumb>
+        <Breadcrumb items={breadcrumbItems} />
+
         {/* Search */}
         <div className="relative ml-auto flex-1 md:grow-0">
           <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
@@ -186,32 +95,7 @@ export default function Customer({ params }: Props) {
           />
         </div>
         {/* Avatar and dropdown */}
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button
-              variant="outline"
-              size="icon"
-              className="overflow-hidden rounded-full"
-            >
-              {/* Placeholder */}
-              <Image
-                src="/btc.png"
-                width={36}
-                height={36}
-                alt="Avatar"
-                className="overflow-hidden rounded-full"
-              />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>My Account</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>Settings</DropdownMenuItem>
-            <DropdownMenuItem>Support</DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>Logout</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <Avatar />
       </header>
       <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
         <div className="grid auto-rows-max items-start gap-4 md:gap-8 lg:col-span-2">
@@ -270,6 +154,6 @@ export default function Customer({ params }: Props) {
           </div>
         </div>
       </main>
-    </div>
+    </>
   );
 }

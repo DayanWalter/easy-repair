@@ -1,4 +1,3 @@
-import Image from "next/image";
 import {
   ChevronLeft,
   ChevronRight,
@@ -50,11 +49,13 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import { Breadcrumb } from "@/components/breadcrumb/breadcrumb";
+import Avatar from "@/components/avatar/avatar";
 
 export default function Dashboard() {
   const breadcrumbItems = [{ href: "/dashboard", label: "Dashboard" }];
   return (
-    <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14">
+    // <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14">
+    <>
       <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
         {/* Breadcrumb */}
         <Breadcrumb items={breadcrumbItems} />
@@ -68,32 +69,7 @@ export default function Dashboard() {
           />
         </div>
         {/* Avatar and dropdown */}
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button
-              variant="outline"
-              size="icon"
-              className="overflow-hidden rounded-full"
-            >
-              {/* Placeholder */}
-              <Image
-                src="/btc.png"
-                width={36}
-                height={36}
-                alt="Avatar"
-                className="overflow-hidden rounded-full"
-              />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>My Account</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>Settings</DropdownMenuItem>
-            <DropdownMenuItem>Support</DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>Logout</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <Avatar />
       </header>
       <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8 lg:grid-cols-3 xl:grid-cols-3">
         <div className="grid auto-rows-max items-start gap-4 md:gap-8 lg:col-span-2">
@@ -529,6 +505,7 @@ export default function Dashboard() {
           </Card>
         </div>
       </main>
-    </div>
+    </>
+    // </div>
   );
 }
