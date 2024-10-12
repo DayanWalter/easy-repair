@@ -66,6 +66,7 @@ import {
 } from "@/components/ui/tooltip";
 import { Breadcrumb } from "@/components/breadcrumb/breadcrumb";
 import Avatar from "@/components/avatar/avatar";
+import { products } from "@/database/products";
 export default function Products() {
 	const breadcrumbItems = [{ href: "/products", label: "Products" }];
 	return (
@@ -157,180 +158,47 @@ export default function Products() {
 									<Table>
 										<TableHeader>
 											<TableRow>
-												<TableHead>Product</TableHead>
+												<TableHead>Name</TableHead>
 												<TableHead className="hidden sm:table-cell">
-													Type
+													Description
 												</TableHead>
 												<TableHead className="hidden sm:table-cell">
-													Status
+													Price
 												</TableHead>
 												<TableHead className="hidden md:table-cell">
-													Date
+													Category
 												</TableHead>
-												<TableHead className="text-right">Amount</TableHead>
+												<TableHead className="text-right">Actions</TableHead>
 											</TableRow>
 										</TableHeader>
 										<TableBody>
-											<TableRow className="bg-accent">
-												<TableCell>
-													<div className="font-medium">Liam Johnson</div>
-													<div className="hidden text-sm text-muted-foreground md:inline">
-														liam@example.com
-													</div>
-												</TableCell>
-												<TableCell className="hidden sm:table-cell">
-													Sale
-												</TableCell>
-												<TableCell className="hidden sm:table-cell">
-													<Badge className="text-xs" variant="secondary">
-														Fulfilled
-													</Badge>
-												</TableCell>
-												<TableCell className="hidden md:table-cell">
-													2023-06-23
-												</TableCell>
-												<TableCell className="text-right">$250.00</TableCell>
-											</TableRow>
-											<TableRow>
-												<TableCell>
-													<div className="font-medium">Olivia Smith</div>
-													<div className="hidden text-sm text-muted-foreground md:inline">
-														olivia@example.com
-													</div>
-												</TableCell>
-												<TableCell className="hidden sm:table-cell">
-													Refund
-												</TableCell>
-												<TableCell className="hidden sm:table-cell">
-													<Badge className="text-xs" variant="outline">
-														Declined
-													</Badge>
-												</TableCell>
-												<TableCell className="hidden md:table-cell">
-													2023-06-24
-												</TableCell>
-												<TableCell className="text-right">$150.00</TableCell>
-											</TableRow>
-											<TableRow>
-												<TableCell>
-													<div className="font-medium">Noah Williams</div>
-													<div className="hidden text-sm text-muted-foreground md:inline">
-														noah@example.com
-													</div>
-												</TableCell>
-												<TableCell className="hidden sm:table-cell">
-													Subscription
-												</TableCell>
-												<TableCell className="hidden sm:table-cell">
-													<Badge className="text-xs" variant="secondary">
-														Fulfilled
-													</Badge>
-												</TableCell>
-												<TableCell className="hidden md:table-cell">
-													2023-06-25
-												</TableCell>
-												<TableCell className="text-right">$350.00</TableCell>
-											</TableRow>
-											<TableRow>
-												<TableCell>
-													<div className="font-medium">Emma Brown</div>
-													<div className="hidden text-sm text-muted-foreground md:inline">
-														emma@example.com
-													</div>
-												</TableCell>
-												<TableCell className="hidden sm:table-cell">
-													Sale
-												</TableCell>
-												<TableCell className="hidden sm:table-cell">
-													<Badge className="text-xs" variant="secondary">
-														Fulfilled
-													</Badge>
-												</TableCell>
-												<TableCell className="hidden md:table-cell">
-													2023-06-26
-												</TableCell>
-												<TableCell className="text-right">$450.00</TableCell>
-											</TableRow>
-											<TableRow>
-												<TableCell>
-													<div className="font-medium">Liam Johnson</div>
-													<div className="hidden text-sm text-muted-foreground md:inline">
-														liam@example.com
-													</div>
-												</TableCell>
-												<TableCell className="hidden sm:table-cell">
-													Sale
-												</TableCell>
-												<TableCell className="hidden sm:table-cell">
-													<Badge className="text-xs" variant="secondary">
-														Fulfilled
-													</Badge>
-												</TableCell>
-												<TableCell className="hidden md:table-cell">
-													2023-06-23
-												</TableCell>
-												<TableCell className="text-right">$250.00</TableCell>
-											</TableRow>
-											<TableRow>
-												<TableCell>
-													<div className="font-medium">Liam Johnson</div>
-													<div className="hidden text-sm text-muted-foreground md:inline">
-														liam@example.com
-													</div>
-												</TableCell>
-												<TableCell className="hidden sm:table-cell">
-													Sale
-												</TableCell>
-												<TableCell className="hidden sm:table-cell">
-													<Badge className="text-xs" variant="secondary">
-														Fulfilled
-													</Badge>
-												</TableCell>
-												<TableCell className="hidden md:table-cell">
-													2023-06-23
-												</TableCell>
-												<TableCell className="text-right">$250.00</TableCell>
-											</TableRow>
-											<TableRow>
-												<TableCell>
-													<div className="font-medium">Olivia Smith</div>
-													<div className="hidden text-sm text-muted-foreground md:inline">
-														olivia@example.com
-													</div>
-												</TableCell>
-												<TableCell className="hidden sm:table-cell">
-													Refund
-												</TableCell>
-												<TableCell className="hidden sm:table-cell">
-													<Badge className="text-xs" variant="outline">
-														Declined
-													</Badge>
-												</TableCell>
-												<TableCell className="hidden md:table-cell">
-													2023-06-24
-												</TableCell>
-												<TableCell className="text-right">$150.00</TableCell>
-											</TableRow>
-											<TableRow>
-												<TableCell>
-													<div className="font-medium">Emma Brown</div>
-													<div className="hidden text-sm text-muted-foreground md:inline">
-														emma@example.com
-													</div>
-												</TableCell>
-												<TableCell className="hidden sm:table-cell">
-													Sale
-												</TableCell>
-												<TableCell className="hidden sm:table-cell">
-													<Badge className="text-xs" variant="secondary">
-														Fulfilled
-													</Badge>
-												</TableCell>
-												<TableCell className="hidden md:table-cell">
-													2023-06-26
-												</TableCell>
-												<TableCell className="text-right">$450.00</TableCell>
-											</TableRow>
+											{products.map((product) => (
+												<TableRow key={product.product_id}>
+													<TableCell>
+														<div className="font-medium">
+															{product.product_name}
+														</div>
+													</TableCell>
+													<TableCell className="hidden sm:table-cell">
+														{product.product_description}
+													</TableCell>
+													<TableCell className="hidden sm:table-cell">
+														${product.product_price.toFixed(2)}
+													</TableCell>
+													<TableCell className="hidden md:table-cell">
+														{product.product_category}
+													</TableCell>
+													<TableCell className="flex justify-end gap-1">
+														<Link href={`/products/${product.product_id}`}>
+															<Button size="sm">Edit</Button>
+															<span className="sr-only">Edit</span>
+														</Link>
+														<Button variant="destructive" size="sm">
+															Delete
+														</Button>
+													</TableCell>
+												</TableRow>
+											))}
 										</TableBody>
 									</Table>
 								</CardContent>
