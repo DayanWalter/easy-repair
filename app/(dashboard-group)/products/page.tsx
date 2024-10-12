@@ -98,7 +98,10 @@ export default function Products() {
 								</CardDescription>
 							</CardHeader>
 							<CardFooter>
-								<Button>Create New Product</Button>
+								<Link href="/products/newproduct">
+									<Button>Create New Product</Button>
+									<span className="sr-only">Create new product</span>
+								</Link>
 							</CardFooter>
 						</Card>
 					</div>
