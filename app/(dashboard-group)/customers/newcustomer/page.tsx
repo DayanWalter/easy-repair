@@ -41,7 +41,6 @@ export default function NewCustomer() {
 	};
 	console.log(newCustomer);
 	const breadcrumbItems = [
-		{ href: "/dashboard", label: "Dashboard" },
 		{ href: "/customers", label: "Customers" },
 		{ href: "/customers/newcustomer", label: "New Customer" },
 	];
