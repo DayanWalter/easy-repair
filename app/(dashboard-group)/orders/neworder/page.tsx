@@ -40,11 +40,94 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Textarea } from "@/components/ui/textarea";
 import { Breadcrumb } from "@/components/breadcrumb/breadcrumb";
 import Avatar from "@/components/avatar/avatar";
+import { orders } from "@/database/orders";
+import { v4 as uuidv4 } from "uuid";
 
 export default function NewOrder() {
-	const [getDate, setGetDate] = React.useState<Date>();
-	const [doneDate, setDoneDate] = React.useState<Date>();
-	const [pickupDate, setPickupDate] = React.useState<Date>();
+	const generateOrderId = () => uuidv4().split("-")[0];
+
+	const [newOrder, setNewOrder] = React.useState({
+		order_id: generateOrderId(),
+		order_customer_id: 0,
+		order_verified: false,
+		order_state: undefined as string | undefined,
+		order_again: false,
+		order_old_order_id: undefined as string | undefined,
+		order_account_access: undefined as string | undefined,
+		order_account_access_more: undefined as string | undefined,
+		order_article_device: undefined as string | undefined,
+		order_article_manufaturer: undefined as string | undefined,
+		order_article_accessory: undefined as string | undefined,
+		order_date_start: undefined as Date | undefined,
+		order_date_done: undefined as Date | undefined,
+		order_date_taken: undefined as Date | undefined,
+		order_error_description: undefined as string | undefined,
+		order_diagnose: undefined as string | undefined,
+		order_offer: undefined as string | undefined,
+		order_repair: undefined as string | undefined,
+		order_comment: undefined as string | undefined,
+		order_employee: undefined as string | undefined,
+		order_repair_time: 0,
+		order_labor_costs: 0,
+		order_material_costs: 0,
+		order_costs: 0,
+	});
+	// Textinput and Textarea
+	const handleChange = (
+		e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+	) => {
+		const { id, value } = e.target;
+		setNewOrder((prevState) => ({
+			...prevState,
+			[id]: value,
+		}));
+	};
+	// Checkbox
+	const handleCheckboxAgainChange = (checked: boolean) => {
+		setNewOrder((prevState) => ({
+			...prevState,
+			order_again: checked,
+		}));
+	};
+	const handleCheckboxVerifiedChange = (checked: boolean) => {
+		setNewOrder((prevState) => ({
+			...prevState,
+			order_verified: checked,
+		}));
+	};
+	// Calendar
+	const handleSetGetDate = (date: Date | undefined) => {
+		setNewOrder((prevState) => ({
+			...prevState,
+			order_date_start: date,
+		}));
+	};
+	const handleSetDoneDate = (date: Date | undefined) => {
+		setNewOrder((prevState) => ({
+			...prevState,
+			order_date_done: date,
+		}));
+	};
+	const handleSetPickupDate = (date: Date | undefined) => {
+		setNewOrder((prevState) => ({
+			...prevState,
+			order_date_taken: date,
+		}));
+	};
+	// Select
+	const handleStateChange = (value: string) => {
+		setNewOrder((prevState) => ({
+			...prevState,
+			order_state: value,
+		}));
+	};
+	const handleEmployeeChange = (value: string) => {
+		setNewOrder((prevState) => ({
+			...prevState,
+			order_employee: value,
+		}));
+	};
+
 	const breadcrumbItems = [
 		{ href: "/orders", label: "Orders" },
 		{ href: "/orders/neworder", label: "New Order" },
@@ -106,11 +189,15 @@ export default function NewOrder() {
 							</CardHeader>
 							<CardContent>
 								<div className="grid gap-2">
-									<Input />
+									<Input id="order_id" value={newOrder.order_id} readOnly />
 									<div className="flex items-center space-x-2">
-										<Checkbox id="accepted" />
+										<Checkbox
+											id="order_verified"
+											checked={newOrder.order_verified}
+											onCheckedChange={handleCheckboxVerifiedChange}
+										/>
 										<label
-											htmlFor="accepted"
+											htmlFor="order_verified"
 											className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
 										>
 											Auftrag erteilt
@@ -127,7 +214,10 @@ export default function NewOrder() {
 							</CardHeader>
 							<CardContent>
 								<div className="grid gap-2">
-									<Select>
+									<Select
+										value={newOrder.order_state}
+										onValueChange={handleStateChange}
+									>
 										<SelectTrigger className="">
 											<SelectValue placeholder="Wählen Sie einen Status" />
 										</SelectTrigger>
@@ -152,15 +242,23 @@ export default function NewOrder() {
 										</SelectContent>
 									</Select>
 									<div className="flex items-center space-x-2">
-										<Checkbox id="again" />
+										<Checkbox
+											id="order_again"
+											checked={newOrder.order_again}
+											onCheckedChange={handleCheckboxAgainChange}
+										/>
 										<label
-											htmlFor="again"
+											htmlFor="order_again"
 											className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
 										>
 											Gerät erneut da
 										</label>
 									</div>
-									<Input placeholder="Alte Auftragsnummer" />
+									<Input
+										id="order_old_order_id"
+										value={newOrder.order_old_order_id}
+										onChange={handleChange}
+									/>
 								</div>
 							</CardContent>
 							<CardFooter />
@@ -185,11 +283,19 @@ export default function NewOrder() {
 								<div className="grid gap-2">
 									<div>
 										<Label htmlFor="password">Passwort</Label>
-										<Input id="password" />
+										<Input
+											id="order_account_access"
+											value={newOrder.order_account_access}
+											onChange={handleChange}
+										/>
 									</div>
 									<div>
 										<Label htmlFor="accounts">Weitere</Label>
-										<Input id="accounts" />
+										<Input
+											id="order_account_access_more"
+											value={newOrder.order_account_access_more}
+											onChange={handleChange}
+										/>
 									</div>
 								</div>
 							</CardContent>
@@ -204,15 +310,27 @@ export default function NewOrder() {
 								<div className="grid gap-3">
 									<div>
 										<Label htmlFor="device">Gerät</Label>
-										<Input id="device" />
+										<Input
+											id="order_article_device"
+											value={newOrder.order_article_device}
+											onChange={handleChange}
+										/>
 									</div>
 									<div>
 										<Label htmlFor="manufacturer">Hersteller</Label>
-										<Input id="manufacturer" />
+										<Input
+											id="order_article_manufaturer"
+											value={newOrder.order_article_manufaturer}
+											onChange={handleChange}
+										/>
 									</div>
 									<div>
 										<Label htmlFor="accessory">Zubehör</Label>
-										<Input id="accessory" />
+										<Input
+											id="order_article_accessory"
+											value={newOrder.order_article_accessory}
+											onChange={handleChange}
+										/>
 									</div>
 								</div>
 							</CardContent>
@@ -233,12 +351,13 @@ export default function NewOrder() {
 													variant={"outline"}
 													className={cn(
 														"justify-start text-left font-normal",
-														!getDate && "text-muted-foreground",
+														!newOrder.order_date_start &&
+															"text-muted-foreground",
 													)}
 												>
 													<CalendarIcon className="mr-2 h-4 w-4" />
-													{getDate ? (
-														format(getDate, "PPP")
+													{newOrder.order_date_start ? (
+														format(newOrder.order_date_start, "PPP")
 													) : (
 														<span>Angenommen am...</span>
 													)}
@@ -247,8 +366,8 @@ export default function NewOrder() {
 											<PopoverContent className="w-auto p-0">
 												<Calendar
 													mode="single"
-													selected={getDate}
-													onSelect={setGetDate}
+													selected={newOrder.order_date_start}
+													onSelect={handleSetGetDate}
 													initialFocus
 												/>
 											</PopoverContent>
@@ -262,12 +381,13 @@ export default function NewOrder() {
 													variant={"outline"}
 													className={cn(
 														"justify-start text-left font-normal",
-														!doneDate && "text-muted-foreground",
+														!newOrder.order_date_done &&
+															"text-muted-foreground",
 													)}
 												>
 													<CalendarIcon className="mr-2 h-4 w-4" />
-													{doneDate ? (
-														format(doneDate, "PPP")
+													{newOrder.order_date_done ? (
+														format(newOrder.order_date_done, "PPP")
 													) : (
 														<span>Fertiggestellt am...</span>
 													)}
@@ -276,8 +396,8 @@ export default function NewOrder() {
 											<PopoverContent className="w-auto p-0">
 												<Calendar
 													mode="single"
-													selected={doneDate}
-													onSelect={setDoneDate}
+													selected={newOrder.order_date_done}
+													onSelect={handleSetDoneDate}
 													initialFocus
 												/>
 											</PopoverContent>
@@ -291,12 +411,13 @@ export default function NewOrder() {
 													variant={"outline"}
 													className={cn(
 														"justify-start text-left font-normal",
-														!pickupDate && "text-muted-foreground",
+														!newOrder.order_date_taken &&
+															"text-muted-foreground",
 													)}
 												>
 													<CalendarIcon className="mr-2 h-4 w-4" />
-													{pickupDate ? (
-														format(pickupDate, "PPP")
+													{newOrder.order_date_taken ? (
+														format(newOrder.order_date_taken, "PPP")
 													) : (
 														<span>Abgeholt am...</span>
 													)}
@@ -305,8 +426,8 @@ export default function NewOrder() {
 											<PopoverContent className="w-auto p-0">
 												<Calendar
 													mode="single"
-													selected={pickupDate}
-													onSelect={setPickupDate}
+													selected={newOrder.order_date_taken}
+													onSelect={handleSetPickupDate}
 													initialFocus
 												/>
 											</PopoverContent>
@@ -325,7 +446,11 @@ export default function NewOrder() {
 								</CardDescription>
 							</CardHeader>
 							<CardContent>
-								<Textarea />
+								<Textarea
+									id="order_error_description"
+									value={newOrder.order_error_description}
+									onChange={handleChange}
+								/>
 							</CardContent>
 							<CardFooter />
 						</Card>
@@ -338,7 +463,11 @@ export default function NewOrder() {
 								</CardDescription>
 							</CardHeader>
 							<CardContent>
-								<Textarea />
+								<Textarea
+									id="order_diagnose"
+									value={newOrder.order_diagnose}
+									onChange={handleChange}
+								/>
 							</CardContent>
 							<CardFooter />
 						</Card>
@@ -351,7 +480,11 @@ export default function NewOrder() {
 								</CardDescription>
 							</CardHeader>
 							<CardContent>
-								<Textarea />
+								<Textarea
+									id="order_offer"
+									value={newOrder.order_offer}
+									onChange={handleChange}
+								/>
 							</CardContent>
 							<CardFooter />
 						</Card>
@@ -364,7 +497,11 @@ export default function NewOrder() {
 								</CardDescription>
 							</CardHeader>
 							<CardContent>
-								<Textarea />
+								<Textarea
+									id="order_repair"
+									value={newOrder.order_repair}
+									onChange={handleChange}
+								/>
 							</CardContent>
 							<CardFooter />
 						</Card>
@@ -377,7 +514,11 @@ export default function NewOrder() {
 								</CardDescription>
 							</CardHeader>
 							<CardContent>
-								<Textarea />
+								<Textarea
+									id="order_comment"
+									value={newOrder.order_comment}
+									onChange={handleChange}
+								/>
 							</CardContent>
 							<CardFooter />
 						</Card>
@@ -390,7 +531,10 @@ export default function NewOrder() {
 								</CardDescription>
 							</CardHeader>
 							<CardContent>
-								<Select>
+								<Select
+									value={newOrder.order_employee}
+									onValueChange={handleEmployeeChange}
+								>
 									<SelectTrigger className="">
 										<SelectValue placeholder="Wählen Sie einen Mitarbeiter" />
 									</SelectTrigger>
@@ -415,7 +559,11 @@ export default function NewOrder() {
 								</CardDescription>
 							</CardHeader>
 							<CardContent>
-								<Input />
+								<Input
+									id="order_repair_time"
+									value={newOrder.order_repair_time}
+									onChange={handleChange}
+								/>
 							</CardContent>
 							<CardFooter />
 						</Card>
@@ -426,7 +574,11 @@ export default function NewOrder() {
 								<CardDescription>Wie hoch sind die Lohnkosten?</CardDescription>
 							</CardHeader>
 							<CardContent>
-								<Input placeholder="80.00€" />
+								<Input
+									id="order_labor_costs"
+									value={newOrder.order_labor_costs}
+									onChange={handleChange}
+								/>
 							</CardContent>
 							<CardFooter />
 						</Card>
@@ -439,7 +591,11 @@ export default function NewOrder() {
 								</CardDescription>
 							</CardHeader>
 							<CardContent>
-								<Input placeholder="120.00€" />
+								<Input
+									id="order_material_costs"
+									value={newOrder.order_material_costs}
+									onChange={handleChange}
+								/>
 							</CardContent>
 							<CardFooter />
 						</Card>
@@ -452,7 +608,13 @@ export default function NewOrder() {
 								</CardDescription>
 							</CardHeader>
 							<CardContent>
-								<Input disabled placeholder="200.00€" />
+								<Input
+									id="order_costs"
+									value={newOrder.order_costs}
+									onChange={handleChange}
+									disabled
+									placeholder="200.00€"
+								/>
 							</CardContent>
 							<CardFooter />
 						</Card>
