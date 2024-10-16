@@ -1,5 +1,4 @@
 "use client";
-import * as React from "react";
 
 import { Search } from "lucide-react";
 
@@ -19,22 +18,31 @@ import { Label } from "@/components/ui/label";
 import { products } from "@/database/products";
 import { Breadcrumb } from "@/components/breadcrumb/breadcrumb";
 import Avatar from "@/components/avatar/avatar";
+import { useState } from "react";
+import supabase from "@/database/supabaseClient";
+import type { Product } from "@/types";
+import { useRouter } from "next/navigation";
 
 export default function NewProduct() {
-	const productId = products.length;
-
-	const [newProduct, setNewProduct] = React.useState({
-		product_id: productId,
-		product_name: "",
-		product_description: "",
-		product_price: "",
-		product_category: "",
-		product_stock: "",
-		product_sku: "",
-		product_manufacturer: "",
-		product_image: "",
-		product_created_at: Date.now(),
-	});
+	const router = useRouter();
+	const initialProductState: Product = {
+		name: undefined,
+		description: undefined,
+		price: undefined,
+		category: undefined,
+		stock: undefined,
+		sku: undefined,
+		manufacturer: undefined,
+		image: undefined,
+		updated_at: new Date(),
+	};
+	const breadcrumbItems = [
+		{ href: "/products", label: "Products" },
+		{ href: "/products/newproduct", label: "New Product" },
+	];
+	const [newProduct, setNewProduct] = useState(initialProductState);
+	//TODO: use error state
+	const [error, setError] = useState<string | null>(null);
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { id, value } = e.target;
@@ -44,15 +52,33 @@ export default function NewProduct() {
 		}));
 	};
 	console.log(newProduct);
-	const breadcrumbItems = [
-		{ href: "/products", label: "Products" },
-		{ href: "/products/newproduct", label: "New Product" },
-	];
+
+	const handleCreateProduct = async () => {
+		console.log("Product created:", newProduct);
+		const { error, data } = await supabase
+			.from("products")
+			.insert([
+				{
+					...newProduct,
+				},
+			])
+			.select();
+
+		if (error) {
+			console.error("Error creating product:", error);
+			setError(`Could not create product, Reason: ${error.message}`);
+		}
+		if (data) {
+			console.log("Product created:", data);
+			setError(null);
+			setNewProduct(initialProductState);
+			router.push("/products");
+			// TODO: Show toast
+		}
+	};
 	return (
 		<>
 			<header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
-				{/* Sheet */}
-
 				{/* Breadcrumb */}
 				<Breadcrumb items={breadcrumbItems} />
 
@@ -76,86 +102,86 @@ export default function NewProduct() {
 							<CardHeader className="pb-3">
 								<CardTitle>Product</CardTitle>
 								<CardDescription className="max-w-lg text-balance leading-relaxed">
-									Id: {productId}
+									{/* Id: {productId} */}
 								</CardDescription>
 							</CardHeader>
 							<CardContent>
 								<div className="grid gap-2">
-									<Label htmlFor="product_name">Name</Label>
+									<Label htmlFor="name">Name</Label>
 									<Input
 										type="text"
-										id="product_name"
+										id="name"
 										placeholder="Product Name"
-										value={newProduct.product_name}
+										value={newProduct.name}
 										onChange={handleChange}
 									/>
 
-									<Label htmlFor="product_description">Description</Label>
+									<Label htmlFor="description">Description</Label>
 									<Input
 										type="text"
-										id="product_description"
+										id="description"
 										placeholder="Product Description"
-										value={newProduct.product_description}
+										value={newProduct.description}
 										onChange={handleChange}
 									/>
 
-									<Label htmlFor="product_price">Price</Label>
+									<Label htmlFor="price">Price</Label>
 									<Input
 										type="text"
-										id="product_price"
+										id="price"
 										placeholder="0.00"
-										value={newProduct.product_price}
+										value={newProduct.price}
 										onChange={handleChange}
 									/>
 
-									<Label htmlFor="product_category">Category</Label>
+									<Label htmlFor="category">Category</Label>
 									<Input
 										type="text"
-										id="product_category"
+										id="category"
 										placeholder="Category"
-										value={newProduct.product_category}
+										value={newProduct.category}
 										onChange={handleChange}
 									/>
 
-									<Label htmlFor="product_stock">Stock</Label>
+									<Label htmlFor="stock">Stock</Label>
 									<Input
 										type="text"
-										id="product_stock"
+										id="stock"
 										placeholder="0"
-										value={newProduct.product_stock}
+										value={newProduct.stock}
 										onChange={handleChange}
 									/>
 
-									<Label htmlFor="product_sku">SKU</Label>
+									<Label htmlFor="sku">SKU</Label>
 									<Input
 										type="text"
-										id="product_sku"
+										id="sku"
 										placeholder="SKU"
-										value={newProduct.product_sku}
+										value={newProduct.sku}
 										onChange={handleChange}
 									/>
 
-									<Label htmlFor="product_manufacturer">Manufacturer</Label>
+									<Label htmlFor="manufacturer">Manufacturer</Label>
 									<Input
 										type="text"
-										id="product_manufacturer"
+										id="manufacturer"
 										placeholder="Manufacturer"
-										value={newProduct.product_manufacturer}
+										value={newProduct.manufacturer}
 										onChange={handleChange}
 									/>
 
-									<Label htmlFor="product_image">Image URL</Label>
+									<Label htmlFor="image">Image URL</Label>
 									<Input
 										type="text"
-										id="product_image"
+										id="image"
 										placeholder="https://example.com/image.jpg"
-										value={newProduct.product_image}
+										value={newProduct.image}
 										onChange={handleChange}
 									/>
 								</div>
 							</CardContent>
 							<CardFooter>
-								<Button>Create Product</Button>
+								<Button onClick={handleCreateProduct}>Create Product</Button>
 							</CardFooter>
 						</Card>
 					</div>

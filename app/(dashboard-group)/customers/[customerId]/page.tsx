@@ -18,6 +18,10 @@ import { Label } from "@/components/ui/label";
 import { customers } from "@/database/customers";
 import { Breadcrumb } from "@/components/breadcrumb/breadcrumb";
 import Avatar from "@/components/avatar/avatar";
+import { useEffect, useState } from "react";
+import supabase from "@/database/supabaseClient";
+import type { Customer } from "@/types";
+import { useRouter } from "next/navigation";
 
 type Props = {
 	params: {
@@ -25,22 +29,66 @@ type Props = {
 	};
 };
 
-export default function Customer({ params }: Props) {
-	const customer = customers.find(
-		(c) => c.customer_id === Number(params.customerId),
-	);
-	console.log(customer);
-	const handleChange = () => {};
+export default function SingleCustomer({ params }: Props) {
+	const router = useRouter();
+	const [customer, setCustomer] = useState<Customer | null>(null);
+	const [error, setError] = useState<string | null>(null);
 	const breadcrumbItems = [
 		{
 			label: "Customers",
 			href: "/customers",
 		},
 		{
-			label: customer?.customer_name || "",
-			href: `/customers/${customer?.customer_id}`,
+			label: customer?.name || "",
+			href: `/customers/${customer?.id}`,
 		},
 	];
+	useEffect(() => {
+		const fetchCustomer = async () => {
+			const { data, error } = await supabase
+				.from("customers")
+				.select()
+				.eq("id", params.customerId)
+				.single();
+
+			if (error) {
+				console.error("Error fetching customer:", error);
+				setError(error.message);
+			}
+			if (data) {
+				setCustomer(data);
+				setError(null);
+			}
+		};
+		fetchCustomer();
+	}, [params.customerId]);
+
+	// console.log(customer);
+	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const { id, value } = e.target;
+		setCustomer((prevState) => ({
+			...prevState,
+			[id]: value,
+		}));
+	};
+
+	const handleSubmit = async () => {
+		const { data, error } = await supabase
+			.from("customers")
+			.update(customer)
+			.eq("id", customer?.id)
+			.select();
+
+		if (error) {
+			console.error("Error updating customer:", error);
+			setError(error.message);
+		}
+		if (data) {
+			console.log("Customer updated:", data);
+			setError(null);
+			router.push("/customers");
+		}
+	};
 	return (
 		<>
 			<header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
@@ -67,50 +115,51 @@ export default function Customer({ params }: Props) {
 							<CardHeader className="pb-3">
 								<CardTitle>Customer</CardTitle>
 								<CardDescription className="max-w-lg text-balance leading-relaxed">
-									Id: {customer?.customer_id}
+									Id: {customer?.id}
 								</CardDescription>
 							</CardHeader>
 							<CardContent>
 								<div className="grid gap-2">
-									<Label htmlFor="customer_name">Name</Label>
+									<Label htmlFor="name">Name</Label>
 									<Input
 										type="text"
-										id="customer_name"
+										id="name"
 										placeholder="John Doe"
-										defaultValue={customer?.customer_name}
+										defaultValue={customer?.name}
 										onChange={handleChange}
 									/>
 
-									<Label htmlFor="customer_phone">Phone</Label>
+									<Label htmlFor="phone">Phone</Label>
 									<Input
 										type="text"
-										id="customer_phone"
+										id="phone"
 										placeholder="65865"
-										defaultValue={customer?.customer_phone}
+										defaultValue={customer?.phone}
 										onChange={handleChange}
 									/>
 
-									<Label htmlFor="customer_adress">Adress</Label>
+									<Label htmlFor="adress">Adress</Label>
 									<Input
 										type="text"
-										id="customer_adress"
+										id="adress"
 										placeholder="Eberwaldstr. 78"
-										defaultValue={customer?.customer_adress}
+										defaultValue={customer?.adress}
 										onChange={handleChange}
 									/>
 
-									<Label htmlFor="customer_email">Email</Label>
+									<Label htmlFor="email">Email</Label>
 									<Input
 										type="email"
-										id="customer_email"
+										id="email"
 										placeholder="John@Doe.com"
-										defaultValue={customer?.customer_email}
+										defaultValue={customer?.email}
 										onChange={handleChange}
 									/>
 								</div>
 							</CardContent>
 							<CardFooter>
-								<Button>Update Customer</Button>
+								<Button onClick={handleSubmit}>Update Customer</Button>
+								{error && <p className="text-red-500">{error}</p>}
 							</CardFooter>
 						</Card>
 					</div>
