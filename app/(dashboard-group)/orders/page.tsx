@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 import { File, ListFilter, Search } from "lucide-react";
 
@@ -34,10 +35,49 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import { Breadcrumb } from "@/components/breadcrumb/breadcrumb";
 import Avatar from "@/components/avatar/avatar";
-import { orders } from "@/database/orders";
-
+import supabase from "@/database/supabaseClient";
+import { useEffect, useState } from "react";
+import type { Order } from "@/types";
+import { format } from "date-fns";
 export default function Orders() {
 	const breadcrumbItems = [{ href: "/orders", label: "Orders" }];
+	const [error, setError] = useState<string | null>(null);
+	const [orders, setOrders] = useState<Order[]>([]);
+
+	useEffect(() => {
+		const fetchOrders = async () => {
+			const { data, error } = await supabase.from("orders").select("*");
+
+			if (error) {
+				setError(`Could not fetch orders, Reason: ${error.message}`);
+				setOrders([]);
+				console.log(error);
+				return;
+			}
+			if (data) {
+				setOrders(data);
+				setError(null);
+			}
+		};
+		fetchOrders();
+	}, []);
+
+	const handleDelete = async (id: number) => {
+		const { data, error } = await supabase
+			.from("orders")
+			.delete()
+			.eq("id", id)
+			.select();
+
+		if (error) {
+			setError(`Could not delete order, Reason: ${error.message}`);
+			return;
+		}
+		if (data) {
+			setOrders(orders.filter((order) => Number(order.id) !== id));
+		}
+	};
+	console.log(orders);
 	return (
 		<>
 			<header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
@@ -77,11 +117,11 @@ export default function Orders() {
 					</div>
 					<Tabs defaultValue="week">
 						<div className="flex items-center">
-							<TabsList>
+							{/* <TabsList>
 								<TabsTrigger value="week">Week</TabsTrigger>
 								<TabsTrigger value="month">Month</TabsTrigger>
 								<TabsTrigger value="year">Year</TabsTrigger>
-							</TabsList>
+							</TabsList> */}
 							<div className="ml-auto flex items-center gap-2">
 								<DropdownMenu>
 									<DropdownMenuTrigger asChild>
@@ -147,42 +187,49 @@ export default function Orders() {
 											</TableRow>
 										</TableHeader>
 										<TableBody>
+											{error && <div>{error}</div>}
 											{orders.map((order) => (
-												<TableRow key={order.order_id}>
+												<TableRow key={order.id}>
 													<TableCell>
 														<div className="font-medium">
-															Order ID: {order.order_id}
+															Order ID: {order.id}
 														</div>
 														<div className="hidden text-sm text-muted-foreground md:inline">
-															Customer ID: {order.order_customer_id}
+															Customer ID: {order.customer_id}
 														</div>
 													</TableCell>
 													<TableCell className="hidden sm:table-cell">
-														{order.order_article_device}
+														{order.article_device}
 													</TableCell>
 													<TableCell className="hidden sm:table-cell">
 														<Badge
 															className="text-xs"
 															variant={
-																order.order_state === "Fulfilled"
+																order.state === "Fulfilled"
 																	? "secondary"
 																	: "outline"
 															}
 														>
-															{order.order_state}
+															{order.state}
 														</Badge>
 													</TableCell>
 													<TableCell className="hidden md:table-cell">
-														{order.order_date_start}
+														{order.date_start
+															? format(order.date_start, "dd.MM.yyyy")
+															: "N/A"}
 													</TableCell>
 													<TableCell className="text-right">
-														{order.order_costs}€
+														{order.total_costs}€
 													</TableCell>
 													<TableCell className="flex justify-end gap-1">
-														<Link href={`/orders/${order.order_id}`}>
+														<Link href={`/orders/${order.id}`}>
 															<Button size="sm">Edit</Button>
 														</Link>
-														<Button variant="destructive" size="sm">
+														<Button
+															onClick={() => handleDelete(order.id)}
+															variant="destructive"
+															size="sm"
+														>
 															Delete
 														</Button>
 													</TableCell>

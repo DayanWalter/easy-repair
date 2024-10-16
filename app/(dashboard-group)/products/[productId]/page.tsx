@@ -1,7 +1,6 @@
 "use client";
 
 import { Search } from "lucide-react";
-
 import { Button } from "@/components/ui/button";
 import {
 	Card,
@@ -11,13 +10,14 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
-
 import { Input } from "@/components/ui/input";
-
 import { Label } from "@/components/ui/label";
-import { products } from "@/database/products";
 import { Breadcrumb } from "@/components/breadcrumb/breadcrumb";
 import Avatar from "@/components/avatar/avatar";
+import { useEffect, useState } from "react";
+import supabase from "@/database/supabaseClient";
+import type { Product } from "@/types";
+import { useRouter } from "next/navigation";
 
 type Props = {
 	params: {
@@ -25,29 +25,71 @@ type Props = {
 	};
 };
 
-export default function Product({ params }: Props) {
-	const product = products.find(
-		(p) => p.product_id === Number(params.productId),
-	);
-	console.log(product);
-	const handleChange = () => {};
+export default function SingleProduct({ params }: Props) {
+	const router = useRouter();
+	const [product, setProduct] = useState<Product | null>(null);
+	const [error, setError] = useState<string | null>(null);
+
 	const breadcrumbItems = [
 		{
 			label: "Products",
 			href: "/products",
 		},
 		{
-			label: product?.product_name || "",
-			href: `/products/${product?.product_id}`,
+			label: product?.name || "",
+			href: `/products/${product?.id}`,
 		},
 	];
+
+	useEffect(() => {
+		const fetchProduct = async () => {
+			const { data, error } = await supabase
+				.from("products")
+				.select()
+				.eq("id", params.productId)
+				.single();
+
+			if (error) {
+				console.error("Error fetching product:", error);
+				setError(error.message);
+			}
+			if (data) {
+				setProduct(data);
+				setError(null);
+			}
+		};
+		fetchProduct();
+	}, [params.productId]);
+
+	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const { id, value } = e.target;
+		setProduct((prevState) => ({
+			...prevState,
+			[id]: value,
+		}));
+	};
+
+	const handleSubmit = async () => {
+		const { data, error } = await supabase
+			.from("products")
+			.update(product)
+			.eq("id", product?.id)
+			.select();
+		if (error) {
+			console.error("Error updating product:", error);
+			setError(error.message);
+		}
+		if (data) {
+			console.log("Product updated:", data);
+			setError(null);
+			router.push("/products");
+		}
+	};
+
 	return (
 		<>
 			<header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
-				{/* Breadcrumb */}
 				<Breadcrumb items={breadcrumbItems} />
-
-				{/* Search */}
 				<div className="relative ml-auto flex-1 md:grow-0">
 					<Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
 					<Input
@@ -56,97 +98,96 @@ export default function Product({ params }: Props) {
 						className="w-full rounded-lg bg-background pl-8 md:w-[200px] lg:w-[336px]"
 					/>
 				</div>
-				{/* Avatar and dropdown */}
 				<Avatar />
 			</header>
 			<main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
 				<div className="grid auto-rows-max items-start gap-4 md:gap-8 lg:col-span-2">
 					<div className="grid xl:grid-cols-2">
-						{/* Product */}
 						<Card className="" x-chunk="dashboard-05-chunk-0">
 							<CardHeader className="pb-3">
 								<CardTitle>Product</CardTitle>
 								<CardDescription className="max-w-lg text-balance leading-relaxed">
-									Id: {product?.product_id}
+									Id: {product?.id}
 								</CardDescription>
 							</CardHeader>
 							<CardContent>
 								<div className="grid gap-2">
-									<Label htmlFor="product_name">Name</Label>
+									<Label htmlFor="name">Name</Label>
 									<Input
 										type="text"
-										id="product_name"
+										id="name"
 										placeholder="Product Name"
-										defaultValue={product?.product_name}
+										value={product?.name}
 										onChange={handleChange}
 									/>
 
-									<Label htmlFor="product_description">Description</Label>
+									<Label htmlFor="description">Description</Label>
 									<Input
 										type="text"
-										id="product_description"
+										id="description"
 										placeholder="Product Description"
-										defaultValue={product?.product_description}
+										value={product?.description}
 										onChange={handleChange}
 									/>
 
-									<Label htmlFor="product_price">Price</Label>
+									<Label htmlFor="price">Price</Label>
 									<Input
 										type="text"
-										id="product_price"
+										id="price"
 										placeholder="0.00"
-										defaultValue={product?.product_price}
+										value={product?.price}
 										onChange={handleChange}
 									/>
 
-									<Label htmlFor="product_category">Category</Label>
+									<Label htmlFor="category">Category</Label>
 									<Input
 										type="text"
-										id="product_category"
+										id="category"
 										placeholder="Category"
-										defaultValue={product?.product_category}
+										value={product?.category}
 										onChange={handleChange}
 									/>
 
-									<Label htmlFor="product_stock">Stock</Label>
+									<Label htmlFor="stock">Stock</Label>
 									<Input
 										type="text"
-										id="product_stock"
+										id="stock"
 										placeholder="0"
-										defaultValue={product?.product_stock}
+										value={product?.stock}
 										onChange={handleChange}
 									/>
 
-									<Label htmlFor="product_sku">SKU</Label>
+									<Label htmlFor="sku">SKU</Label>
 									<Input
 										type="text"
-										id="product_sku"
+										id="sku"
 										placeholder="SKU"
-										defaultValue={product?.product_sku}
+										value={product?.sku}
 										onChange={handleChange}
 									/>
 
-									<Label htmlFor="product_manufacturer">Manufacturer</Label>
+									<Label htmlFor="manufacturer">Manufacturer</Label>
 									<Input
 										type="text"
-										id="product_manufacturer"
+										id="manufacturer"
 										placeholder="Manufacturer"
-										defaultValue={product?.product_manufacturer}
+										value={product?.manufacturer}
 										onChange={handleChange}
 									/>
 
-									<Label htmlFor="product_image">Image URL</Label>
+									<Label htmlFor="image">Image URL</Label>
 									<Input
 										type="text"
-										id="product_image"
+										id="image"
 										placeholder="https://example.com/image.jpg"
-										defaultValue={product?.product_image}
+										value={product?.image}
 										onChange={handleChange}
 									/>
 								</div>
 							</CardContent>
 							<CardFooter>
-								<Button>Update Product</Button>
+								<Button onClick={handleSubmit}>Update Product</Button>
+								{error && <p className="text-red-500">{error}</p>}
 							</CardFooter>
 						</Card>
 					</div>

@@ -1,5 +1,4 @@
 "use client";
-import * as React from "react";
 
 import { Search } from "lucide-react";
 
@@ -20,17 +19,27 @@ import { customers } from "@/database/customers";
 import { Breadcrumb } from "@/components/breadcrumb/breadcrumb";
 import Avatar from "@/components/avatar/avatar";
 
-export default function NewCustomer() {
-	const customerId = customers.length;
+import supabase from "@/database/supabaseClient";
+import { useState } from "react";
+import type { Customer } from "@/types";
+import { useRouter } from "next/navigation";
 
-	const [newCustomer, setNewCustomer] = React.useState({
-		customer_id: customerId,
-		customer_name: "",
-		customer_adress: "",
-		customer_phone: "",
-		customer_email: "",
-		customer_reg_date: Date.now(),
-	});
+export default function NewCustomer() {
+	const router = useRouter();
+
+	const initialCustomerState: Customer = {
+		name: undefined,
+		adress: undefined,
+		phone: undefined,
+		email: undefined,
+	};
+	const breadcrumbItems = [
+		{ href: "/customers", label: "Customers" },
+		{ href: "/customers/newcustomer", label: "New Customer" },
+	];
+	const [newCustomer, setNewCustomer] = useState(initialCustomerState);
+	//TODO: use error state
+	const [error, setError] = useState<string | null>(null);
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { id, value } = e.target;
@@ -39,11 +48,31 @@ export default function NewCustomer() {
 			[id]: value,
 		}));
 	};
-	console.log(newCustomer);
-	const breadcrumbItems = [
-		{ href: "/customers", label: "Customers" },
-		{ href: "/customers/newcustomer", label: "New Customer" },
-	];
+
+	const handleCreateCustomer = async () => {
+		console.log("Customer created:", newCustomer);
+		//TODO: Error handling
+		const { error, data } = await supabase
+			.from("customers")
+			.insert([
+				{
+					...newCustomer,
+				},
+			])
+			.select();
+
+		if (error) {
+			console.error("Error creating customer:", error);
+			setError(`Could not create customer, Reason: ${error.message}`);
+		}
+		if (data) {
+			console.log("Customer created:", data);
+			setError(null);
+			setNewCustomer(initialCustomerState);
+			router.push("/customers");
+			//TODO: Show toast
+		}
+	};
 	return (
 		<>
 			<header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
@@ -72,50 +101,50 @@ export default function NewCustomer() {
 							<CardHeader className="pb-3">
 								<CardTitle>Customer</CardTitle>
 								<CardDescription className="max-w-lg text-balance leading-relaxed">
-									Id: {customerId}
+									{/* Id: {customerId} */}
 								</CardDescription>
 							</CardHeader>
 							<CardContent>
 								<div className="grid gap-2">
-									<Label htmlFor="customer_name">Name</Label>
+									<Label htmlFor="name">Name</Label>
 									<Input
 										type="text"
-										id="customer_name"
+										id="name"
 										placeholder="John Doe"
-										defaultValue={newCustomer.customer_name}
+										defaultValue={newCustomer.name}
 										onChange={handleChange}
 									/>
 
-									<Label htmlFor="customer_phone">Phone</Label>
+									<Label htmlFor="phone">Phone</Label>
 									<Input
 										type="text"
-										id="customer_phone"
+										id="phone"
 										placeholder="65865"
-										defaultValue={newCustomer.customer_phone}
+										defaultValue={newCustomer.phone}
 										onChange={handleChange}
 									/>
 
-									<Label htmlFor="customer_adress">Adress</Label>
+									<Label htmlFor="adress">Adress</Label>
 									<Input
 										type="text"
-										id="customer_adress"
+										id="adress"
 										placeholder="Eberwaldstr. 78"
-										defaultValue={newCustomer.customer_adress}
+										defaultValue={newCustomer.adress}
 										onChange={handleChange}
 									/>
 
-									<Label htmlFor="customer_email">Email</Label>
+									<Label htmlFor="email">Email</Label>
 									<Input
 										type="email"
-										id="customer_email"
+										id="email"
 										placeholder="John@Doe.com"
-										defaultValue={newCustomer.customer_email}
+										defaultValue={newCustomer.email}
 										onChange={handleChange}
 									/>
 								</div>
 							</CardContent>
 							<CardFooter>
-								<Button>Create Customer</Button>
+								<Button onClick={handleCreateCustomer}>Create Customer</Button>
 							</CardFooter>
 						</Card>
 					</div>

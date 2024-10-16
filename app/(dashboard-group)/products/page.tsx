@@ -1,26 +1,9 @@
-import Image from "next/image";
+"use client";
 import Link from "next/link";
-import {
-	ChevronLeft,
-	ChevronRight,
-	Copy,
-	CreditCard,
-	File,
-	Home,
-	LineChart,
-	ListFilter,
-	MoreVertical,
-	Package,
-	Package2,
-	PanelLeft,
-	Search,
-	Settings,
-	ShoppingCart,
-	Truck,
-	Users2,
-	Wrench,
-} from "lucide-react";
-
+import { File, ListFilter, Search } from "lucide-react";
+import supabase from "@/database/supabaseClient";
+import { useEffect, useState } from "react";
+import type { Product } from "@/types";
 import { Badge } from "@/components/ui/badge";
 
 import { Button } from "@/components/ui/button";
@@ -36,20 +19,12 @@ import {
 	DropdownMenu,
 	DropdownMenuCheckboxItem,
 	DropdownMenuContent,
-	DropdownMenuItem,
 	DropdownMenuLabel,
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
-import {
-	Pagination,
-	PaginationContent,
-	PaginationItem,
-} from "@/components/ui/pagination";
-import { Progress } from "@/components/ui/progress";
-import { Separator } from "@/components/ui/separator";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+
 import {
 	Table,
 	TableBody,
@@ -59,16 +34,50 @@ import {
 	TableRow,
 } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import {
-	Tooltip,
-	TooltipContent,
-	TooltipTrigger,
-} from "@/components/ui/tooltip";
+
 import { Breadcrumb } from "@/components/breadcrumb/breadcrumb";
 import Avatar from "@/components/avatar/avatar";
-import { products } from "@/database/products";
+
 export default function Products() {
 	const breadcrumbItems = [{ href: "/products", label: "Products" }];
+
+	const [error, setError] = useState<string | null>(null);
+	const [products, setProducts] = useState<Product[]>([]);
+
+	useEffect(() => {
+		const fetchProducts = async () => {
+			const { data, error } = await supabase.from("products").select("*");
+
+			if (error) {
+				setError(`Could not fetch products, Reason: ${error.message}`);
+				setProducts([]);
+				console.log(error);
+				return;
+			}
+			if (data) {
+				setProducts(data);
+				setError(null);
+			}
+		};
+		fetchProducts();
+	}, []);
+	console.log(products);
+
+	const handleDelete = async (id: number) => {
+		const { data, error } = await supabase
+			.from("products")
+			.delete()
+			.eq("id", id)
+			.select();
+
+		if (error) {
+			setError(`Could not delete product, Reason: ${error.message}`);
+			return;
+		}
+		if (data) {
+			setProducts(products.filter((product) => Number(product.id) !== id));
+		}
+	};
 	return (
 		<>
 			<header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
@@ -108,10 +117,10 @@ export default function Products() {
 					</div>
 					<Tabs defaultValue="products">
 						<div className="flex items-center">
-							<TabsList>
+							{/* <TabsList>
 								<TabsTrigger value="products">Products</TabsTrigger>
 								<TabsTrigger value="services">Services</TabsTrigger>
-							</TabsList>
+							</TabsList> */}
 							<div className="ml-auto flex items-center gap-2">
 								<DropdownMenu>
 									<DropdownMenuTrigger asChild>
@@ -148,6 +157,7 @@ export default function Products() {
 								</Button>
 							</div>
 						</div>
+						{/* Table */}
 						<TabsContent value="products">
 							<Card x-chunk="dashboard-05-chunk-3">
 								<CardHeader className="px-7">
@@ -173,27 +183,29 @@ export default function Products() {
 										</TableHeader>
 										<TableBody>
 											{products.map((product) => (
-												<TableRow key={product.product_id}>
+												<TableRow key={product.id}>
 													<TableCell>
-														<div className="font-medium">
-															{product.product_name}
-														</div>
+														<div className="font-medium">{product.name}</div>
 													</TableCell>
 													<TableCell className="hidden sm:table-cell">
-														{product.product_description}
+														{product.description}
 													</TableCell>
 													<TableCell className="hidden sm:table-cell">
-														${product.product_price.toFixed(2)}
+														${product.price?.toFixed(2)}
 													</TableCell>
 													<TableCell className="hidden md:table-cell">
-														{product.product_category}
+														{product.category}
 													</TableCell>
 													<TableCell className="flex justify-end gap-1">
-														<Link href={`/products/${product.product_id}`}>
+														<Link href={`/products/${product.id}`}>
 															<Button size="sm">Edit</Button>
 															<span className="sr-only">Edit</span>
 														</Link>
-														<Button variant="destructive" size="sm">
+														<Button
+															onClick={() => handleDelete(product.id)}
+															variant="destructive"
+															size="sm"
+														>
 															Delete
 														</Button>
 													</TableCell>
@@ -204,7 +216,7 @@ export default function Products() {
 								</CardContent>
 							</Card>
 						</TabsContent>
-						<TabsContent value="services">
+						{/* <TabsContent value="services">
 							<Card x-chunk="dashboard-05-chunk-3">
 								<CardHeader className="px-7">
 									<CardTitle>Services</CardTitle>
@@ -392,7 +404,7 @@ export default function Products() {
 									</Table>
 								</CardContent>
 							</Card>
-						</TabsContent>
+						</TabsContent> */}
 					</Tabs>
 				</div>
 			</main>

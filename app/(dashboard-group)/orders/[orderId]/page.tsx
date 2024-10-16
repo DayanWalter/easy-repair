@@ -1,5 +1,4 @@
 "use client";
-import * as React from "react";
 
 import Image from "next/image";
 import { format, setDate } from "date-fns";
@@ -23,14 +22,8 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
-import {
-	DropdownMenu,
-	DropdownMenuContent,
-	DropdownMenuItem,
-	DropdownMenuLabel,
-	DropdownMenuSeparator,
-	DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+
+import Avatar from "@/components/avatar/avatar";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
@@ -59,33 +52,59 @@ import { orders } from "@/database/orders";
 import { customers } from "@/database/customers";
 import { Breadcrumb } from "@/components/breadcrumb/breadcrumb";
 
+import supabase from "@/database/supabaseClient";
+import type { Order } from "@/types";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+
 type Props = {
 	params: {
 		orderId: string;
 	};
 };
 
-export default function Order({ params }: Props) {
-	// Find order via params
-	const initOrder = orders.find((o) => o.order_id === Number(params.orderId));
-	// Search customer from initOrder via customer_id
-	const comm = customers.find(
-		(c) => c.customer_id === Number(initOrder?.order_customer_id),
-	);
-	const [order, setOrder] = React.useState(initOrder);
-	// console.log(customer);
-	console.log(order);
+export default function SingleOrder({ params }: Props) {
+	const router = useRouter();
+	const [order, setOrder] = useState<Order>({} as Order);
+	const [error, setError] = useState<string | null>(null);
 
-	const [getDate, setGetDate] = React.useState<Date>();
-	const [doneDate, setDoneDate] = React.useState<Date>();
-	const [pickupDate, setPickupDate] = React.useState<Date>();
+	const breadcrumbItems = [
+		{
+			label: "Orders",
+			href: "/orders",
+		},
+		{
+			label: String(order?.id),
+			href: `/orders/${order?.id}`,
+		},
+	];
+
+	useEffect(() => {
+		const fetchOrder = async () => {
+			const { data, error } = await supabase
+				.from("orders")
+				.select()
+				.eq("id", params.orderId)
+				.single();
+
+			if (error) {
+				console.error("Error fetching order:", error);
+				setError(error.message);
+			}
+			if (data) {
+				setOrder(data);
+				setError(null);
+			}
+		};
+		fetchOrder();
+	}, [params.orderId]);
 
 	const handleVerifiedChange = () => {
 		setOrder((prevOrder) => {
 			if (prevOrder) {
 				return {
 					...prevOrder,
-					order_verified: !prevOrder.order_verified,
+					verified: !prevOrder.verified,
 				};
 			}
 			return prevOrder;
@@ -96,7 +115,7 @@ export default function Order({ params }: Props) {
 			if (prevOrder) {
 				return {
 					...prevOrder,
-					order_state: e,
+					state: e,
 				};
 			}
 			return prevOrder;
@@ -107,7 +126,7 @@ export default function Order({ params }: Props) {
 			if (prevOrder) {
 				return {
 					...prevOrder,
-					order_again: !prevOrder.order_again,
+					again: !prevOrder.again,
 				};
 			}
 			return prevOrder;
@@ -118,7 +137,7 @@ export default function Order({ params }: Props) {
 			if (prevOrder) {
 				return {
 					...prevOrder,
-					order_old_order_id: e.target.value,
+					old_order_id: e.target.value,
 				};
 			}
 			return prevOrder;
@@ -129,7 +148,7 @@ export default function Order({ params }: Props) {
 			if (prevOrder) {
 				return {
 					...prevOrder,
-					order_account_access: e.target.value,
+					account_access: e.target.value,
 				};
 			}
 			return prevOrder;
@@ -140,7 +159,7 @@ export default function Order({ params }: Props) {
 			if (prevOrder) {
 				return {
 					...prevOrder,
-					order_account_access_more: e.target.value,
+					account_access_more: e.target.value,
 				};
 			}
 			return prevOrder;
@@ -159,38 +178,23 @@ export default function Order({ params }: Props) {
 		});
 	};
 	// TODO: Fix any
-	const handleSetGetDate = (e: any) => {
-		setOrder((prevOrder: any) => {
-			if (prevOrder) {
-				return {
-					...prevOrder,
-					order_date_start: e,
-				};
-			}
-			return prevOrder;
-		});
+	const handleSetGetDate = (date: Date | undefined) => {
+		setOrder((prevOrder) => ({
+			...prevOrder,
+			date_start: date,
+		}));
 	};
-	const handleSetDoneDate = (e: any) => {
-		setOrder((prevOrder: any) => {
-			if (prevOrder) {
-				return {
-					...prevOrder,
-					order_date_done: e,
-				};
-			}
-			return prevOrder;
-		});
+	const handleSetDoneDate = (date: Date | undefined) => {
+		setOrder((prevOrder) => ({
+			...prevOrder,
+			date_done: date,
+		}));
 	};
-	const handleSetTakenDate = (e: any) => {
-		setOrder((prevOrder: any) => {
-			if (prevOrder) {
-				return {
-					...prevOrder,
-					order_date_taken: e,
-				};
-			}
-			return prevOrder;
-		});
+	const handleSetPickupDate = (date: Date | undefined) => {
+		setOrder((prevOrder) => ({
+			...prevOrder,
+			date_taken: date,
+		}));
 	};
 	const handleTextareaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
 		const { id, value } = e.target;
@@ -209,24 +213,47 @@ export default function Order({ params }: Props) {
 			if (prevOrder) {
 				return {
 					...prevOrder,
-					order_employee: e,
+					employee: e,
 				};
 			}
 			return prevOrder;
 		});
 	};
+	const handleCostsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const { id, value } = e.target;
+		setOrder((prevOrder) => {
+			if (prevOrder) {
+				const updatedOrder = { ...prevOrder, [id]: value };
+				const labor =
+					Number(id === "labor_costs" ? value : prevOrder.labor_costs) || 0;
+				const material =
+					Number(id === "material_costs" ? value : prevOrder.material_costs) ||
+					0;
+				updatedOrder.total_costs = Number((labor + material).toFixed(2));
+				return updatedOrder;
+			}
+			return prevOrder;
+		});
+	};
 
-	const breadcrumbItems = [
-		{
-			label: "Orders",
-			href: "/orders",
-		},
-		{
-			label: String(order?.order_id),
-			href: `/orders/${order?.order_id}`,
-		},
-	];
+	const handleSubmit = async () => {
+		const { data, error } = await supabase
+			.from("orders")
+			.update(order)
+			.eq("id", order?.id)
+			.select();
+		if (error) {
+			console.error("Error updating order:", error);
+			setError(error.message);
+		}
+		if (data) {
+			console.log("Order updated:", data);
+			setError(null);
+			router.push("/orders");
+		}
+	};
 
+	console.log(order);
 	return (
 		<>
 			<header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
@@ -242,32 +269,7 @@ export default function Order({ params }: Props) {
 					/>
 				</div>
 				{/* Avatar and dropdown */}
-				<DropdownMenu>
-					<DropdownMenuTrigger asChild>
-						<Button
-							variant="outline"
-							size="icon"
-							className="overflow-hidden rounded-full"
-						>
-							{/* Placeholder */}
-							<Image
-								src="/btc.png"
-								width={36}
-								height={36}
-								alt="Avatar"
-								className="overflow-hidden rounded-full"
-							/>
-						</Button>
-					</DropdownMenuTrigger>
-					<DropdownMenuContent align="end">
-						<DropdownMenuLabel>My Account</DropdownMenuLabel>
-						<DropdownMenuSeparator />
-						<DropdownMenuItem>Settings</DropdownMenuItem>
-						<DropdownMenuItem>Support</DropdownMenuItem>
-						<DropdownMenuSeparator />
-						<DropdownMenuItem>Logout</DropdownMenuItem>
-					</DropdownMenuContent>
-				</DropdownMenu>
+				<Avatar />
 			</header>
 			<main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
 				<div className="grid auto-rows-max items-start gap-4 md:gap-8 lg:col-span-2">
@@ -277,7 +279,7 @@ export default function Order({ params }: Props) {
 							<CardHeader className="pb-3">
 								<CardTitle>Kunde</CardTitle>
 								<CardDescription className="max-w-lg text-balance leading-relaxed">
-									Id: {comm?.customer_id}
+									Id: {order?.customer_id}
 								</CardDescription>
 							</CardHeader>
 							<CardContent>
@@ -285,19 +287,19 @@ export default function Order({ params }: Props) {
 									<Input
 										type="name"
 										id="name"
-										placeholder={comm?.customer_name}
+										placeholder="Name of customer"
 										disabled
 									/>
 									<Input
 										type="phone"
 										id="phone"
-										placeholder={comm?.customer_phone}
+										placeholder="Phone of customer"
 										disabled
 									/>
 									<Input
 										type="email"
 										id="email"
-										placeholder={comm?.customer_email}
+										placeholder="Email of customer"
 										disabled
 									/>
 								</div>
@@ -311,15 +313,15 @@ export default function Order({ params }: Props) {
 							</CardHeader>
 							<CardContent>
 								<div className="grid gap-2">
-									<Input placeholder={String(order?.order_id)} disabled />
+									<Input placeholder={order?.id} disabled />
 									<div className="flex items-center space-x-2">
 										<Checkbox
-											id="accepted"
-											checked={order?.order_verified}
+											id="verified"
+											checked={order?.verified}
 											onClick={handleVerifiedChange}
 										/>
 										<label
-											htmlFor="accepted"
+											htmlFor="verified"
 											className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
 										>
 											Auftrag erteilt
@@ -338,7 +340,7 @@ export default function Order({ params }: Props) {
 								<div className="grid gap-2">
 									<Select onValueChange={handleStateChange}>
 										<SelectTrigger>
-											<SelectValue placeholder={order?.order_state} />
+											<SelectValue placeholder={order?.state} />
 										</SelectTrigger>
 										<SelectContent>
 											<SelectGroup>
@@ -363,7 +365,7 @@ export default function Order({ params }: Props) {
 									<div className="flex items-center space-x-2">
 										<Checkbox
 											id="again"
-											checked={order?.order_again}
+											checked={order?.again}
 											onClick={handleAgainChange}
 										/>
 										<label
@@ -375,7 +377,7 @@ export default function Order({ params }: Props) {
 									</div>
 									<Input
 										placeholder="Alte Auftragsnummer"
-										value={order?.order_old_order_id}
+										value={order?.old_order_id}
 										onChange={handleOldOrderId}
 									/>
 								</div>
@@ -407,7 +409,7 @@ export default function Order({ params }: Props) {
 									</TableHeader>
 									<TableBody>
 										{/* Communication */}
-										{order?.order_communication.map((comm) => (
+										{order?.communication?.map((comm: any) => (
 											<TableRow key={comm.id}>
 												<TableCell>
 													<div className="text-sm font-medium md:inline">
@@ -439,7 +441,7 @@ export default function Order({ params }: Props) {
 										<Input
 											id="password"
 											placeholder="Passwords"
-											value={order?.order_account_access}
+											value={order?.account_access}
 											onChange={handleAccountAccess}
 										/>
 									</div>
@@ -448,7 +450,7 @@ export default function Order({ params }: Props) {
 										<Input
 											id="accounts"
 											placeholder="More"
-											value={order?.order_account_access_more}
+											value={order?.account_access_more}
 											onChange={handleAccountAccessMore}
 										/>
 									</div>
@@ -468,7 +470,7 @@ export default function Order({ params }: Props) {
 										<Input
 											id="order_article_device"
 											onChange={handleInputChange}
-											value={order?.order_article_device}
+											value={order?.article_device}
 										/>
 									</div>
 									<div>
@@ -478,7 +480,7 @@ export default function Order({ params }: Props) {
 										<Input
 											id="order_article_manufaturer"
 											onChange={handleInputChange}
-											value={order?.order_article_manufaturer}
+											value={order?.article_manufacturer}
 										/>
 									</div>
 									<div>
@@ -486,7 +488,7 @@ export default function Order({ params }: Props) {
 										<Input
 											id="order_article_accessory"
 											onChange={handleInputChange}
-											value={order?.order_article_accessory}
+											value={order?.article_accessory}
 										/>
 									</div>
 								</div>
@@ -508,12 +510,12 @@ export default function Order({ params }: Props) {
 													variant={"outline"}
 													className={cn(
 														"justify-start text-left font-normal",
-														!order?.order_date_start && "text-muted-foreground",
+														!order?.date_start && "text-muted-foreground",
 													)}
 												>
 													<CalendarIcon className="mr-2 h-4 w-4" />
-													{order?.order_date_start ? (
-														format(order?.order_date_start, "PPP")
+													{order?.date_start ? (
+														format(order?.date_start, "PPP")
 													) : (
 														<span>Angenommen am...</span>
 													)}
@@ -522,7 +524,7 @@ export default function Order({ params }: Props) {
 											<PopoverContent className="w-auto p-0">
 												<Calendar
 													mode="single"
-													selected={order?.order_date_start}
+													selected={order?.date_start}
 													onSelect={handleSetGetDate}
 													initialFocus
 												/>
@@ -537,12 +539,12 @@ export default function Order({ params }: Props) {
 													variant={"outline"}
 													className={cn(
 														"justify-start text-left font-normal",
-														!order?.order_date_done && "text-muted-foreground",
+														!order?.date_done && "text-muted-foreground",
 													)}
 												>
 													<CalendarIcon className="mr-2 h-4 w-4" />
-													{order?.order_date_done ? (
-														format(order?.order_date_done, "PPP")
+													{order?.date_done ? (
+														format(order?.date_done, "PPP")
 													) : (
 														<span>Fertiggestellt am...</span>
 													)}
@@ -551,7 +553,7 @@ export default function Order({ params }: Props) {
 											<PopoverContent className="w-auto p-0">
 												<Calendar
 													mode="single"
-													selected={order?.order_date_done}
+													selected={order?.date_done}
 													onSelect={handleSetDoneDate}
 													initialFocus
 												/>
@@ -566,12 +568,12 @@ export default function Order({ params }: Props) {
 													variant={"outline"}
 													className={cn(
 														"justify-start text-left font-normal",
-														!order?.order_date_taken && "text-muted-foreground",
+														!order?.date_taken && "text-muted-foreground",
 													)}
 												>
 													<CalendarIcon className="mr-2 h-4 w-4" />
-													{order?.order_date_taken ? (
-														format(order?.order_date_taken, "PPP")
+													{order?.date_taken ? (
+														format(order?.date_taken, "PPP")
 													) : (
 														<span>Abgeholt am...</span>
 													)}
@@ -580,8 +582,8 @@ export default function Order({ params }: Props) {
 											<PopoverContent className="w-auto p-0">
 												<Calendar
 													mode="single"
-													selected={order?.order_date_taken}
-													onSelect={handleSetTakenDate}
+													selected={order?.date_taken}
+													onSelect={handleSetPickupDate}
 													initialFocus
 												/>
 											</PopoverContent>
@@ -601,9 +603,9 @@ export default function Order({ params }: Props) {
 							</CardHeader>
 							<CardContent>
 								<Textarea
-									id="order_error_description"
+									id="error_description"
 									onChange={handleTextareaChange}
-									value={order?.order_error_description}
+									value={order?.error_description}
 								/>
 							</CardContent>
 							<CardFooter />
@@ -618,9 +620,9 @@ export default function Order({ params }: Props) {
 							</CardHeader>
 							<CardContent>
 								<Textarea
-									id="order_diagnose"
+									id="diagnose"
 									onChange={handleTextareaChange}
-									value={order?.order_diagnose}
+									value={order?.diagnose}
 								/>
 							</CardContent>
 							<CardFooter />
@@ -635,9 +637,9 @@ export default function Order({ params }: Props) {
 							</CardHeader>
 							<CardContent>
 								<Textarea
-									id="order_offer"
+									id="offer"
 									onChange={handleTextareaChange}
-									value={order?.order_offer}
+									value={order?.offer}
 								/>
 							</CardContent>
 							<CardFooter />
@@ -652,9 +654,9 @@ export default function Order({ params }: Props) {
 							</CardHeader>
 							<CardContent>
 								<Textarea
-									id="order_repair"
+									id="repair"
 									onChange={handleTextareaChange}
-									value={order?.order_repair}
+									value={order?.repair}
 								/>
 							</CardContent>
 							<CardFooter />
@@ -669,9 +671,9 @@ export default function Order({ params }: Props) {
 							</CardHeader>
 							<CardContent>
 								<Textarea
-									id="order_comment"
+									id="comment"
 									onChange={handleTextareaChange}
-									value={order?.order_comment}
+									value={order?.comment}
 								/>
 							</CardContent>
 							<CardFooter />
@@ -687,7 +689,7 @@ export default function Order({ params }: Props) {
 							<CardContent>
 								<Select onValueChange={handleEmployeeChange}>
 									<SelectTrigger>
-										<SelectValue placeholder={order?.order_employee} />
+										<SelectValue placeholder={order?.employee} />
 									</SelectTrigger>
 									<SelectContent>
 										<SelectGroup>
@@ -701,7 +703,7 @@ export default function Order({ params }: Props) {
 							</CardContent>
 							<CardFooter />
 						</Card>
-						{/* Zeit - done*/}
+						{/* Zeit */}
 						<Card x-chunk="dashboard-05-chunk-1">
 							<CardHeader className="pb-2">
 								<CardTitle>Zeit</CardTitle>
@@ -711,14 +713,14 @@ export default function Order({ params }: Props) {
 							</CardHeader>
 							<CardContent>
 								<Input
-									id="order_repair_time"
+									id="repair_time"
 									onChange={handleInputChange}
-									value={order?.order_repair_time}
+									value={order?.repair_time}
 								/>
 							</CardContent>
 							<CardFooter />
 						</Card>
-						{/* Lohnkosten - done*/}
+						{/* Lohnkosten */}
 						<Card x-chunk="dashboard-05-chunk-1">
 							<CardHeader className="pb-2">
 								<CardTitle>Lohnkosten</CardTitle>
@@ -727,14 +729,14 @@ export default function Order({ params }: Props) {
 							<CardContent>
 								<Input
 									placeholder="80.00€"
-									id="order_labor_costs"
-									onChange={handleInputChange}
-									value={order?.order_labor_costs}
+									id="labor_costs"
+									onChange={handleCostsChange}
+									value={order?.labor_costs}
 								/>
 							</CardContent>
 							<CardFooter />
 						</Card>
-						{/* Materialkosten - done*/}
+						{/* Materialkosten */}
 						<Card x-chunk="dashboard-05-chunk-1">
 							<CardHeader className="pb-2">
 								<CardTitle>Materialkosten</CardTitle>
@@ -745,14 +747,14 @@ export default function Order({ params }: Props) {
 							<CardContent>
 								<Input
 									placeholder="120.00€"
-									id="order_material_costs"
-									onChange={handleInputChange}
-									value={order?.order_material_costs}
+									id="material_costs"
+									onChange={handleCostsChange}
+									value={order?.material_costs}
 								/>
 							</CardContent>
 							<CardFooter />
 						</Card>
-						{/* Gesamtkosten - done*/}
+						{/* Gesamtkosten */}
 						<Card x-chunk="dashboard-05-chunk-1">
 							<CardHeader className="pb-2">
 								<CardTitle>Gesamtkosten</CardTitle>
@@ -764,9 +766,8 @@ export default function Order({ params }: Props) {
 								<Input
 									disabled
 									placeholder="200.00€"
-									id="order_costs"
-									onChange={handleInputChange}
-									value={order?.order_costs}
+									id="total_costs"
+									value={order?.total_costs}
 								/>
 							</CardContent>
 							<CardFooter />
@@ -776,6 +777,7 @@ export default function Order({ params }: Props) {
 						size={"lg"}
 						variant={"destructive"}
 						className="max-w-[250px] justify-self-end"
+						onClick={handleSubmit}
 					>
 						Change order
 					</Button>
