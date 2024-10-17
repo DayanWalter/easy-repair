@@ -39,11 +39,10 @@ import Avatar from "@/components/avatar/avatar";
 import SkeletonRow from "@/components/skeleton-row/skeleton-row";
 
 export default function Products() {
-	const breadcrumbItems = [{ href: "/products", label: "Products" }];
-
 	const [error, setError] = useState<string | null>(null);
 	const [productsLoading, setProductsLoading] = useState<boolean>(false);
 	const [products, setProducts] = useState<Product[]>([]);
+	const breadcrumbItems = [{ href: "/products", label: "Products" }];
 
 	const numSkeletons = 3;
 
