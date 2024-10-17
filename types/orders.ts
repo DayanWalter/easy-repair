@@ -5,12 +5,6 @@ export type Order = {
 	state?: string;
 	again: boolean;
 	old_order_id?: string;
-	communication?: {
-		id: string;
-		message: string;
-		who: string;
-		date: string;
-	}[];
 	account_access?: string;
 	account_access_more?: string;
 	article_device?: string;

@@ -57,6 +57,23 @@ import type { Order } from "@/types";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
+// TEMP
+import {
+	Sheet,
+	SheetClose,
+	SheetContent,
+	SheetDescription,
+	SheetFooter,
+	SheetHeader,
+	SheetTitle,
+	SheetTrigger,
+} from "@/components/ui/sheet";
+import OrderMessages from "@/components/order-messages/order-messages";
+
+// const communication = [
+// 	{ text: "New message", who: "You", date: new Date() },
+// ];
+
 type Props = {
 	params: {
 		orderId: string;
@@ -78,7 +95,6 @@ export default function SingleOrder({ params }: Props) {
 			href: `/orders/${order?.id}`,
 		},
 	];
-
 	useEffect(() => {
 		const fetchOrder = async () => {
 			const { data, error } = await supabase
@@ -177,7 +193,6 @@ export default function SingleOrder({ params }: Props) {
 			return prevOrder;
 		});
 	};
-	// TODO: Fix any
 	const handleSetGetDate = (date: Date | undefined) => {
 		setOrder((prevOrder) => ({
 			...prevOrder,
@@ -253,7 +268,6 @@ export default function SingleOrder({ params }: Props) {
 		}
 	};
 
-	console.log(order);
 	return (
 		<>
 			<header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
@@ -274,7 +288,7 @@ export default function SingleOrder({ params }: Props) {
 			<main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
 				<div className="grid auto-rows-max items-start gap-4 md:gap-8 lg:col-span-2">
 					<div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
-						{/* Kunde - done*/}
+						{/* Kunde */}
 						<Card className="" x-chunk="dashboard-05-chunk-0">
 							<CardHeader className="pb-3">
 								<CardTitle>Kunde</CardTitle>
@@ -306,7 +320,7 @@ export default function SingleOrder({ params }: Props) {
 							</CardContent>
 							<CardFooter />
 						</Card>
-						{/* Auftragsnummer -done */}
+						{/* Auftragsnummer */}
 						<Card className="" x-chunk="dashboard-05-chunk-0">
 							<CardHeader className="pb-3">
 								<CardTitle>Auftragsnummer</CardTitle>
@@ -331,7 +345,7 @@ export default function SingleOrder({ params }: Props) {
 							</CardContent>
 							<CardFooter />
 						</Card>
-						{/* Status - done*/}
+						{/* Status */}
 						<Card x-chunk="dashboard-05-chunk-1">
 							<CardHeader className="pb-2">
 								<CardTitle>Status</CardTitle>
@@ -385,51 +399,8 @@ export default function SingleOrder({ params }: Props) {
 							<CardFooter />
 						</Card>
 						{/* Kommunikation */}
-						<Card
-							x-chunk="dashboard-05-chunk-1"
-							className="h-72 overflow-auto xl:col-span-2 "
-						>
-							<CardHeader className="pb-2">
-								<CardTitle>Kommunikation</CardTitle>
-								<CardDescription>
-									Dies ist der Kommunikationsverlauf
-								</CardDescription>
-							</CardHeader>
-							<CardContent>
-								<Button>New message</Button>
-								{/* Communication-table */}
-								<Table>
-									<TableHeader>
-										<TableRow>
-											<TableHead>Content</TableHead>
-											<TableHead className="flex items-center justify-end">
-												Date
-											</TableHead>
-										</TableRow>
-									</TableHeader>
-									<TableBody>
-										{/* Communication */}
-										{order?.communication?.map((comm: any) => (
-											<TableRow key={comm.id}>
-												<TableCell>
-													<div className="text-sm font-medium md:inline">
-														{comm.message}
-													</div>
-													<div className="text-muted-foreground">
-														{comm.who}
-													</div>
-												</TableCell>
-												<TableCell className="flex items-center justify-end">
-													{comm.date}
-												</TableCell>
-											</TableRow>
-										))}
-									</TableBody>
-								</Table>
-							</CardContent>
-							<CardFooter />
-						</Card>
-						{/* Zugänge - done*/}
+						<OrderMessages orderId={Number(order?.id)} />
+						{/* Zugänge */}
 						<Card className="xl:col-span-1" x-chunk="dashboard-05-chunk-1">
 							<CardHeader className="pb-2">
 								<CardTitle>Zugänge</CardTitle>
@@ -466,27 +437,25 @@ export default function SingleOrder({ params }: Props) {
 							<CardContent>
 								<div className="grid gap-3">
 									<div>
-										<Label htmlFor="order_article_device">Gerät</Label>
+										<Label htmlFor="article_device">Gerät</Label>
 										<Input
-											id="order_article_device"
+											id="article_device"
 											onChange={handleInputChange}
 											value={order?.article_device}
 										/>
 									</div>
 									<div>
-										<Label htmlFor="order_article_manufaturer">
-											Hersteller
-										</Label>
+										<Label htmlFor="article_manufacturer">Hersteller</Label>
 										<Input
-											id="order_article_manufaturer"
+											id="article_manufacturer"
 											onChange={handleInputChange}
 											value={order?.article_manufacturer}
 										/>
 									</div>
 									<div>
-										<Label htmlFor="order_article_accessory">Zubehör</Label>
+										<Label htmlFor="article_accessory">Zubehör</Label>
 										<Input
-											id="order_article_accessory"
+											id="article_accessory"
 											onChange={handleInputChange}
 											value={order?.article_accessory}
 										/>
