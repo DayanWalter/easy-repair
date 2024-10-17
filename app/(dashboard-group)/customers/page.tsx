@@ -38,28 +38,32 @@ import { useEffect, useState } from "react";
 import type { Customer } from "@/types";
 import { format } from "date-fns";
 import { Tabs, TabsContent } from "@/components/ui/tabs";
+import SkeletonRow from "@/components/skeleton-row/skeleton-row";
 
 export default function Customers() {
-	// const { data: customers, error } =  supabase.from("customers").select("*");
-	// console.log(customers);
+	const breadcrumbItems = [{ href: "/customers", label: "Customers" }];
 
 	const [error, setError] = useState<string | null>(null);
+	const [customersLoading, setCustomersLoading] = useState<boolean>(false);
 	const [customers, setCustomers] = useState<Customer[]>([]);
+
+	const numSkeletons = 3;
 
 	useEffect(() => {
 		const fetchCustomers = async () => {
+			setCustomersLoading(true);
 			const { data, error } = await supabase.from("customers").select("*");
 
 			if (error) {
 				setError(`Could not fetch customers, Reason: ${error.message}`);
 				setCustomers([]);
-				console.log(error);
 				return;
 			}
 			if (data) {
 				setCustomers(data);
 				setError(null);
 			}
+			setCustomersLoading(false);
 		};
 		fetchCustomers();
 	}, []);
@@ -79,9 +83,7 @@ export default function Customers() {
 			setCustomers(customers.filter((customer) => Number(customer.id) !== id));
 		}
 	};
-	console.log(customers);
 
-	const breadcrumbItems = [{ href: "/customers", label: "Customers" }];
 	return (
 		<>
 			<header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
@@ -183,47 +185,61 @@ export default function Customers() {
 											</TableRow>
 										</TableHeader>
 										<TableBody>
-											{/* Error */}
-											{error && <div>{error}</div>}
-											{/* Customer */}
-											{customers?.map((customer: Customer) => (
-												<TableRow key={customer.id}>
-													<TableCell>
-														<div className="font-medium">{customer.name}</div>
-														<div className="hidden text-sm text-muted-foreground md:inline">
-															{customer.email}
-														</div>
-													</TableCell>
-													<TableCell className="hidden sm:table-cell">
-														{customer.phone}
-													</TableCell>
-													<TableCell className="hidden sm:table-cell">
-														{customer.adress}
-													</TableCell>
-													<TableCell className="hidden md:table-cell">
-														{customer.created_at
-															? format(
-																	new Date(customer.created_at),
-																	"dd.MM.yyyy HH:mm",
-																)
-															: "N/A"}{" "}
-													</TableCell>
-													<TableCell className="flex justify-end gap-1">
-														<Link href={`/customers/${customer.id}`}>
-															<Button size="sm">Edit</Button>
-															<span className="sr-only">Edit</span>
-														</Link>
-
-														<Button
-															onClick={() => handleDelete(customer.id)}
-															variant="destructive"
-															size="sm"
-														>
-															Delete
-														</Button>
-													</TableCell>
+											{customersLoading ? (
+												<>
+													{Array.from({ length: numSkeletons }).map(
+														(_, index) => (
+															// biome-ignore lint/suspicious/noArrayIndexKey: Using index as key for skeleton rows
+															<SkeletonRow key={`skeleton-${index}`} />
+														),
+													)}
+												</>
+											) : error ? (
+												<TableRow>
+													<TableCell colSpan={6}>{error}</TableCell>
 												</TableRow>
-											))}
+											) : (
+												customers?.map((customer: Customer) => (
+													<TableRow key={customer.id}>
+														<TableCell>
+															<div className="font-medium">{customer.name}</div>
+															<div className="hidden text-sm text-muted-foreground md:inline">
+																{customer.email}
+															</div>
+														</TableCell>
+														<TableCell className="hidden sm:table-cell">
+															{customer.phone}
+														</TableCell>
+														<TableCell className="hidden sm:table-cell">
+															{customer.adress}
+														</TableCell>
+														<TableCell className="hidden md:table-cell">
+															{customer.created_at
+																? format(
+																		new Date(customer.created_at),
+																		"dd.MM.yyyy HH:mm",
+																	)
+																: "N/A"}{" "}
+														</TableCell>
+														<TableCell className="flex justify-end gap-1">
+															<Link href={`/customers/${customer.id}`}>
+																<Button size="sm">Edit</Button>
+																<span className="sr-only">Edit</span>
+															</Link>
+
+															<Button
+																onClick={() =>
+																	handleDelete(Number(customer.id))
+																}
+																variant="destructive"
+																size="sm"
+															>
+																Delete
+															</Button>
+														</TableCell>
+													</TableRow>
+												))
+											)}
 										</TableBody>
 									</Table>
 								</CardContent>

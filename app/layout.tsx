@@ -6,29 +6,29 @@ import "./globals.css";
 import { TooltipProvider } from "@/components/ui/tooltip";
 
 const fontSans = FontSans({
-  subsets: ["latin"],
-  variable: "--font-sans",
+	subsets: ["latin"],
+	variable: "--font-sans",
 });
 export const metadata: Metadata = {
-  title: "Easy Repair",
-  description: "Let's repair stuff!",
+	title: "Easy Repair",
+	description: "Let's repair stuff!",
 };
 
 export default function RootLayout({
-  children,
+	children,
 }: Readonly<{
-  children: React.ReactNode;
+	children: React.ReactNode;
 }>) {
-  return (
-    <html lang="en">
-      <body
-        className={cn(
-          "min-h-screen bg-background font-sans antialiased",
-          fontSans.variable,
-        )}
-      >
-        <TooltipProvider>{children}</TooltipProvider>
-      </body>
-    </html>
-  );
+	return (
+		<html lang="en">
+			<body
+				className={cn(
+					"min-h-screen bg-background font-sans antialiased",
+					fontSans.variable,
+				)}
+			>
+				<TooltipProvider>{children}</TooltipProvider>
+			</body>
+		</html>
+	);
 }
