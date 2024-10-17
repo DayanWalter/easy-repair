@@ -4,7 +4,6 @@ import { File, ListFilter, Search } from "lucide-react";
 import supabase from "@/database/supabaseClient";
 import { useEffect, useState } from "react";
 import type { Product } from "@/types";
-import { Badge } from "@/components/ui/badge";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -33,35 +32,39 @@ import {
 	TableHeader,
 	TableRow,
 } from "@/components/ui/table";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs, TabsContent } from "@/components/ui/tabs";
 
 import { Breadcrumb } from "@/components/breadcrumb/breadcrumb";
 import Avatar from "@/components/avatar/avatar";
+import SkeletonRow from "@/components/skeleton-row/skeleton-row";
 
 export default function Products() {
 	const breadcrumbItems = [{ href: "/products", label: "Products" }];
 
 	const [error, setError] = useState<string | null>(null);
+	const [productsLoading, setProductsLoading] = useState<boolean>(false);
 	const [products, setProducts] = useState<Product[]>([]);
+
+	const numSkeletons = 3;
 
 	useEffect(() => {
 		const fetchProducts = async () => {
+			setProductsLoading(true);
 			const { data, error } = await supabase.from("products").select("*");
 
 			if (error) {
 				setError(`Could not fetch products, Reason: ${error.message}`);
 				setProducts([]);
-				console.log(error);
 				return;
 			}
 			if (data) {
 				setProducts(data);
 				setError(null);
 			}
+			setProductsLoading(false);
 		};
 		fetchProducts();
 	}, []);
-	console.log(products);
 
 	const handleDelete = async (id: number) => {
 		const { data, error } = await supabase
@@ -182,35 +185,50 @@ export default function Products() {
 											</TableRow>
 										</TableHeader>
 										<TableBody>
-											{products.map((product) => (
-												<TableRow key={product.id}>
-													<TableCell>
-														<div className="font-medium">{product.name}</div>
-													</TableCell>
-													<TableCell className="hidden sm:table-cell">
-														{product.description}
-													</TableCell>
-													<TableCell className="hidden sm:table-cell">
-														${product.price?.toFixed(2)}
-													</TableCell>
-													<TableCell className="hidden md:table-cell">
-														{product.category}
-													</TableCell>
-													<TableCell className="flex justify-end gap-1">
-														<Link href={`/products/${product.id}`}>
-															<Button size="sm">Edit</Button>
-															<span className="sr-only">Edit</span>
-														</Link>
-														<Button
-															onClick={() => handleDelete(product.id)}
-															variant="destructive"
-															size="sm"
-														>
-															Delete
-														</Button>
-													</TableCell>
+											{productsLoading ? (
+												<>
+													{Array.from({ length: numSkeletons }).map(
+														(_, index) => (
+															// biome-ignore lint/suspicious/noArrayIndexKey: Using index as key for skeleton rows
+															<SkeletonRow key={`skeleton-${index}`} />
+														),
+													)}
+												</>
+											) : error ? (
+												<TableRow>
+													<TableCell colSpan={6}>{error}</TableCell>
 												</TableRow>
-											))}
+											) : (
+												products.map((product) => (
+													<TableRow key={product.id}>
+														<TableCell>
+															<div className="font-medium">{product.name}</div>
+														</TableCell>
+														<TableCell className="hidden sm:table-cell">
+															{product.description}
+														</TableCell>
+														<TableCell className="hidden sm:table-cell">
+															${product.price?.toFixed(2)}
+														</TableCell>
+														<TableCell className="hidden md:table-cell">
+															{product.category}
+														</TableCell>
+														<TableCell className="flex justify-end gap-1">
+															<Link href={`/products/${product.id}`}>
+																<Button size="sm">Edit</Button>
+																<span className="sr-only">Edit</span>
+															</Link>
+															<Button
+																onClick={() => handleDelete(Number(product.id))}
+																variant="destructive"
+																size="sm"
+															>
+																Delete
+															</Button>
+														</TableCell>
+													</TableRow>
+												))
+											)}
 										</TableBody>
 									</Table>
 								</CardContent>

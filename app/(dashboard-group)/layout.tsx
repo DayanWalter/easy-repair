@@ -1,12 +1,11 @@
 import type React from "react";
 import NavBar from "@/components/navbar/navbar";
-import supabase from "@/database/supabaseClient";
+
 export default function DashboardGroupLayout({
 	children,
 }: Readonly<{
 	children: React.ReactNode;
 }>) {
-	console.log(supabase);
 	return (
 		<>
 			<NavBar />

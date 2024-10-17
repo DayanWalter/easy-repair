@@ -31,33 +31,39 @@ import {
 	TableHeader,
 	TableRow,
 } from "@/components/ui/table";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs, TabsContent } from "@/components/ui/tabs";
 
 import { Breadcrumb } from "@/components/breadcrumb/breadcrumb";
+
 import Avatar from "@/components/avatar/avatar";
 import supabase from "@/database/supabaseClient";
 import { useEffect, useState } from "react";
 import type { Order } from "@/types";
 import { format } from "date-fns";
+import SkeletonRow from "@/components/skeleton-row/skeleton-row";
 export default function Orders() {
 	const breadcrumbItems = [{ href: "/orders", label: "Orders" }];
 	const [error, setError] = useState<string | null>(null);
 	const [orders, setOrders] = useState<Order[]>([]);
+	const [ordersLoading, setOrdersLoading] = useState<boolean>(false);
+
+	const numSkeletons = 3;
 
 	useEffect(() => {
 		const fetchOrders = async () => {
+			setOrdersLoading(true);
 			const { data, error } = await supabase.from("orders").select("*");
 
 			if (error) {
 				setError(`Could not fetch orders, Reason: ${error.message}`);
 				setOrders([]);
-				console.log(error);
 				return;
 			}
 			if (data) {
 				setOrders(data);
 				setError(null);
 			}
+			setOrdersLoading(false);
 		};
 		fetchOrders();
 	}, []);
@@ -77,7 +83,6 @@ export default function Orders() {
 			setOrders(orders.filter((order) => Number(order.id) !== id));
 		}
 	};
-	console.log(orders);
 	return (
 		<>
 			<header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
@@ -187,54 +192,68 @@ export default function Orders() {
 											</TableRow>
 										</TableHeader>
 										<TableBody>
-											{error && <div>{error}</div>}
-											{orders.map((order) => (
-												<TableRow key={order.id}>
-													<TableCell>
-														<div className="font-medium">
-															Order ID: {order.id}
-														</div>
-														<div className="hidden text-sm text-muted-foreground md:inline">
-															Customer ID: {order.customer_id}
-														</div>
-													</TableCell>
-													<TableCell className="hidden sm:table-cell">
-														{order.article_device}
-													</TableCell>
-													<TableCell className="hidden sm:table-cell">
-														<Badge
-															className="text-xs"
-															variant={
-																order.state === "Fulfilled"
-																	? "secondary"
-																	: "outline"
-															}
-														>
-															{order.state}
-														</Badge>
-													</TableCell>
-													<TableCell className="hidden md:table-cell">
-														{order.date_start
-															? format(order.date_start, "dd.MM.yyyy")
-															: "N/A"}
-													</TableCell>
-													<TableCell className="text-right">
-														{order.total_costs}€
-													</TableCell>
-													<TableCell className="flex justify-end gap-1">
-														<Link href={`/orders/${order.id}`}>
-															<Button size="sm">Edit</Button>
-														</Link>
-														<Button
-															onClick={() => handleDelete(order.id)}
-															variant="destructive"
-															size="sm"
-														>
-															Delete
-														</Button>
-													</TableCell>
+											{ordersLoading ? (
+												<>
+													{Array.from({ length: numSkeletons }).map(
+														(_, index) => (
+															// biome-ignore lint/suspicious/noArrayIndexKey: Using index as key for skeleton rows
+															<SkeletonRow key={`skeleton-${index}`} />
+														),
+													)}
+												</>
+											) : error ? (
+												<TableRow>
+													<TableCell colSpan={6}>{error}</TableCell>
 												</TableRow>
-											))}
+											) : (
+												orders.map((order) => (
+													<TableRow key={order.id}>
+														<TableCell>
+															<div className="font-medium">
+																Order ID: {order.id}
+															</div>
+															<div className="hidden text-sm text-muted-foreground md:inline">
+																Customer ID: {order.customer_id}
+															</div>
+														</TableCell>
+														<TableCell className="hidden sm:table-cell">
+															{order.article_device}
+														</TableCell>
+														<TableCell className="hidden sm:table-cell">
+															<Badge
+																className="text-xs"
+																variant={
+																	order.state === "Fulfilled"
+																		? "secondary"
+																		: "outline"
+																}
+															>
+																{order.state}
+															</Badge>
+														</TableCell>
+														<TableCell className="hidden md:table-cell">
+															{order.date_start
+																? format(order.date_start, "dd.MM.yyyy")
+																: "N/A"}
+														</TableCell>
+														<TableCell className="text-right">
+															{order.total_costs}€
+														</TableCell>
+														<TableCell className="flex justify-end gap-1">
+															<Link href={`/orders/${order.id}`}>
+																<Button size="sm">Edit</Button>
+															</Link>
+															<Button
+																onClick={() => handleDelete(Number(order.id))}
+																variant="destructive"
+																size="sm"
+															>
+																Delete
+															</Button>
+														</TableCell>
+													</TableRow>
+												))
+											)}
 										</TableBody>
 									</Table>
 								</CardContent>
