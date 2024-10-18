@@ -39,6 +39,7 @@ import type { Customer } from "@/types";
 import { format } from "date-fns";
 import { Tabs, TabsContent } from "@/components/ui/tabs";
 import SkeletonRow from "@/components/skeleton-row/skeleton-row";
+import { CustomerDeletePopover } from "@/components/customer-delete-popover/customer-delete-popover";
 
 export default function Customers() {
 	const breadcrumbItems = [{ href: "/customers", label: "Customers" }];
@@ -226,16 +227,11 @@ export default function Customers() {
 																<Button size="sm">Edit</Button>
 																<span className="sr-only">Edit</span>
 															</Link>
-
-															<Button
-																onClick={() =>
-																	handleDelete(Number(customer.id))
-																}
-																variant="destructive"
-																size="sm"
-															>
-																Delete
-															</Button>
+															<CustomerDeletePopover
+																customer={customer}
+																customers={customers}
+																setCustomers={setCustomers}
+															/>
 														</TableCell>
 													</TableRow>
 												))

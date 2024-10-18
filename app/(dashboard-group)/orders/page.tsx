@@ -41,6 +41,8 @@ import { useEffect, useState } from "react";
 import type { Order } from "@/types";
 import { format } from "date-fns";
 import SkeletonRow from "@/components/skeleton-row/skeleton-row";
+import { OrderDeletePopover } from "@/components/order-delete-popover/order-delete-popover";
+
 export default function Orders() {
 	const breadcrumbItems = [{ href: "/orders", label: "Orders" }];
 	const [error, setError] = useState<string | null>(null);
@@ -68,21 +70,6 @@ export default function Orders() {
 		fetchOrders();
 	}, []);
 
-	const handleDelete = async (id: number) => {
-		const { data, error } = await supabase
-			.from("orders")
-			.delete()
-			.eq("id", id)
-			.select();
-
-		if (error) {
-			setError(`Could not delete order, Reason: ${error.message}`);
-			return;
-		}
-		if (data) {
-			setOrders(orders.filter((order) => Number(order.id) !== id));
-		}
-	};
 	return (
 		<>
 			<header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
@@ -243,13 +230,11 @@ export default function Orders() {
 															<Link href={`/orders/${order.id}`}>
 																<Button size="sm">Edit</Button>
 															</Link>
-															<Button
-																onClick={() => handleDelete(Number(order.id))}
-																variant="destructive"
-																size="sm"
-															>
-																Delete
-															</Button>
+															<OrderDeletePopover
+																order={order}
+																orders={orders}
+																setOrders={setOrders}
+															/>
 														</TableCell>
 													</TableRow>
 												))

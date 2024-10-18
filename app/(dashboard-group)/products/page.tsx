@@ -37,6 +37,7 @@ import { Tabs, TabsContent } from "@/components/ui/tabs";
 import { Breadcrumb } from "@/components/breadcrumb/breadcrumb";
 import Avatar from "@/components/avatar/avatar";
 import SkeletonRow from "@/components/skeleton-row/skeleton-row";
+import { ProductDeletePopover } from "@/components/product-delete-popover/product-delete-popover";
 
 export default function Products() {
 	const [error, setError] = useState<string | null>(null);
@@ -65,21 +66,6 @@ export default function Products() {
 		fetchProducts();
 	}, []);
 
-	const handleDelete = async (id: number) => {
-		const { data, error } = await supabase
-			.from("products")
-			.delete()
-			.eq("id", id)
-			.select();
-
-		if (error) {
-			setError(`Could not delete product, Reason: ${error.message}`);
-			return;
-		}
-		if (data) {
-			setProducts(products.filter((product) => Number(product.id) !== id));
-		}
-	};
 	return (
 		<>
 			<header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
@@ -217,13 +203,11 @@ export default function Products() {
 																<Button size="sm">Edit</Button>
 																<span className="sr-only">Edit</span>
 															</Link>
-															<Button
-																onClick={() => handleDelete(Number(product.id))}
-																variant="destructive"
-																size="sm"
-															>
-																Delete
-															</Button>
+															<ProductDeletePopover
+																product={product}
+																products={products}
+																setProducts={setProducts}
+															/>
 														</TableCell>
 													</TableRow>
 												))
