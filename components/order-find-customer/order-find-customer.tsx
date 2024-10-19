@@ -65,7 +65,7 @@ export default function OrderFindCustomer({
 			<CardHeader className="pb-3">
 				<CardTitle>Kunde</CardTitle>
 				<CardDescription className="max-w-lg text-balance leading-relaxed">
-					Id: {selectedCustomer?.id || "-"}
+					Kundennr.: {selectedCustomer?.id || "-"}
 				</CardDescription>
 			</CardHeader>
 			<CardContent>

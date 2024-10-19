@@ -59,12 +59,12 @@ export default function LoginForm() {
 						render={({ field }) => (
 							<FormItem>
 								<div className="flex items-center">
-									<FormLabel>Password</FormLabel>
+									<FormLabel>Passwort</FormLabel>
 									<Link
 										href="/forgot-password"
 										className="ml-auto inline-block text-sm underline"
 									>
-										Forgot your password?
+										Passwort vergessen?
 									</Link>
 								</div>
 
@@ -78,7 +78,7 @@ export default function LoginForm() {
 
 					{/* submit button */}
 					<Button type="submit" className="w-full">
-						Login
+						Anmelden
 					</Button>
 				</form>
 			</Form>

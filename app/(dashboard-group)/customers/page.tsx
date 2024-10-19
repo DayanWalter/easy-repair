@@ -41,7 +41,7 @@ import SkeletonRow from "@/components/skeleton-row/skeleton-row";
 import { CustomerDeletePopover } from "@/components/customer-delete-popover/customer-delete-popover";
 
 export default function Customers() {
-	const breadcrumbItems = [{ href: "/customers", label: "Customers" }];
+	const breadcrumbItems = [{ href: "/customers", label: "Kunden" }];
 
 	const [error, setError] = useState<string | null>(null);
 	const [customersLoading, setCustomersLoading] = useState<boolean>(false);
@@ -78,7 +78,7 @@ export default function Customers() {
 					<Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
 					<Input
 						type="search"
-						placeholder="Search..."
+						placeholder="Suchen..."
 						className="w-full rounded-lg bg-background pl-8 md:w-[200px] lg:w-[336px]"
 					/>
 				</div>
@@ -91,16 +91,15 @@ export default function Customers() {
 						{/* Your customers */}
 						<Card className="" x-chunk="dashboard-05-chunk-0">
 							<CardHeader className="pb-3">
-								<CardTitle>Your Customers</CardTitle>
+								<CardTitle>Ihre Kunden</CardTitle>
 								<CardDescription className="max-w-lg text-balance leading-relaxed">
-									Introducing Our Dynamic Orders Dashboard for Seamless
-									Management and Insightful Analysis.
+									Hier finden Sie eine umfassende Übersicht Ihrer Kundendaten.
 								</CardDescription>
 							</CardHeader>
 							<CardFooter>
 								<Link href="/customers/newcustomer">
-									<Button>Create New Customer</Button>
-									<span className="sr-only">Create new customer</span>
+									<Button>Kunde erstellen</Button>
+									<span className="sr-only">Kunde erstellen</span>
 								</Link>
 							</CardFooter>
 						</Card>
@@ -148,24 +147,24 @@ export default function Customers() {
 						<TabsContent value="customers">
 							<Card x-chunk="dashboard-05-chunk-3">
 								<CardHeader className="px-7">
-									<CardTitle>Customers</CardTitle>
-									<CardDescription>These are your customers.</CardDescription>
+									<CardTitle>Kunden</CardTitle>
+									<CardDescription>Übersicht Ihrer Kunden.</CardDescription>
 								</CardHeader>
 								<CardContent>
 									<Table>
 										<TableHeader>
 											<TableRow>
-												<TableHead>Customer</TableHead>
+												<TableHead>Kunde</TableHead>
 												<TableHead className="hidden sm:table-cell">
-													Phone
+													Telefon
 												</TableHead>
 												<TableHead className="hidden sm:table-cell">
-													Street
+													Straße
 												</TableHead>
 												<TableHead className="hidden md:table-cell">
-													Added
+													Hinzugefügt
 												</TableHead>
-												<TableHead className="text-right">Edit</TableHead>
+												<TableHead className="text-right">Bearbeiten</TableHead>
 											</TableRow>
 										</TableHeader>
 										<TableBody>
@@ -207,8 +206,8 @@ export default function Customers() {
 														</TableCell>
 														<TableCell className="flex justify-end gap-1">
 															<Link href={`/customers/${customer.id}`}>
-																<Button size="sm">Edit</Button>
-																<span className="sr-only">Edit</span>
+																<Button size="sm">Bearbeiten</Button>
+																<span className="sr-only">Bearbeiten</span>
 															</Link>
 															<CustomerDeletePopover
 																customer={customer}

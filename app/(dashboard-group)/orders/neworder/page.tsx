@@ -74,8 +74,8 @@ export default function NewOrder() {
 		total_costs: 0,
 	};
 	const breadcrumbItems = [
-		{ href: "/orders", label: "Orders" },
-		{ href: "/orders/neworder", label: "New Order" },
+		{ href: "/orders", label: "Bestellungen" },
+		{ href: "/orders/neworder", label: "Neue Bestellung" },
 	];
 	const [newOrder, setNewOrder] = useState<Order>(initialOrderState);
 	//TODO: use error state

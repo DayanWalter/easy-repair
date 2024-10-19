@@ -89,7 +89,7 @@ export default function SingleOrder({ params }: Props) {
 
 	const breadcrumbItems = [
 		{
-			label: "Orders",
+			label: "Bestellungen",
 			href: "/orders",
 		},
 		{
@@ -323,7 +323,7 @@ export default function SingleOrder({ params }: Props) {
 							<CardHeader className="pb-3">
 								<CardTitle>Kunde</CardTitle>
 								<CardDescription className="max-w-lg text-balance leading-relaxed">
-									Id: {order?.customer_id}
+									Kundennr.: {order?.customer_id}
 								</CardDescription>
 							</CardHeader>
 							<CardContent>
@@ -433,8 +433,8 @@ export default function SingleOrder({ params }: Props) {
 											Gerät erneut da
 										</label>
 									</div>
+									<Label htmlFor="old_order_id">Alte Auftragsnummer</Label>
 									<Input
-										placeholder="Alte Auftragsnummer"
 										value={order?.old_order_id}
 										onChange={handleOldOrderId}
 									/>
@@ -455,7 +455,6 @@ export default function SingleOrder({ params }: Props) {
 										<Label htmlFor="password">Passwort</Label>
 										<Input
 											id="password"
-											placeholder="Passwords"
 											value={order?.account_access}
 											onChange={handleAccountAccess}
 										/>
@@ -464,7 +463,6 @@ export default function SingleOrder({ params }: Props) {
 										<Label htmlFor="accounts">Weitere</Label>
 										<Input
 											id="accounts"
-											placeholder="More"
 											value={order?.account_access_more}
 											onChange={handleAccountAccessMore}
 										/>
@@ -719,13 +717,15 @@ export default function SingleOrder({ params }: Props) {
 						{/* Zeit */}
 						<Card x-chunk="dashboard-05-chunk-1">
 							<CardHeader className="pb-2">
-								<CardTitle>Zeit</CardTitle>
+								<CardTitle>Reparaturzeit in Std.</CardTitle>
 								<CardDescription>
 									Wie lange hat die Reparatur gedauert?
 								</CardDescription>
 							</CardHeader>
 							<CardContent>
 								<Input
+									type="number"
+									step="0.01"
 									id="repair_time"
 									onChange={handleInputChange}
 									value={order?.repair_time}
@@ -736,7 +736,7 @@ export default function SingleOrder({ params }: Props) {
 						{/* Lohnkosten */}
 						<Card x-chunk="dashboard-05-chunk-1">
 							<CardHeader className="pb-2">
-								<CardTitle>Lohnkosten</CardTitle>
+								<CardTitle>Lohnkosten in €</CardTitle>
 								<CardDescription>Wie hoch sind die Lohnkosten?</CardDescription>
 							</CardHeader>
 							<CardContent>
@@ -753,7 +753,7 @@ export default function SingleOrder({ params }: Props) {
 						{/* Materialkosten */}
 						<Card x-chunk="dashboard-05-chunk-1">
 							<CardHeader className="pb-2">
-								<CardTitle>Materialkosten</CardTitle>
+								<CardTitle>Materialkosten in €</CardTitle>
 								<CardDescription>
 									Wie hoch sind die Materialkosten?
 								</CardDescription>
@@ -772,9 +772,9 @@ export default function SingleOrder({ params }: Props) {
 						{/* Gesamtkosten */}
 						<Card x-chunk="dashboard-05-chunk-1">
 							<CardHeader className="pb-2">
-								<CardTitle>Gesamtkosten</CardTitle>
+								<CardTitle>Gesamtkosten in €</CardTitle>
 								<CardDescription>
-									Wie hoch sind die Gesamtkosten?
+									Wie hoch sind die Gesamtkosten in €?
 								</CardDescription>
 							</CardHeader>
 							<CardContent>

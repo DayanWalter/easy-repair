@@ -24,7 +24,7 @@ export default function RegisterForm() {
 			confirmPassword: z.string().min(4),
 		})
 		.refine((data) => data.password === data.confirmPassword, {
-			message: "Passwords don't match",
+			message: "Passwörter stimmen nicht überein",
 			path: ["confirmPassword"],
 		});
 
@@ -53,7 +53,7 @@ export default function RegisterForm() {
 						name="userName"
 						render={({ field }) => (
 							<FormItem>
-								<FormLabel>User Name</FormLabel>
+								<FormLabel>Benutzername</FormLabel>
 								<FormControl>
 									<Input type="text" placeholder="JohnDoe" {...field} />
 								</FormControl>
@@ -81,7 +81,7 @@ export default function RegisterForm() {
 						name="password"
 						render={({ field }) => (
 							<FormItem>
-								<FormLabel>Password</FormLabel>
+								<FormLabel>Passwort</FormLabel>
 
 								<FormControl>
 									<Input type="password" placeholder="" {...field} />
@@ -96,7 +96,7 @@ export default function RegisterForm() {
 						name="confirmPassword"
 						render={({ field }) => (
 							<FormItem>
-								<FormLabel>Confirm Password</FormLabel>
+								<FormLabel>Passwort bestätigen</FormLabel>
 
 								<FormControl>
 									<Input type="password" placeholder="" {...field} />
@@ -108,7 +108,7 @@ export default function RegisterForm() {
 
 					{/* submit button */}
 					<Button type="submit" className="w-full">
-						Create account
+						Konto erstellen
 					</Button>
 				</form>
 			</Form>

@@ -37,15 +37,15 @@ export const ProductDeletePopover = ({
 		<Popover>
 			<PopoverTrigger asChild>
 				<Button variant="destructive" size="sm">
-					Delete
+					Löschen
 				</Button>
 			</PopoverTrigger>
 			<PopoverContent className="w-80">
 				<div className="grid gap-4">
 					<div className="space-y-2">
-						<h4 className="font-medium leading-none">Delete product</h4>
+						<h4 className="font-medium leading-none">Produkt löschen</h4>
 						<p className="text-sm text-muted-foreground">
-							Enter &quot;delete&quot;, if you want to delete this product
+							Geben Sie &quot;delete&quot; ein, um dieses Produkt zu löschen
 						</p>
 					</div>
 					<div className="grid gap-2">
@@ -67,7 +67,7 @@ export const ProductDeletePopover = ({
 								size="sm"
 								disabled={deleteText.toLowerCase() !== "delete"}
 							>
-								DELETE
+								LÖSCHEN
 							</Button>
 						</div>
 					</div>

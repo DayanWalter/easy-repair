@@ -35,7 +35,7 @@ export default function SingleCustomer({ params }: Props) {
 	const [error, setError] = useState<string | null>(null);
 	const breadcrumbItems = [
 		{
-			label: "Customers",
+			label: "Kunden",
 			href: "/customers",
 		},
 		{
@@ -100,7 +100,7 @@ export default function SingleCustomer({ params }: Props) {
 					<Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
 					<Input
 						type="search"
-						placeholder="Search..."
+						placeholder="Suchen..."
 						className="w-full rounded-lg bg-background pl-8 md:w-[200px] lg:w-[336px]"
 					/>
 				</div>
@@ -113,9 +113,9 @@ export default function SingleCustomer({ params }: Props) {
 						{/* Kunde */}
 						<Card className="" x-chunk="dashboard-05-chunk-0">
 							<CardHeader className="pb-3">
-								<CardTitle>Customer</CardTitle>
+								<CardTitle>Kunde</CardTitle>
 								<CardDescription className="max-w-lg text-balance leading-relaxed">
-									Id: {customer?.id}
+									Kundennr.: {customer?.id}
 								</CardDescription>
 							</CardHeader>
 							<CardContent>
@@ -129,7 +129,7 @@ export default function SingleCustomer({ params }: Props) {
 										onChange={handleChange}
 									/>
 
-									<Label htmlFor="phone">Phone</Label>
+									<Label htmlFor="phone">Telefon</Label>
 									<Input
 										type="text"
 										id="phone"
@@ -138,7 +138,7 @@ export default function SingleCustomer({ params }: Props) {
 										onChange={handleChange}
 									/>
 
-									<Label htmlFor="adress">Adress</Label>
+									<Label htmlFor="adress">Adresse</Label>
 									<Input
 										type="text"
 										id="adress"
@@ -158,7 +158,7 @@ export default function SingleCustomer({ params }: Props) {
 								</div>
 							</CardContent>
 							<CardFooter>
-								<Button onClick={handleSubmit}>Update Customer</Button>
+								<Button onClick={handleSubmit}>Kunde aktualisieren</Button>
 								{error && <p className="text-red-500">{error}</p>}
 							</CardFooter>
 						</Card>

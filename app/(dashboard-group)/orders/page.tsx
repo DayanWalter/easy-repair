@@ -44,7 +44,7 @@ import SkeletonRow from "@/components/skeleton-row/skeleton-row";
 import { OrderDeletePopover } from "@/components/order-delete-popover/order-delete-popover";
 
 export default function Orders() {
-	const breadcrumbItems = [{ href: "/orders", label: "Orders" }];
+	const breadcrumbItems = [{ href: "/orders", label: "Bestellungen" }];
 	const [error, setError] = useState<string | null>(null);
 	const [orders, setOrders] = useState<Order[]>([]);
 	const [ordersLoading, setOrdersLoading] = useState<boolean>(false);
@@ -80,7 +80,7 @@ export default function Orders() {
 					<Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
 					<Input
 						type="search"
-						placeholder="Search..."
+						placeholder="Suchen..."
 						className="w-full rounded-lg bg-background pl-8 md:w-[200px] lg:w-[336px]"
 					/>
 				</div>
@@ -93,16 +93,16 @@ export default function Orders() {
 						{/* Your Orders */}
 						<Card className="" x-chunk="dashboard-05-chunk-0">
 							<CardHeader className="pb-3">
-								<CardTitle>Your Orders</CardTitle>
+								<CardTitle>Ihre Bestellungen</CardTitle>
 								<CardDescription className="max-w-lg text-balance leading-relaxed">
-									Introducing Our Dynamic Orders Dashboard for Seamless
-									Management and Insightful Analysis.
+									Übersicht aller Bestellungen. Prüfen Sie den Status oder
+									erstellen Sie neue Aufträge.
 								</CardDescription>
 							</CardHeader>
 							<CardFooter>
 								<Link href="/orders/neworder">
-									<Button>Create New Order</Button>
-									<span className="sr-only">Create new order</span>
+									<Button>Auftrag erstellen</Button>
+									<span className="sr-only">Auftrag erstellen</span>
 								</Link>
 							</CardFooter>
 						</Card>
@@ -153,29 +153,29 @@ export default function Orders() {
 						<TabsContent value="week">
 							<Card x-chunk="dashboard-05-chunk-3">
 								<CardHeader className="px-7">
-									<CardTitle>Orders</CardTitle>
+									<CardTitle>Bestellungen</CardTitle>
 									<CardDescription>
-										Recent orders from your store.
+										Übersicht Ihrer erstellten Aufträge und Bestellungen.
 									</CardDescription>
 								</CardHeader>
 								<CardContent>
 									<Table>
 										<TableHeader>
 											<TableRow>
-												<TableHead>Order ID / Customer ID</TableHead>
+												<TableHead>Auftragsnr. / Kundennr.</TableHead>
 												<TableHead className="hidden sm:table-cell">
-													Device
+													Gerät
 												</TableHead>
 												<TableHead className="hidden sm:table-cell">
 													Status
 												</TableHead>
 												<TableHead className="hidden md:table-cell">
-													Start Date
+													Startdatum
 												</TableHead>
 												<TableHead className="text-right">
-													Total Price
+													Gesamtbetrag{" "}
 												</TableHead>
-												<TableHead className="text-right">Actions</TableHead>
+												<TableHead className="text-right">Aktionen</TableHead>
 											</TableRow>
 										</TableHeader>
 										<TableBody>
@@ -197,10 +197,10 @@ export default function Orders() {
 													<TableRow key={order.id}>
 														<TableCell>
 															<div className="font-medium">
-																Order ID: {order.id}
+																Auftragsnr.: {order.id}
 															</div>
 															<div className="hidden text-sm text-muted-foreground md:inline">
-																Customer ID: {order.customer_id}
+																Kundennr.: {order.customer_id}
 															</div>
 														</TableCell>
 														<TableCell className="hidden sm:table-cell">
@@ -228,7 +228,7 @@ export default function Orders() {
 														</TableCell>
 														<TableCell className="flex justify-end gap-1">
 															<Link href={`/orders/${order.id}`}>
-																<Button size="sm">Edit</Button>
+																<Button size="sm">Bearbeiten</Button>
 															</Link>
 															<OrderDeletePopover
 																order={order}
