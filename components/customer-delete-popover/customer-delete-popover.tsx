@@ -58,7 +58,7 @@ export const CustomerDeletePopover = ({
 							/>
 							<Button
 								onClick={() => {
-									if (deleteText === "delete") {
+									if (deleteText.toLowerCase() === "delete") {
 										handleDelete(Number(customer.id));
 										setDeleteText("");
 									}
