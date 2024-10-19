@@ -45,7 +45,7 @@ export const CustomerDeletePopover = ({
 					<div className="space-y-2">
 						<h4 className="font-medium leading-none">Delete customer</h4>
 						<p className="text-sm text-muted-foreground">
-							Enter "delete", if you want to delete this customer
+							Enter &quot;delete&quot;, if you want to delete this customer
 						</p>
 					</div>
 					<div className="grid gap-2">

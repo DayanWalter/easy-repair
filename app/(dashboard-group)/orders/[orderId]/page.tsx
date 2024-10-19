@@ -53,7 +53,7 @@ import { customers } from "@/database/customers";
 import { Breadcrumb } from "@/components/breadcrumb/breadcrumb";
 
 import supabase from "@/database/supabaseClient";
-import type { Order } from "@/types";
+import type { Customer, Order } from "@/types";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
@@ -69,6 +69,7 @@ import {
 	SheetTrigger,
 } from "@/components/ui/sheet";
 import OrderMessages from "@/components/order-messages/order-messages";
+import SkeletonInput from "@/components/skeleton-input/skeleton-input";
 
 type Props = {
 	params: {
@@ -79,7 +80,12 @@ type Props = {
 export default function SingleOrder({ params }: Props) {
 	const router = useRouter();
 	const [order, setOrder] = useState<Order>({} as Order);
-	const [error, setError] = useState<string | null>(null);
+	const [customer, setCustomer] = useState<Customer | null>(null);
+
+	// TODO: Error handling
+	const [orderError, setOrderError] = useState<string | null>(null);
+	const [customerError, setCustomerError] = useState<string | null>(null);
+	const [isLoading, setIsLoading] = useState<boolean>(false);
 
 	const breadcrumbItems = [
 		{
@@ -93,23 +99,50 @@ export default function SingleOrder({ params }: Props) {
 	];
 	useEffect(() => {
 		const fetchOrder = async () => {
-			const { data, error } = await supabase
+			const { data, error: orderError } = await supabase
 				.from("orders")
 				.select()
 				.eq("id", params.orderId)
 				.single();
 
-			if (error) {
-				console.error("Error fetching order:", error);
-				setError(error.message);
+			if (orderError) {
+				console.error("Error fetching order:", orderError);
+				setOrderError(orderError.message);
 			}
 			if (data) {
 				setOrder(data);
-				setError(null);
+				setOrderError(null);
 			}
 		};
 		fetchOrder();
 	}, [params.orderId]);
+
+	useEffect(() => {
+		const fetchCustomer = async () => {
+			setIsLoading(true);
+			if (order?.customer_id) {
+				const { data, error } = await supabase
+					.from("customers")
+					.select()
+					.eq("id", order.customer_id)
+					.single();
+
+				if (error) {
+					console.error("Error fetching customer:", error);
+					setCustomerError(error.message);
+				}
+				if (data) {
+					setCustomer(data);
+					setCustomerError(null);
+				}
+				setIsLoading(false);
+			}
+			// else {
+			// 	setIsLoading(false);
+			// }
+		};
+		fetchCustomer();
+	}, [order?.customer_id]);
 
 	const handleVerifiedChange = () => {
 		setOrder((prevOrder) => {
@@ -256,11 +289,11 @@ export default function SingleOrder({ params }: Props) {
 			.select();
 		if (error) {
 			console.error("Error updating order:", error);
-			setError(error.message);
+			setOrderError(error.message);
 		}
 		if (data) {
 			console.log("Order updated:", data);
-			setError(null);
+			setOrderError(null);
 			router.push("/orders");
 		}
 	};
@@ -295,24 +328,38 @@ export default function SingleOrder({ params }: Props) {
 							</CardHeader>
 							<CardContent>
 								<div className="grid gap-2">
-									<Input
-										type="name"
-										id="name"
-										placeholder="Name of customer"
-										disabled
-									/>
-									<Input
-										type="phone"
-										id="phone"
-										placeholder="Phone of customer"
-										disabled
-									/>
-									<Input
-										type="email"
-										id="email"
-										placeholder="Email of customer"
-										disabled
-									/>
+									{isLoading ? (
+										<>
+											<SkeletonInput />
+											<SkeletonInput />
+											<SkeletonInput />
+										</>
+									) : (
+										<>
+											<Input
+												type="name"
+												id="name"
+												placeholder={customer?.name || "Kein Name vorhanden"}
+												disabled
+											/>
+											<Input
+												type="phone"
+												id="phone"
+												placeholder={
+													customer?.phone || "Keine Telefonnummer vorhanden"
+												}
+												disabled
+											/>
+											<Input
+												type="email"
+												id="email"
+												placeholder={
+													customer?.email || "Keine E-Mail vorhanden"
+												}
+												disabled
+											/>
+										</>
+									)}
 								</div>
 							</CardContent>
 							<CardFooter />

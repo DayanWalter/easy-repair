@@ -45,7 +45,7 @@ export const OrderDeletePopover = ({
 					<div className="space-y-2">
 						<h4 className="font-medium leading-none">Delete order</h4>
 						<p className="text-sm text-muted-foreground">
-							Enter "delete", if you want to delete this order
+							Enter &quot;delete&quot;, if you want to delete this order
 						</p>
 					</div>
 					<div className="grid gap-2">
