@@ -167,6 +167,9 @@ export default function Products() {
 													Preis
 												</TableHead>
 												<TableHead className="hidden md:table-cell">
+													Lagerbestand
+												</TableHead>
+												<TableHead className="hidden md:table-cell">
 													Kategorie
 												</TableHead>
 												<TableHead className="text-right">Aktionen</TableHead>
@@ -197,6 +200,9 @@ export default function Products() {
 														</TableCell>
 														<TableCell className="hidden sm:table-cell">
 															{product.price?.toFixed(2)} €
+														</TableCell>
+														<TableCell className="hidden md:table-cell">
+															{product.stock}
 														</TableCell>
 														<TableCell className="hidden md:table-cell">
 															{product.category}
