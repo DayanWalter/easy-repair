@@ -44,6 +44,7 @@ import { useState } from "react";
 import supabase from "@/database/supabaseClient";
 import type { Order } from "@/types";
 import { useRouter } from "next/navigation";
+import OrderFindCustomer from "@/components/order-find-customer/order-find-customer";
 
 export default function NewOrder() {
 	const router = useRouter();
@@ -135,6 +136,13 @@ export default function NewOrder() {
 		}));
 	};
 
+	const handleCustomerChange = (customerId: number) => {
+		setNewOrder((prevState) => ({
+			...prevState,
+			customer_id: customerId,
+		}));
+	};
+
 	const handleCreateOrder = async () => {
 		console.log("Order created:", newOrder);
 		//TODO: Error handling
@@ -181,34 +189,7 @@ export default function NewOrder() {
 				<div className="grid auto-rows-max items-start gap-4 md:gap-8 lg:col-span-2">
 					<div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
 						{/* Kunde */}
-						<Card className="" x-chunk="dashboard-05-chunk-0">
-							<CardHeader className="pb-3">
-								<CardTitle>Kunde</CardTitle>
-								<CardDescription className="max-w-lg text-balance leading-relaxed">
-									Id: 123456
-								</CardDescription>
-							</CardHeader>
-							<CardContent>
-								<div className="grid gap-2">
-									<Input
-										type="name"
-										id="name"
-										placeholder="John Doe"
-										disabled
-									/>
-									<Input type="phone" id="phone" placeholder="65865" disabled />
-									<Input
-										type="email"
-										id="email"
-										placeholder="John@Doe.com"
-										disabled
-									/>
-								</div>
-							</CardContent>
-							<CardFooter>
-								<Button>Kunden suchen</Button>
-							</CardFooter>
-						</Card>
+						<OrderFindCustomer onCustomerChange={handleCustomerChange} />
 						{/* Auftragsnummer */}
 						<Card className="" x-chunk="dashboard-05-chunk-0">
 							<CardHeader className="pb-3">
@@ -251,18 +232,18 @@ export default function NewOrder() {
 										<SelectContent>
 											<SelectGroup>
 												<SelectLabel>Status</SelectLabel>
-												<SelectItem value="annahme">Annahme</SelectItem>
-												<SelectItem value="technik">Technik</SelectItem>
-												<SelectItem value="technikWartend">
+												<SelectItem value="Annahme">Annahme</SelectItem>
+												<SelectItem value="Technik">Technik</SelectItem>
+												<SelectItem value="Technik wartend">
 													Technik wartend
 												</SelectItem>
-												<SelectItem value="kundenAnrufen">
+												<SelectItem value="Kunden anrufen">
 													Kunden anrufen
 												</SelectItem>
-												<SelectItem value="geraetWirdAbgeholt">
+												<SelectItem value="Gerät wird abgeholt">
 													Gerät wird abgeholt
 												</SelectItem>
-												<SelectItem value="teileBestellt">
+												<SelectItem value="Teile bestellt">
 													Teile bestellt
 												</SelectItem>
 											</SelectGroup>
@@ -644,6 +625,7 @@ export default function NewOrder() {
 							<CardFooter />
 						</Card>
 					</div>
+					{/* Auftrag erstellen Button */}
 					<Button
 						size={"lg"}
 						variant={"destructive"}

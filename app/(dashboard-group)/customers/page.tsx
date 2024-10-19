@@ -30,7 +30,6 @@ import {
 	TableRow,
 } from "@/components/ui/table";
 
-// import { customers } from "@/database/customers";
 import { Breadcrumb } from "@/components/breadcrumb/breadcrumb";
 import Avatar from "@/components/avatar/avatar";
 import supabase from "@/database/supabaseClient";
@@ -68,22 +67,6 @@ export default function Customers() {
 		};
 		fetchCustomers();
 	}, []);
-
-	const handleDelete = async (id: number) => {
-		const { data, error } = await supabase
-			.from("customers")
-			.delete()
-			.eq("id", id)
-			.select();
-
-		if (error) {
-			setError(`Could not delete customer, Reason: ${error.message}`);
-			return;
-		}
-		if (data) {
-			setCustomers(customers.filter((customer) => Number(customer.id) !== id));
-		}
-	};
 
 	return (
 		<>

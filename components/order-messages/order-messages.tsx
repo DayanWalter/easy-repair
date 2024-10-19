@@ -30,6 +30,7 @@ import type { OrderCommunication } from "@/types";
 
 export default function OrderMessages({ orderId }: { orderId: number }) {
 	const [newMessage, setNewMessage] = useState({ author: "", text: "" });
+	//TODO: use error state
 	const [error, setError] = useState<string | null>(null);
 
 	const [communication, setCommunication] = useState<OrderCommunication[]>([]);
@@ -55,15 +56,9 @@ export default function OrderMessages({ orderId }: { orderId: number }) {
 		}
 	}, [orderId]);
 
-	const handleChangeName = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const { id, value } = e.target;
-		setNewMessage((prevState) => ({
-			...prevState,
-			[id]: value,
-		}));
-	};
-
-	const handleChangeText = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+	const handleChange = (
+		e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+	) => {
 		const { id, value } = e.target;
 		setNewMessage((prevState) => ({
 			...prevState,
@@ -125,7 +120,7 @@ export default function OrderMessages({ orderId }: { orderId: number }) {
 										id="author"
 										placeholder="Your name"
 										value={newMessage.author}
-										onChange={handleChangeName}
+										onChange={handleChange}
 										className="col-span-3"
 									/>
 								</div>
@@ -137,7 +132,7 @@ export default function OrderMessages({ orderId }: { orderId: number }) {
 										id="text"
 										placeholder="Your message"
 										value={newMessage.text}
-										onChange={handleChangeText}
+										onChange={handleChange}
 										className="col-span-3"
 									/>
 								</div>
