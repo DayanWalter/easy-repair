@@ -70,10 +70,6 @@ import {
 } from "@/components/ui/sheet";
 import OrderMessages from "@/components/order-messages/order-messages";
 
-// const communication = [
-// 	{ text: "New message", who: "You", date: new Date() },
-// ];
-
 type Props = {
 	params: {
 		orderId: string;
@@ -250,7 +246,6 @@ export default function SingleOrder({ params }: Props) {
 			return prevOrder;
 		});
 	};
-
 	const handleSubmit = async () => {
 		const { data, error } = await supabase
 			.from("orders")

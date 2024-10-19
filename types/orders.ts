@@ -1,6 +1,6 @@
 export type Order = {
 	id?: string;
-	customer_id?: string;
+	customer_id?: number;
 	verified: boolean;
 	state?: string;
 	again: boolean;
