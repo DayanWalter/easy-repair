@@ -32,7 +32,7 @@ export default function SingleProduct({ params }: Props) {
 
 	const breadcrumbItems = [
 		{
-			label: "Products",
+			label: "Produkte",
 			href: "/products",
 		},
 		{
@@ -105,9 +105,9 @@ export default function SingleProduct({ params }: Props) {
 					<div className="grid xl:grid-cols-2">
 						<Card className="" x-chunk="dashboard-05-chunk-0">
 							<CardHeader className="pb-3">
-								<CardTitle>Product</CardTitle>
+								<CardTitle>Produkt</CardTitle>
 								<CardDescription className="max-w-lg text-balance leading-relaxed">
-									Id: {product?.id}
+									Produktnr: {product?.id}
 								</CardDescription>
 							</CardHeader>
 							<CardContent>
@@ -116,21 +116,21 @@ export default function SingleProduct({ params }: Props) {
 									<Input
 										type="text"
 										id="name"
-										placeholder="Product Name"
+										placeholder="Produktname"
 										value={product?.name}
 										onChange={handleChange}
 									/>
 
-									<Label htmlFor="description">Description</Label>
+									<Label htmlFor="description">Beschreibung</Label>
 									<Input
 										type="text"
 										id="description"
-										placeholder="Product Description"
+										placeholder="Produktbeschreibung"
 										value={product?.description}
 										onChange={handleChange}
 									/>
 
-									<Label htmlFor="price">Price</Label>
+									<Label htmlFor="price">Preis</Label>
 									<Input
 										type="text"
 										id="price"
@@ -139,16 +139,16 @@ export default function SingleProduct({ params }: Props) {
 										onChange={handleChange}
 									/>
 
-									<Label htmlFor="category">Category</Label>
+									<Label htmlFor="category">Kategorie</Label>
 									<Input
 										type="text"
 										id="category"
-										placeholder="Category"
+										placeholder="Kategorie"
 										value={product?.category}
 										onChange={handleChange}
 									/>
 
-									<Label htmlFor="stock">Stock</Label>
+									<Label htmlFor="stock">Lagerbestand</Label>
 									<Input
 										type="text"
 										id="stock"
@@ -166,16 +166,16 @@ export default function SingleProduct({ params }: Props) {
 										onChange={handleChange}
 									/>
 
-									<Label htmlFor="manufacturer">Manufacturer</Label>
+									<Label htmlFor="manufacturer">Hersteller</Label>
 									<Input
 										type="text"
 										id="manufacturer"
-										placeholder="Manufacturer"
+										placeholder="Hersteller"
 										value={product?.manufacturer}
 										onChange={handleChange}
 									/>
 
-									<Label htmlFor="image">Image URL</Label>
+									<Label htmlFor="image">Bild-URL</Label>
 									<Input
 										type="text"
 										id="image"
@@ -186,7 +186,7 @@ export default function SingleProduct({ params }: Props) {
 								</div>
 							</CardContent>
 							<CardFooter>
-								<Button onClick={handleSubmit}>Update Product</Button>
+								<Button onClick={handleSubmit}>Produkt aktualisieren</Button>
 								{error && <p className="text-red-500">{error}</p>}
 							</CardFooter>
 						</Card>

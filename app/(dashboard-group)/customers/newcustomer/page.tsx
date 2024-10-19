@@ -34,8 +34,8 @@ export default function NewCustomer() {
 		email: undefined,
 	};
 	const breadcrumbItems = [
-		{ href: "/customers", label: "Customers" },
-		{ href: "/customers/newcustomer", label: "New Customer" },
+		{ href: "/customers", label: "Kunden" },
+		{ href: "/customers/newcustomer", label: "Neuer Kunde" },
 	];
 	const [newCustomer, setNewCustomer] = useState(initialCustomerState);
 	//TODO: use error state
@@ -86,7 +86,7 @@ export default function NewCustomer() {
 					<Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
 					<Input
 						type="search"
-						placeholder="Search..."
+						placeholder="Suchen..."
 						className="w-full rounded-lg bg-background pl-8 md:w-[200px] lg:w-[336px]"
 					/>
 				</div>
@@ -99,7 +99,7 @@ export default function NewCustomer() {
 						{/* Kunde */}
 						<Card className="" x-chunk="dashboard-05-chunk-0">
 							<CardHeader className="pb-3">
-								<CardTitle>Customer</CardTitle>
+								<CardTitle>Kunde</CardTitle>
 								<CardDescription className="max-w-lg text-balance leading-relaxed">
 									{/* Id: {customerId} */}
 								</CardDescription>
@@ -110,25 +110,25 @@ export default function NewCustomer() {
 									<Input
 										type="text"
 										id="name"
-										placeholder="John Doe"
+										placeholder="Name des Kunden"
 										defaultValue={newCustomer.name}
 										onChange={handleChange}
 									/>
 
-									<Label htmlFor="phone">Phone</Label>
+									<Label htmlFor="phone">Telefon</Label>
 									<Input
 										type="text"
 										id="phone"
-										placeholder="65865"
+										placeholder="Telefonnummer des Kunden"
 										defaultValue={newCustomer.phone}
 										onChange={handleChange}
 									/>
 
-									<Label htmlFor="adress">Adress</Label>
+									<Label htmlFor="adress">Adresse</Label>
 									<Input
 										type="text"
 										id="adress"
-										placeholder="Eberwaldstr. 78"
+										placeholder="Straße und Hausnummer des Kunden"
 										defaultValue={newCustomer.adress}
 										onChange={handleChange}
 									/>
@@ -137,14 +137,14 @@ export default function NewCustomer() {
 									<Input
 										type="email"
 										id="email"
-										placeholder="John@Doe.com"
+										placeholder="Email des Kunden"
 										defaultValue={newCustomer.email}
 										onChange={handleChange}
 									/>
 								</div>
 							</CardContent>
 							<CardFooter>
-								<Button onClick={handleCreateCustomer}>Create Customer</Button>
+								<Button onClick={handleCreateCustomer}>Kunden erstellen</Button>
 							</CardFooter>
 						</Card>
 					</div>

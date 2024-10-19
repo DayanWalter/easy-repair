@@ -37,8 +37,8 @@ export default function NewProduct() {
 		updated_at: new Date(),
 	};
 	const breadcrumbItems = [
-		{ href: "/products", label: "Products" },
-		{ href: "/products/newproduct", label: "New Product" },
+		{ href: "/products", label: "Produkte" },
+		{ href: "/products/newproduct", label: "Neues Produkt" },
 	];
 	const [newProduct, setNewProduct] = useState(initialProductState);
 	//TODO: use error state
@@ -51,7 +51,6 @@ export default function NewProduct() {
 			[id]: value,
 		}));
 	};
-	console.log(newProduct);
 
 	const handleCreateProduct = async () => {
 		console.log("Product created:", newProduct);
@@ -100,7 +99,7 @@ export default function NewProduct() {
 						{/* Kunde */}
 						<Card className="" x-chunk="dashboard-05-chunk-0">
 							<CardHeader className="pb-3">
-								<CardTitle>Product</CardTitle>
+								<CardTitle>Produkt</CardTitle>
 								<CardDescription className="max-w-lg text-balance leading-relaxed">
 									{/* Id: {productId} */}
 								</CardDescription>
@@ -111,43 +110,45 @@ export default function NewProduct() {
 									<Input
 										type="text"
 										id="name"
-										placeholder="Product Name"
+										placeholder="Name des Produkts"
 										value={newProduct.name}
 										onChange={handleChange}
 									/>
 
-									<Label htmlFor="description">Description</Label>
+									<Label htmlFor="description">Beschreibung</Label>
 									<Input
 										type="text"
 										id="description"
-										placeholder="Product Description"
+										placeholder="Beschreibung des Produkts"
 										value={newProduct.description}
 										onChange={handleChange}
 									/>
 
-									<Label htmlFor="price">Price</Label>
+									<Label htmlFor="price">Preis</Label>
 									<Input
-										type="text"
+										type="number"
+										step="0.01"
 										id="price"
-										placeholder="0.00"
+										placeholder="Preis des Produkts"
 										value={newProduct.price}
 										onChange={handleChange}
 									/>
 
-									<Label htmlFor="category">Category</Label>
+									<Label htmlFor="category">Kategorie</Label>
 									<Input
 										type="text"
 										id="category"
-										placeholder="Category"
+										placeholder="Kategorie des Produkts"
 										value={newProduct.category}
 										onChange={handleChange}
 									/>
 
-									<Label htmlFor="stock">Stock</Label>
+									<Label htmlFor="stock">Lagerbestand</Label>
 									<Input
-										type="text"
+										type="number"
+										step="1"
 										id="stock"
-										placeholder="0"
+										placeholder="Lagerbestand des Produkts"
 										value={newProduct.stock}
 										onChange={handleChange}
 									/>
@@ -156,21 +157,21 @@ export default function NewProduct() {
 									<Input
 										type="text"
 										id="sku"
-										placeholder="SKU"
+										placeholder="SKU des Produkts"
 										value={newProduct.sku}
 										onChange={handleChange}
 									/>
 
-									<Label htmlFor="manufacturer">Manufacturer</Label>
+									<Label htmlFor="manufacturer">Hersteller</Label>
 									<Input
 										type="text"
 										id="manufacturer"
-										placeholder="Manufacturer"
+										placeholder="Hersteller des Produkts"
 										value={newProduct.manufacturer}
 										onChange={handleChange}
 									/>
 
-									<Label htmlFor="image">Image URL</Label>
+									<Label htmlFor="image">Bild-URL</Label>
 									<Input
 										type="text"
 										id="image"
@@ -181,7 +182,7 @@ export default function NewProduct() {
 								</div>
 							</CardContent>
 							<CardFooter>
-								<Button onClick={handleCreateProduct}>Create Product</Button>
+								<Button onClick={handleCreateProduct}>Produkt erstellen</Button>
 							</CardFooter>
 						</Card>
 					</div>

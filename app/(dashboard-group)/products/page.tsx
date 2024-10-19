@@ -43,7 +43,7 @@ export default function Products() {
 	const [error, setError] = useState<string | null>(null);
 	const [productsLoading, setProductsLoading] = useState<boolean>(false);
 	const [products, setProducts] = useState<Product[]>([]);
-	const breadcrumbItems = [{ href: "/products", label: "Products" }];
+	const breadcrumbItems = [{ href: "/products", label: "Produkte" }];
 
 	const numSkeletons = 3;
 
@@ -89,16 +89,16 @@ export default function Products() {
 					<div className="grid xl:grid-cols-4">
 						<Card className="" x-chunk="dashboard-05-chunk-0">
 							<CardHeader className="pb-3">
-								<CardTitle>Your Products</CardTitle>
+								<CardTitle>Ihre Produkte</CardTitle>
 								<CardDescription className="max-w-lg text-balance leading-relaxed">
-									Introducing Our Dynamic Orders Dashboard for Seamless
-									Management and Insightful Analysis.
+									Übersicht Ihrer Produkte. Erstellen Sie neue Produkte und
+									verwalten Sie Ihren Bestand.
 								</CardDescription>
 							</CardHeader>
 							<CardFooter>
 								<Link href="/products/newproduct">
-									<Button>Create New Product</Button>
-									<span className="sr-only">Create new product</span>
+									<Button>Produkt erstellen</Button>
+									<span className="sr-only">Produkt erstellen</span>
 								</Link>
 							</CardFooter>
 						</Card>
@@ -149,8 +149,11 @@ export default function Products() {
 						<TabsContent value="products">
 							<Card x-chunk="dashboard-05-chunk-3">
 								<CardHeader className="px-7">
-									<CardTitle>Products</CardTitle>
-									<CardDescription>These are your products.</CardDescription>
+									<CardTitle>Produkte</CardTitle>
+									<CardDescription>
+										Ihr Produktkatalog auf einen Blick. Einfaches Hinzufügen,
+										Bearbeiten und Organisieren Ihrer Artikel.
+									</CardDescription>
 								</CardHeader>
 								<CardContent>
 									<Table>
@@ -158,15 +161,15 @@ export default function Products() {
 											<TableRow>
 												<TableHead>Name</TableHead>
 												<TableHead className="hidden sm:table-cell">
-													Description
+													Beschreibung
 												</TableHead>
 												<TableHead className="hidden sm:table-cell">
-													Price
+													Preis
 												</TableHead>
 												<TableHead className="hidden md:table-cell">
-													Category
+													Kategorie
 												</TableHead>
-												<TableHead className="text-right">Actions</TableHead>
+												<TableHead className="text-right">Aktionen</TableHead>
 											</TableRow>
 										</TableHeader>
 										<TableBody>
@@ -193,14 +196,14 @@ export default function Products() {
 															{product.description}
 														</TableCell>
 														<TableCell className="hidden sm:table-cell">
-															${product.price?.toFixed(2)}
+															{product.price?.toFixed(2)} €
 														</TableCell>
 														<TableCell className="hidden md:table-cell">
 															{product.category}
 														</TableCell>
 														<TableCell className="flex justify-end gap-1">
 															<Link href={`/products/${product.id}`}>
-																<Button size="sm">Edit</Button>
+																<Button size="sm">Bearbeiten</Button>
 																<span className="sr-only">Edit</span>
 															</Link>
 															<ProductDeletePopover

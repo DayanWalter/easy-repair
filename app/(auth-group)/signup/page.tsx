@@ -8,9 +8,9 @@ export default function Register() {
 		<div className="flex items-center justify-center py-12">
 			<div className="mx-auto grid w-[350px] gap-6">
 				<div className="grid gap-2 text-center">
-					<h1 className="text-3xl font-bold">Create your account</h1>
+					<h1 className="text-3xl font-bold">Erstellen Sie Ihr Konto</h1>
 					<p className="text-balance text-muted-foreground">
-						Enter your data below to create an account
+						Geben Sie unten Ihre Daten ein, um ein Konto zu erstellen
 					</p>
 				</div>
 
@@ -18,12 +18,12 @@ export default function Register() {
 				<RegisterForm />
 				{/* end of form */}
 				<Button variant="outline" className="w-full">
-					Continue with Google
+					Mit Google fortfahren
 				</Button>
 				<div className="mt-4 text-center text-sm">
-					Already have an account?{" "}
+					Haben Sie bereits ein Konto?{" "}
 					<Link href="/login" className="underline">
-						Login
+						Anmelden
 					</Link>
 				</div>
 			</div>
