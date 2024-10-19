@@ -142,6 +142,24 @@ export default function NewOrder() {
 			customer_id: customerId,
 		}));
 	};
+	const handleCostsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const { id, value } = e.target;
+		const numericValue = value ? Number(value) : 0;
+
+		setNewOrder((prevState) => {
+			const updatedState = {
+				...prevState,
+				[id]: numericValue,
+			};
+
+			const otherCostField =
+				id === "labor_costs" ? "material_costs" : "labor_costs";
+			updatedState.total_costs =
+				numericValue + (prevState[otherCostField] || 0);
+
+			return updatedState;
+		});
+	};
 
 	const handleCreateOrder = async () => {
 		console.log("Order created:", newOrder);
@@ -582,8 +600,10 @@ export default function NewOrder() {
 							<CardContent>
 								<Input
 									id="labor_costs"
-									value={newOrder.labor_costs}
-									onChange={handleChange}
+									value={newOrder.labor_costs?.toString() || ""}
+									onChange={handleCostsChange}
+									type="number"
+									step="0.01"
 								/>
 							</CardContent>
 							<CardFooter />
@@ -599,8 +619,10 @@ export default function NewOrder() {
 							<CardContent>
 								<Input
 									id="material_costs"
-									value={newOrder.material_costs}
-									onChange={handleChange}
+									value={newOrder.material_costs?.toString() || ""}
+									onChange={handleCostsChange}
+									type="number"
+									step="0.01"
 								/>
 							</CardContent>
 							<CardFooter />
@@ -616,10 +638,9 @@ export default function NewOrder() {
 							<CardContent>
 								<Input
 									id="total_costs"
-									value={newOrder.total_costs}
-									onChange={handleChange}
+									value={`${newOrder.total_costs?.toFixed(2) || "0.00"} €`}
+									readOnly
 									disabled
-									placeholder="200.00€"
 								/>
 							</CardContent>
 							<CardFooter />

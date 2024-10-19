@@ -224,7 +224,7 @@ export default function Orders() {
 																: "N/A"}
 														</TableCell>
 														<TableCell className="text-right">
-															{order.total_costs}€
+															{order.total_costs?.toFixed(2)} €
 														</TableCell>
 														<TableCell className="flex justify-end gap-1">
 															<Link href={`/orders/${order.id}`}>

@@ -232,18 +232,20 @@ export default function SingleOrder({ params }: Props) {
 	};
 	const handleCostsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { id, value } = e.target;
-		setOrder((prevOrder) => {
-			if (prevOrder) {
-				const updatedOrder = { ...prevOrder, [id]: value };
-				const labor =
-					Number(id === "labor_costs" ? value : prevOrder.labor_costs) || 0;
-				const material =
-					Number(id === "material_costs" ? value : prevOrder.material_costs) ||
-					0;
-				updatedOrder.total_costs = Number((labor + material).toFixed(2));
-				return updatedOrder;
-			}
-			return prevOrder;
+		const numericValue = value ? Number(value) : 0;
+
+		setOrder((prevState) => {
+			const updatedState = {
+				...prevState,
+				[id]: numericValue,
+			};
+
+			const otherCostField =
+				id === "labor_costs" ? "material_costs" : "labor_costs";
+			updatedState.total_costs =
+				numericValue + (prevState[otherCostField] || 0);
+
+			return updatedState;
 		});
 	};
 	const handleSubmit = async () => {
@@ -692,10 +694,11 @@ export default function SingleOrder({ params }: Props) {
 							</CardHeader>
 							<CardContent>
 								<Input
-									placeholder="80.00€"
 									id="labor_costs"
+									value={order.labor_costs?.toString() || ""}
 									onChange={handleCostsChange}
-									value={order?.labor_costs}
+									type="number"
+									step="0.01"
 								/>
 							</CardContent>
 							<CardFooter />
@@ -710,10 +713,11 @@ export default function SingleOrder({ params }: Props) {
 							</CardHeader>
 							<CardContent>
 								<Input
-									placeholder="120.00€"
 									id="material_costs"
+									value={order.material_costs?.toString() || ""}
 									onChange={handleCostsChange}
-									value={order?.material_costs}
+									type="number"
+									step="0.01"
 								/>
 							</CardContent>
 							<CardFooter />
@@ -729,14 +733,15 @@ export default function SingleOrder({ params }: Props) {
 							<CardContent>
 								<Input
 									disabled
-									placeholder="200.00€"
+									readOnly
 									id="total_costs"
-									value={order?.total_costs}
+									value={`${order?.total_costs?.toFixed(2) || "0.00"} €`}
 								/>
 							</CardContent>
 							<CardFooter />
 						</Card>
 					</div>
+					{/* Change order button */}
 					<Button
 						size={"lg"}
 						variant={"destructive"}
