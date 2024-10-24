@@ -1,5 +1,6 @@
 export type Order = {
 	id?: string;
+	user_id?: string | null;
 	customer_id?: number;
 	verified: boolean;
 	state?: string;

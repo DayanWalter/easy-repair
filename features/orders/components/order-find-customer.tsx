@@ -13,7 +13,7 @@ import {
 	PopoverContent,
 	PopoverTrigger,
 } from "@/components/ui/popover";
-import { Button } from "../ui/button";
+import { Button } from "../../../components/ui/button";
 import {
 	Card,
 	CardContent,
@@ -21,8 +21,8 @@ import {
 	CardFooter,
 	CardHeader,
 	CardTitle,
-} from "../ui/card";
-import { Input } from "../ui/input";
+} from "../../../components/ui/card";
+import { Input } from "../../../components/ui/input";
 import supabase from "@/database/supabaseClient";
 import { useEffect, useState } from "react";
 import type { Customer } from "@/types";

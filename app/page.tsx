@@ -1,18 +1,5 @@
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
+import { redirect } from "next/navigation";
 
-export default function Main() {
-	return (
-		<>
-			<Button>
-				<Link href="/dashboard">Dashboard</Link>
-			</Button>
-			<Button>
-				<Link href="/login">Login</Link>
-			</Button>
-			<Button>
-				<Link href="/signup">Signup</Link>
-			</Button>
-		</>
-	);
+export default async function Main() {
+	return redirect("/dashboard");
 }

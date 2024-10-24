@@ -1,8 +1,11 @@
 "use client";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 import { format } from "date-fns";
 import { Calendar as CalendarIcon } from "lucide-react";
 
+// Global Components
 import { cn } from "@/lib/utils";
 import { Calendar } from "@/components/ui/calendar";
 import {
@@ -21,10 +24,8 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
-
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-
 import {
 	Select,
 	SelectContent,
@@ -34,20 +35,36 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-
 import { Checkbox } from "@/components/ui/checkbox";
 import { Textarea } from "@/components/ui/textarea";
 import { Breadcrumb } from "@/components/breadcrumb/breadcrumb";
 import Avatar from "@/components/avatar/avatar";
-import { orders } from "@/database/orders";
-import { useState } from "react";
-import supabase from "@/database/supabaseClient";
 import type { Order } from "@/types";
-import { useRouter } from "next/navigation";
-import OrderFindCustomer from "@/components/order-find-customer/order-find-customer";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+
+// Features
+import OrderFindCustomer from "@/features/orders/components/order-find-customer";
 
 export default function NewOrder() {
 	const router = useRouter();
+	const supabase = createClientComponentClient();
+	const [userId, setUserId] = useState<string | null>(null);
+
+	useEffect(() => {
+		const fetchUser = async () => {
+			const {
+				data: { user },
+			} = await supabase.auth.getUser();
+			if (user) {
+				setUserId(user.id);
+			} else {
+				router.push("/login"); // Redirect to login page if user is not authenticated
+			}
+		};
+
+		fetchUser();
+	}, [supabase, router]);
+
 	const initialOrderState: Order = {
 		customer_id: undefined,
 		verified: false,
@@ -72,6 +89,7 @@ export default function NewOrder() {
 		labor_costs: 0,
 		material_costs: 0,
 		total_costs: 0,
+		user_id: null,
 	};
 	const breadcrumbItems = [
 		{ href: "/orders", label: "Bestellungen" },
@@ -80,6 +98,7 @@ export default function NewOrder() {
 	const [newOrder, setNewOrder] = useState<Order>(initialOrderState);
 	//TODO: use error state
 	const [error, setError] = useState<string | null>(null);
+
 	// Textinput and Textarea
 	const handleChange = (
 		e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -169,6 +188,7 @@ export default function NewOrder() {
 			.insert([
 				{
 					...newOrder,
+					user_id: userId,
 				},
 			])
 			.select();

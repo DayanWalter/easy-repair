@@ -1,10 +1,7 @@
-"use client";
 import Link from "next/link";
 import { File, ListFilter, Search } from "lucide-react";
-import supabase from "@/database/supabaseClient";
-import { useEffect, useState } from "react";
-import type { Product } from "@/types";
 
+// Global Components
 import { Button } from "@/components/ui/button";
 import {
 	Card,
@@ -23,56 +20,23 @@ import {
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
-
-import {
-	Table,
-	TableBody,
-	TableCell,
-	TableHead,
-	TableHeader,
-	TableRow,
-} from "@/components/ui/table";
 import { Tabs, TabsContent } from "@/components/ui/tabs";
-
 import { Breadcrumb } from "@/components/breadcrumb/breadcrumb";
 import Avatar from "@/components/avatar/avatar";
-import SkeletonRow from "@/components/skeleton-row/skeleton-row";
-import { ProductDeletePopover } from "@/components/product-delete-popover/product-delete-popover";
+import ProductTable from "@/features/products/components/product-table";
+// Features
+import { readProducts } from "@/features/products/api/read";
 
-export default function Products() {
-	const [error, setError] = useState<string | null>(null);
-	const [productsLoading, setProductsLoading] = useState<boolean>(false);
-	const [products, setProducts] = useState<Product[]>([]);
+export default async function Products() {
 	const breadcrumbItems = [{ href: "/products", label: "Produkte" }];
 
-	const numSkeletons = 3;
-
-	useEffect(() => {
-		const fetchProducts = async () => {
-			setProductsLoading(true);
-			const { data, error } = await supabase.from("products").select("*");
-
-			if (error) {
-				setError(`Could not fetch products, Reason: ${error.message}`);
-				setProducts([]);
-				return;
-			}
-			if (data) {
-				setProducts(data);
-				setError(null);
-			}
-			setProductsLoading(false);
-		};
-		fetchProducts();
-	}, []);
+	const products = await readProducts();
 
 	return (
 		<>
 			<header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
-				{/* Breadcrumb */}
 				<Breadcrumb items={breadcrumbItems} />
 
-				{/* Search */}
 				<div className="relative ml-auto flex-1 md:grow-0">
 					<Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
 					<Input
@@ -81,7 +45,6 @@ export default function Products() {
 						className="w-full rounded-lg bg-background pl-8 md:w-[200px] lg:w-[336px]"
 					/>
 				</div>
-				{/* Avatar and dropdown */}
 				<Avatar />
 			</header>
 			<main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
@@ -156,73 +119,7 @@ export default function Products() {
 									</CardDescription>
 								</CardHeader>
 								<CardContent>
-									<Table>
-										<TableHeader>
-											<TableRow>
-												<TableHead>Name</TableHead>
-												<TableHead className="hidden sm:table-cell">
-													Beschreibung
-												</TableHead>
-												<TableHead className="hidden sm:table-cell">
-													Preis
-												</TableHead>
-												<TableHead className="hidden md:table-cell">
-													Lagerbestand
-												</TableHead>
-												<TableHead className="hidden md:table-cell">
-													Kategorie
-												</TableHead>
-												<TableHead className="text-right">Aktionen</TableHead>
-											</TableRow>
-										</TableHeader>
-										<TableBody>
-											{productsLoading ? (
-												<>
-													{Array.from({ length: numSkeletons }).map(
-														(_, index) => (
-															// biome-ignore lint/suspicious/noArrayIndexKey: Using index as key for skeleton rows
-															<SkeletonRow key={`skeleton-${index}`} />
-														),
-													)}
-												</>
-											) : error ? (
-												<TableRow>
-													<TableCell colSpan={6}>{error}</TableCell>
-												</TableRow>
-											) : (
-												products.map((product) => (
-													<TableRow key={product.id}>
-														<TableCell>
-															<div className="font-medium">{product.name}</div>
-														</TableCell>
-														<TableCell className="hidden sm:table-cell">
-															{product.description}
-														</TableCell>
-														<TableCell className="hidden sm:table-cell">
-															{product.price?.toFixed(2)} €
-														</TableCell>
-														<TableCell className="hidden md:table-cell">
-															{product.stock}
-														</TableCell>
-														<TableCell className="hidden md:table-cell">
-															{product.category}
-														</TableCell>
-														<TableCell className="flex justify-end gap-1">
-															<Link href={`/products/${product.id}`}>
-																<Button size="sm">Bearbeiten</Button>
-																<span className="sr-only">Edit</span>
-															</Link>
-															<ProductDeletePopover
-																product={product}
-																products={products}
-																setProducts={setProducts}
-															/>
-														</TableCell>
-													</TableRow>
-												))
-											)}
-										</TableBody>
-									</Table>
+									<ProductTable products={products ?? []} />
 								</CardContent>
 							</Card>
 						</TabsContent>
