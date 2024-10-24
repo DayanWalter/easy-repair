@@ -1,5 +1,6 @@
 export type Product = {
 	id?: number;
+	user_id?: string;
 	name?: string;
 	description?: string;
 	price?: number;

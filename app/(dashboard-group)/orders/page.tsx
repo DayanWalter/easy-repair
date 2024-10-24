@@ -1,8 +1,5 @@
-"use client";
 import Link from "next/link";
 import { File, ListFilter, Search } from "lucide-react";
-
-import { Badge } from "@/components/ui/badge";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -22,53 +19,17 @@ import {
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
-
-import {
-	Table,
-	TableBody,
-	TableCell,
-	TableHead,
-	TableHeader,
-	TableRow,
-} from "@/components/ui/table";
 import { Tabs, TabsContent } from "@/components/ui/tabs";
-
 import { Breadcrumb } from "@/components/breadcrumb/breadcrumb";
-
 import Avatar from "@/components/avatar/avatar";
-import supabase from "@/database/supabaseClient";
-import { useEffect, useState } from "react";
-import type { Order } from "@/types";
-import { format } from "date-fns";
-import SkeletonRow from "@/components/skeleton-row/skeleton-row";
-import { OrderDeletePopover } from "@/components/order-delete-popover/order-delete-popover";
 
-export default function Orders() {
+// Features
+import { readOrders } from "@/features/orders/api/read";
+import OrderTable from "@/features/orders/components/order-table";
+
+export default async function Orders() {
 	const breadcrumbItems = [{ href: "/orders", label: "Bestellungen" }];
-	const [error, setError] = useState<string | null>(null);
-	const [orders, setOrders] = useState<Order[]>([]);
-	const [ordersLoading, setOrdersLoading] = useState<boolean>(false);
-
-	const numSkeletons = 3;
-
-	useEffect(() => {
-		const fetchOrders = async () => {
-			setOrdersLoading(true);
-			const { data, error } = await supabase.from("orders").select("*");
-
-			if (error) {
-				setError(`Could not fetch orders, Reason: ${error.message}`);
-				setOrders([]);
-				return;
-			}
-			if (data) {
-				setOrders(data);
-				setError(null);
-			}
-			setOrdersLoading(false);
-		};
-		fetchOrders();
-	}, []);
+	const orders = await readOrders();
 
 	return (
 		<>
@@ -159,88 +120,7 @@ export default function Orders() {
 									</CardDescription>
 								</CardHeader>
 								<CardContent>
-									<Table>
-										<TableHeader>
-											<TableRow>
-												<TableHead>Auftragsnr. / Kundennr.</TableHead>
-												<TableHead className="hidden sm:table-cell">
-													Gerät
-												</TableHead>
-												<TableHead className="hidden sm:table-cell">
-													Status
-												</TableHead>
-												<TableHead className="hidden md:table-cell">
-													Startdatum
-												</TableHead>
-												<TableHead className="text-right">
-													Gesamtbetrag{" "}
-												</TableHead>
-												<TableHead className="text-right">Aktionen</TableHead>
-											</TableRow>
-										</TableHeader>
-										<TableBody>
-											{ordersLoading ? (
-												<>
-													{Array.from({ length: numSkeletons }).map(
-														(_, index) => (
-															// biome-ignore lint/suspicious/noArrayIndexKey: Using index as key for skeleton rows
-															<SkeletonRow key={`skeleton-${index}`} />
-														),
-													)}
-												</>
-											) : error ? (
-												<TableRow>
-													<TableCell colSpan={6}>{error}</TableCell>
-												</TableRow>
-											) : (
-												orders.map((order) => (
-													<TableRow key={order.id}>
-														<TableCell>
-															<div className="font-medium">
-																Auftragsnr.: {order.id}
-															</div>
-															<div className="hidden text-sm text-muted-foreground md:inline">
-																Kundennr.: {order.customer_id}
-															</div>
-														</TableCell>
-														<TableCell className="hidden sm:table-cell">
-															{order.article_device}
-														</TableCell>
-														<TableCell className="hidden sm:table-cell">
-															<Badge
-																className="text-xs"
-																variant={
-																	order.state === "Fulfilled"
-																		? "secondary"
-																		: "outline"
-																}
-															>
-																{order.state}
-															</Badge>
-														</TableCell>
-														<TableCell className="hidden md:table-cell">
-															{order.date_start
-																? format(order.date_start, "dd.MM.yyyy")
-																: "N/A"}
-														</TableCell>
-														<TableCell className="text-right">
-															{order.total_costs?.toFixed(2)} €
-														</TableCell>
-														<TableCell className="flex justify-end gap-1">
-															<Link href={`/orders/${order.id}`}>
-																<Button size="sm">Bearbeiten</Button>
-															</Link>
-															<OrderDeletePopover
-																order={order}
-																orders={orders}
-																setOrders={setOrders}
-															/>
-														</TableCell>
-													</TableRow>
-												))
-											)}
-										</TableBody>
-									</Table>
+									<OrderTable orders={orders ?? []} />
 								</CardContent>
 							</Card>
 						</TabsContent>

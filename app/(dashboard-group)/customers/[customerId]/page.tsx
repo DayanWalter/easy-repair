@@ -1,7 +1,7 @@
-"use client";
-
 import { Search } from "lucide-react";
+import { redirect } from "next/navigation";
 
+// Global Components
 import { Button } from "@/components/ui/button";
 import {
 	Card,
@@ -11,17 +11,15 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
-
 import { Input } from "@/components/ui/input";
-
 import { Label } from "@/components/ui/label";
-import { customers } from "@/database/customers";
 import { Breadcrumb } from "@/components/breadcrumb/breadcrumb";
 import Avatar from "@/components/avatar/avatar";
-import { useEffect, useState } from "react";
-import supabase from "@/database/supabaseClient";
-import type { Customer } from "@/types";
-import { useRouter } from "next/navigation";
+
+// Features
+import { readCustomer } from "@/features/customers/api/read";
+import { updateCustomer } from "@/features/customers/api/update";
+import { deleteCustomer } from "@/features/customers/api/delete";
 
 type Props = {
 	params: {
@@ -29,10 +27,36 @@ type Props = {
 	};
 };
 
-export default function SingleCustomer({ params }: Props) {
-	const router = useRouter();
-	const [customer, setCustomer] = useState<Customer | null>(null);
-	const [error, setError] = useState<string | null>(null);
+export default async function SingleCustomer({ params }: Props) {
+	const customer = await readCustomer(params.customerId);
+
+	if (!customer) {
+		// TODO: add real ui
+		return <div>Customer not found</div>;
+	}
+	const handleFormAction = async (formData: FormData) => {
+		"use server";
+
+		const action = formData.get("action");
+		if (action === "update") {
+			const { success, customer } = await updateCustomer(
+				params.customerId,
+				formData,
+			);
+			if (success) {
+				// TODO: Add toast, wait and redirect
+				redirect("/customers");
+			}
+			// TODO: Add error handling
+		} else if (action === "delete") {
+			const { success } = await deleteCustomer(params.customerId);
+			if (success) {
+				// TODO: Add toast, wait and redirect
+				redirect("/customers");
+			}
+			// TODO: Add error handling
+		}
+	};
 	const breadcrumbItems = [
 		{
 			label: "Kunden",
@@ -43,52 +67,7 @@ export default function SingleCustomer({ params }: Props) {
 			href: `/customers/${customer?.id}`,
 		},
 	];
-	useEffect(() => {
-		const fetchCustomer = async () => {
-			const { data, error } = await supabase
-				.from("customers")
-				.select()
-				.eq("id", params.customerId)
-				.single();
 
-			if (error) {
-				console.error("Error fetching customer:", error);
-				setError(error.message);
-			}
-			if (data) {
-				setCustomer(data);
-				setError(null);
-			}
-		};
-		fetchCustomer();
-	}, [params.customerId]);
-
-	// console.log(customer);
-	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const { id, value } = e.target;
-		setCustomer((prevState) => ({
-			...prevState,
-			[id]: value,
-		}));
-	};
-
-	const handleSubmit = async () => {
-		const { data, error } = await supabase
-			.from("customers")
-			.update(customer)
-			.eq("id", customer?.id)
-			.select();
-
-		if (error) {
-			console.error("Error updating customer:", error);
-			setError(error.message);
-		}
-		if (data) {
-			console.log("Customer updated:", data);
-			setError(null);
-			router.push("/customers");
-		}
-	};
 	return (
 		<>
 			<header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
@@ -112,55 +91,66 @@ export default function SingleCustomer({ params }: Props) {
 					<div className="grid xl:grid-cols-2">
 						{/* Kunde */}
 						<Card className="" x-chunk="dashboard-05-chunk-0">
-							<CardHeader className="pb-3">
-								<CardTitle>Kunde</CardTitle>
-								<CardDescription className="max-w-lg text-balance leading-relaxed">
-									Kundennr.: {customer?.id}
-								</CardDescription>
-							</CardHeader>
-							<CardContent>
-								<div className="grid gap-2">
-									<Label htmlFor="name">Name</Label>
-									<Input
-										type="text"
-										id="name"
-										placeholder="John Doe"
-										defaultValue={customer?.name}
-										onChange={handleChange}
-									/>
+							<form action={handleFormAction}>
+								<CardHeader className="pb-3">
+									<CardTitle>Kunde</CardTitle>
+									<CardDescription className="max-w-lg text-balance leading-relaxed">
+										Kundennr.: {customer?.id}
+									</CardDescription>
+								</CardHeader>
+								<CardContent>
+									<div className="grid gap-2">
+										<Label htmlFor="name">Name</Label>
+										<Input
+											type="text"
+											id="name"
+											name="name"
+											placeholder="Name des Kunden"
+											defaultValue={customer?.name}
+										/>
 
-									<Label htmlFor="phone">Telefon</Label>
-									<Input
-										type="text"
-										id="phone"
-										placeholder="65865"
-										defaultValue={customer?.phone}
-										onChange={handleChange}
-									/>
+										<Label htmlFor="phone">Telefon</Label>
+										<Input
+											type="text"
+											id="phone"
+											name="phone"
+											placeholder="Telefonnummer des Kunden"
+											defaultValue={customer?.phone}
+										/>
 
-									<Label htmlFor="adress">Adresse</Label>
-									<Input
-										type="text"
-										id="adress"
-										placeholder="Eberwaldstr. 78"
-										defaultValue={customer?.adress}
-										onChange={handleChange}
-									/>
+										<Label htmlFor="adress">Adresse</Label>
+										<Input
+											type="text"
+											id="adress"
+											name="adress"
+											placeholder="Adresse des Kunden"
+											defaultValue={customer?.adress}
+										/>
 
-									<Label htmlFor="email">Email</Label>
-									<Input
-										type="email"
-										id="email"
-										placeholder="John@Doe.com"
-										defaultValue={customer?.email}
-										onChange={handleChange}
-									/>
-								</div>
-							</CardContent>
-							<CardFooter>
-								<Button onClick={handleSubmit}>Kunde aktualisieren</Button>
-								{error && <p className="text-red-500">{error}</p>}
-							</CardFooter>
+										<Label htmlFor="email">Email</Label>
+										<Input
+											type="email"
+											id="email"
+											name="email"
+											placeholder="Email des Kunden"
+											defaultValue={customer?.email}
+										/>
+									</div>
+								</CardContent>
+								<CardFooter className="flex justify-between">
+									<Button type="submit" name="action" value="update">
+										Kunden aktualisieren
+									</Button>
+									<Button
+										type="submit"
+										name="action"
+										value="delete"
+										variant="destructive"
+									>
+										Kunden löschen
+									</Button>
+								</CardFooter>
+							</form>
 						</Card>
 					</div>
 				</div>

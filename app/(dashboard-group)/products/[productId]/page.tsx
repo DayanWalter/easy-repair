@@ -1,6 +1,7 @@
-"use client";
-
+import { redirect } from "next/navigation";
 import { Search } from "lucide-react";
+
+// Global Components
 import { Button } from "@/components/ui/button";
 import {
 	Card,
@@ -14,10 +15,11 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Breadcrumb } from "@/components/breadcrumb/breadcrumb";
 import Avatar from "@/components/avatar/avatar";
-import { useEffect, useState } from "react";
-import supabase from "@/database/supabaseClient";
-import type { Product } from "@/types";
-import { useRouter } from "next/navigation";
+
+// Features
+import { deleteProduct } from "@/features/products/api/delete";
+import { updateProduct } from "@/features/products/api/update";
+import { readProduct } from "@/features/products/api/read";
 
 type Props = {
 	params: {
@@ -25,11 +27,36 @@ type Props = {
 	};
 };
 
-export default function SingleProduct({ params }: Props) {
-	const router = useRouter();
-	const [product, setProduct] = useState<Product | null>(null);
-	const [error, setError] = useState<string | null>(null);
+export default async function SingleProduct({ params }: Props) {
+	const product = await readProduct(params.productId);
+	if (!product) {
+		// Handle case where product is not found
+		return <div>Product not found</div>;
+	}
+	const handleFormAction = async (formData: FormData) => {
+		"use server";
 
+		const action = formData.get("action");
+
+		if (action === "update") {
+			const { success, product } = await updateProduct(
+				params.productId,
+				formData,
+			);
+			if (success) {
+				// TODO: Add toast, wait and redirect
+				redirect("/products");
+			}
+			// TODO: Add error handling
+		} else if (action === "delete") {
+			const { success } = await deleteProduct(params.productId);
+			if (success) {
+				// TODO: Add toast, wait and redirect
+				redirect("/products");
+			}
+			// TODO: Add error handling
+		}
+	};
 	const breadcrumbItems = [
 		{
 			label: "Produkte",
@@ -40,51 +67,6 @@ export default function SingleProduct({ params }: Props) {
 			href: `/products/${product?.id}`,
 		},
 	];
-
-	useEffect(() => {
-		const fetchProduct = async () => {
-			const { data, error } = await supabase
-				.from("products")
-				.select()
-				.eq("id", params.productId)
-				.single();
-
-			if (error) {
-				console.error("Error fetching product:", error);
-				setError(error.message);
-			}
-			if (data) {
-				setProduct(data);
-				setError(null);
-			}
-		};
-		fetchProduct();
-	}, [params.productId]);
-
-	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const { id, value } = e.target;
-		setProduct((prevState) => ({
-			...prevState,
-			[id]: value,
-		}));
-	};
-
-	const handleSubmit = async () => {
-		const { data, error } = await supabase
-			.from("products")
-			.update(product)
-			.eq("id", product?.id)
-			.select();
-		if (error) {
-			console.error("Error updating product:", error);
-			setError(error.message);
-		}
-		if (data) {
-			console.log("Product updated:", data);
-			setError(null);
-			router.push("/products");
-		}
-	};
 
 	return (
 		<>
@@ -104,91 +86,102 @@ export default function SingleProduct({ params }: Props) {
 				<div className="grid auto-rows-max items-start gap-4 md:gap-8 lg:col-span-2">
 					<div className="grid xl:grid-cols-2">
 						<Card className="" x-chunk="dashboard-05-chunk-0">
-							<CardHeader className="pb-3">
-								<CardTitle>Produkt</CardTitle>
-								<CardDescription className="max-w-lg text-balance leading-relaxed">
-									Produktnr: {product?.id}
-								</CardDescription>
-							</CardHeader>
-							<CardContent>
-								<div className="grid gap-2">
-									<Label htmlFor="name">Name</Label>
-									<Input
-										type="text"
-										id="name"
-										placeholder="Produktname"
-										value={product?.name}
-										onChange={handleChange}
-									/>
+							<form action={handleFormAction}>
+								<CardHeader className="pb-3">
+									<CardTitle>Produkt</CardTitle>
+									<CardDescription className="max-w-lg text-balance leading-relaxed" />
+								</CardHeader>
+								<CardContent>
+									<div className="grid gap-2">
+										<Label htmlFor="name">Name</Label>
+										<Input
+											type="text"
+											id="name"
+											name="name"
+											placeholder="Name des Produkts"
+											defaultValue={product?.name}
+										/>
 
-									<Label htmlFor="description">Beschreibung</Label>
-									<Input
-										type="text"
-										id="description"
-										placeholder="Produktbeschreibung"
-										value={product?.description}
-										onChange={handleChange}
-									/>
+										<Label htmlFor="description">Beschreibung</Label>
+										<Input
+											type="text"
+											id="description"
+											name="description"
+											placeholder="Beschreibung des Produkts"
+											defaultValue={product?.description}
+										/>
 
-									<Label htmlFor="price">Preis</Label>
-									<Input
-										type="text"
-										id="price"
-										placeholder="0.00"
-										value={product?.price}
-										onChange={handleChange}
-									/>
+										<Label htmlFor="price">Preis</Label>
+										<Input
+											type="number"
+											id="price"
+											step="0.01"
+											name="price"
+											placeholder="Preis des Produkts"
+											defaultValue={product?.price}
+										/>
 
-									<Label htmlFor="category">Kategorie</Label>
-									<Input
-										type="text"
-										id="category"
-										placeholder="Kategorie"
-										value={product?.category}
-										onChange={handleChange}
-									/>
+										<Label htmlFor="category">Kategorie</Label>
+										<Input
+											type="text"
+											id="category"
+											name="category"
+											placeholder="Kategorie des Produkts"
+											defaultValue={product?.category}
+										/>
 
-									<Label htmlFor="stock">Lagerbestand</Label>
-									<Input
-										type="text"
-										id="stock"
-										placeholder="0"
-										value={product?.stock}
-										onChange={handleChange}
-									/>
+										<Label htmlFor="stock">Lagerbestand</Label>
+										<Input
+											type="number"
+											id="stock"
+											step="1"
+											name="stock"
+											placeholder="Lagerbestand des Produkts"
+											defaultValue={product?.stock}
+										/>
 
-									<Label htmlFor="sku">SKU</Label>
-									<Input
-										type="text"
-										id="sku"
-										placeholder="SKU"
-										value={product?.sku}
-										onChange={handleChange}
-									/>
+										<Label htmlFor="sku">SKU</Label>
+										<Input
+											type="text"
+											id="sku"
+											name="sku"
+											placeholder="SKU des Produkts"
+											defaultValue={product?.sku}
+										/>
 
-									<Label htmlFor="manufacturer">Hersteller</Label>
-									<Input
-										type="text"
-										id="manufacturer"
-										placeholder="Hersteller"
-										value={product?.manufacturer}
-										onChange={handleChange}
-									/>
+										<Label htmlFor="manufacturer">Hersteller</Label>
+										<Input
+											type="text"
+											id="manufacturer"
+											name="manufacturer"
+											placeholder="Hersteller des Produkts"
+											defaultValue={product?.manufacturer}
+										/>
 
-									<Label htmlFor="image">Bild-URL</Label>
-									<Input
-										type="text"
-										id="image"
-										placeholder="https://example.com/image.jpg"
-										value={product?.image}
-										onChange={handleChange}
-									/>
-								</div>
-							</CardContent>
-							<CardFooter>
-								<Button onClick={handleSubmit}>Produkt aktualisieren</Button>
-								{error && <p className="text-red-500">{error}</p>}
-							</CardFooter>
+										<Label htmlFor="image">Bild-URL</Label>
+										<Input
+											type="text"
+											id="image"
+											name="image"
+											placeholder="https://example.com/image.jpg"
+											defaultValue={product?.image}
+										/>
+									</div>
+								</CardContent>
+								<CardFooter className="flex justify-between">
+									<Button type="submit" name="action" value="update">
+										Produkt aktualisieren
+									</Button>
+									<Button
+										type="submit"
+										name="action"
+										value="delete"
+										variant="destructive"
+									>
+										Produkt löschen
+									</Button>
+								</CardFooter>
+							</form>
 						</Card>
 					</div>
 				</div>

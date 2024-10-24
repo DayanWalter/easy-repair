@@ -1,9 +1,19 @@
 "use client";
 import RegisterForm from "@/components/register-form/register-form";
 import { Button } from "@/components/ui/button";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import Link from "next/link";
 
 export default function Register() {
+	const supabase = createClientComponentClient();
+	const handleSignIn = async () => {
+		await supabase.auth.signInWithOAuth({
+			provider: "github",
+			options: {
+				redirectTo: `${process.env.NEXT_PUBLIC_AUTH_CALLBACK_URL}`,
+			},
+		});
+	};
 	return (
 		<div className="flex items-center justify-center py-12">
 			<div className="mx-auto grid w-[350px] gap-6">
@@ -17,8 +27,8 @@ export default function Register() {
 				{/* form */}
 				<RegisterForm />
 				{/* end of form */}
-				<Button variant="outline" className="w-full">
-					Mit Google fortfahren
+				<Button onClick={handleSignIn} variant="outline" className="w-full">
+					Mit Github fortfahren
 				</Button>
 				<div className="mt-4 text-center text-sm">
 					Haben Sie bereits ein Konto?{" "}

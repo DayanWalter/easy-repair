@@ -1,7 +1,6 @@
 "use client";
 
-import Image from "next/image";
-import { format, setDate } from "date-fns";
+import { format } from "date-fns";
 import { Calendar as CalendarIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
@@ -37,39 +36,18 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 
-import {
-	Table,
-	TableBody,
-	TableCell,
-	TableHead,
-	TableHeader,
-	TableRow,
-} from "@/components/ui/table";
-
 import { Checkbox } from "@/components/ui/checkbox";
 import { Textarea } from "@/components/ui/textarea";
-import { orders } from "@/database/orders";
-import { customers } from "@/database/customers";
+
 import { Breadcrumb } from "@/components/breadcrumb/breadcrumb";
 
-import supabase from "@/database/supabaseClient";
 import type { Customer, Order } from "@/types";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
-// TEMP
-import {
-	Sheet,
-	SheetClose,
-	SheetContent,
-	SheetDescription,
-	SheetFooter,
-	SheetHeader,
-	SheetTitle,
-	SheetTrigger,
-} from "@/components/ui/sheet";
 import OrderMessages from "@/components/order-messages/order-messages";
 import SkeletonInput from "@/components/skeleton-input/skeleton-input";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 
 type Props = {
 	params: {
@@ -78,6 +56,7 @@ type Props = {
 };
 
 export default function SingleOrder({ params }: Props) {
+	const supabase = createClientComponentClient();
 	const router = useRouter();
 	const [order, setOrder] = useState<Order>({} as Order);
 	const [customer, setCustomer] = useState<Customer | null>(null);
@@ -115,7 +94,7 @@ export default function SingleOrder({ params }: Props) {
 			}
 		};
 		fetchOrder();
-	}, [params.orderId]);
+	}, [params.orderId, supabase]);
 
 	useEffect(() => {
 		const fetchCustomer = async () => {
@@ -142,7 +121,7 @@ export default function SingleOrder({ params }: Props) {
 			// }
 		};
 		fetchCustomer();
-	}, [order?.customer_id]);
+	}, [order?.customer_id, supabase]);
 
 	const handleVerifiedChange = () => {
 		setOrder((prevOrder) => {

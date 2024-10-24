@@ -1,35 +1,38 @@
+"use client";
 import { useState } from "react";
-import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
-import { Button } from "../ui/button";
-import { Input } from "../ui/input";
+import {
+	Popover,
+	PopoverContent,
+	PopoverTrigger,
+} from "@/components/ui/popover";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import supabase from "@/database/supabaseClient";
-import type { Product } from "@/types";
+import type { Order } from "@/types";
+import { useRouter } from "next/navigation";
 
-export const ProductDeletePopover = ({
-	product,
-	products,
-	setProducts,
+export const OrderDeletePopover = ({
+	order,
 }: {
-	product: Product;
-	products: Product[];
-	setProducts: React.Dispatch<React.SetStateAction<Product[]>>;
+	order: Order;
 }) => {
 	const [error, setError] = useState<string | null>(null);
+	const router = useRouter();
 	const [deleteText, setDeleteText] = useState("");
 
 	const handleDelete = async (id: number) => {
 		const { data, error } = await supabase
-			.from("products")
+			.from("orders")
 			.delete()
 			.eq("id", id)
 			.select();
 
 		if (error) {
-			setError(`Could not delete product, Reason: ${error.message}`);
+			setError(`Could not delete order, Reason: ${error.message}`);
 			return;
 		}
 		if (data) {
-			setProducts(products.filter((product) => Number(product.id) !== id));
+			router.push("/orders");
 		}
 	};
 
@@ -43,9 +46,9 @@ export const ProductDeletePopover = ({
 			<PopoverContent className="w-80">
 				<div className="grid gap-4">
 					<div className="space-y-2">
-						<h4 className="font-medium leading-none">Produkt löschen</h4>
+						<h4 className="font-medium leading-none">Auftrag löschen</h4>
 						<p className="text-sm text-muted-foreground">
-							Geben Sie &quot;delete&quot; ein, um dieses Produkt zu löschen
+							Geben Sie &quot;delete&quot; ein, um diesen Auftrag zu löschen
 						</p>
 					</div>
 					<div className="grid gap-2">
@@ -59,7 +62,7 @@ export const ProductDeletePopover = ({
 							<Button
 								onClick={() => {
 									if (deleteText.toLowerCase() === "delete") {
-										handleDelete(Number(product.id));
+										handleDelete(Number(order.id));
 										setDeleteText("");
 									}
 								}}
