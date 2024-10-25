@@ -52,3 +52,35 @@ export async function createOrder(formData: FormData) {
 
 	return { success: true, order: data[0] };
 }
+
+export async function createOrderMessage(formData: FormData) {
+	const supabase = createServerActionClient({ cookies });
+
+	const {
+		data: { user },
+	} = await supabase.auth.getUser();
+	if (!user) {
+		throw new Error("User not authenticated");
+	}
+
+	const orderMessageData: any = {
+		author: formData.get("author") as string,
+		text: formData.get("text") as string,
+		order_id: Number(formData.get("order_id")),
+		created_at: new Date(),
+	};
+
+	const { data, error } = await supabase
+		.from("order_communications")
+		.insert({
+			...orderMessageData,
+		})
+		.select();
+
+	if (error) {
+		console.error("Error creating order message:", error);
+		throw new Error("Failed to create order message");
+	}
+
+	return { success: true, orderMessage: data[0] };
+}

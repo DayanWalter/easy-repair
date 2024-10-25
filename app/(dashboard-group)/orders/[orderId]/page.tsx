@@ -19,10 +19,15 @@ import OrderEmployee from "@/features/orders/components/single/order-employee";
 import OrderTime from "@/features/orders/components/single/order-time";
 import OrderCosts from "@/features/orders/components/single/order-costs";
 
-import { readCustomer, readOrder } from "@/features/orders/api/read";
+import {
+	readCustomer,
+	readOrder,
+	readOrderMessages,
+} from "@/features/orders/api/read";
 import { updateOrder } from "@/features/orders/api/update";
 import { deleteOrder } from "@/features/orders/api/delete";
 import { Card } from "@/components/ui/card";
+import { createOrderMessage } from "@/features/orders/api/create";
 
 type Props = {
 	params: {
@@ -31,12 +36,11 @@ type Props = {
 };
 
 export default async function SingleOrder({ params }: Props) {
+	// TODO: Add error handling
 	const order = await readOrder(Number(params.orderId));
-	if (!order) {
-		// Handle case where product is not found
-		return <div>Order not found</div>;
-	}
 	const customer = await readCustomer(order.customer_id);
+	const messages = await readOrderMessages(Number(params.orderId));
+
 	const handleFormAction = async (formData: FormData) => {
 		"use server";
 		console.log(formData);
@@ -49,7 +53,8 @@ export default async function SingleOrder({ params }: Props) {
 				redirect("/orders");
 			}
 			// TODO: Add error handling
-		} else if (action === "delete") {
+		}
+		if (action === "delete") {
 			const { success } = await deleteOrder(params.orderId);
 			if (success) {
 				// TODO: Add toast, wait and redirect
@@ -57,6 +62,14 @@ export default async function SingleOrder({ params }: Props) {
 			}
 			// TODO: Add error handling
 		}
+		// if (action === "createMessage") {
+		// 	const { success } = await createOrderMessage(params.orderId, formData);
+		// 	if (success) {
+		// 		// TODO: Add toast, wait and redirect
+		// 		redirect(`/orders/${params.orderId}`);
+		// 	}
+		// 	// TODO: Add error handling
+		// }
 	};
 
 	const breadcrumbItems = [
@@ -91,7 +104,7 @@ export default async function SingleOrder({ params }: Props) {
 							</Card>
 							{/* Kommunikation */}
 							<Card className="h-72 overflow-auto xl:col-span-2 ">
-								<OrderMessages orderId={Number(order?.id)} />
+								<OrderMessages messages={messages} />
 							</Card>
 							{/* Zugänge */}
 							<Card>

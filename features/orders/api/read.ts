@@ -47,3 +47,15 @@ export async function readCustomer(customerId: number) {
 	}
 	return customer;
 }
+export async function readOrderMessages(orderId: number) {
+	const supabase = createServerComponentClient({ cookies });
+	const { data: orderMessages, error } = await supabase
+		.from("order_communication")
+		.select("*")
+		.eq("order_id", orderId);
+	if (error) {
+		console.error("Error reading order messages:", error);
+		throw new Error("Failed to read order messages");
+	}
+	return orderMessages;
+}
