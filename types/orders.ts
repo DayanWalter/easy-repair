@@ -2,9 +2,9 @@ export type Order = {
 	id?: string;
 	user_id?: string | null;
 	customer_id?: number;
-	verified: boolean;
+	verified?: boolean;
 	state?: string;
-	again: boolean;
+	again?: boolean;
 	old_order_id?: string;
 	account_access?: string;
 	account_access_more?: string;

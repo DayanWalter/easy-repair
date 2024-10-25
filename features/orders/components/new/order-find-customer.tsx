@@ -1,3 +1,5 @@
+"use client";
+
 import { Check, ChevronsUpDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import {
@@ -13,7 +15,7 @@ import {
 	PopoverContent,
 	PopoverTrigger,
 } from "@/components/ui/popover";
-import { Button } from "../../../components/ui/button";
+import { Button } from "@/components/ui/button";
 import {
 	Card,
 	CardContent,
@@ -21,17 +23,13 @@ import {
 	CardFooter,
 	CardHeader,
 	CardTitle,
-} from "../../../components/ui/card";
-import { Input } from "../../../components/ui/input";
-import supabase from "@/database/supabaseClient";
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
 import { useEffect, useState } from "react";
 import type { Customer } from "@/types";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 
-export default function OrderFindCustomer({
-	onCustomerChange,
-}: {
-	onCustomerChange: (customerId: number) => void;
-}) {
+export default function OrderFindCustomer() {
 	const [open, setOpen] = useState(false);
 	const [customerName, setCustomerName] = useState("");
 	const [error, setError] = useState<string | null>(null);
@@ -40,12 +38,13 @@ export default function OrderFindCustomer({
 	const selectedCustomer = customers.find(
 		(customer) => customer.name === customerName,
 	);
-
+	console.log(selectedCustomer);
+	const supabase = createClientComponentClient();
 	useEffect(() => {
 		const fetchCustomers = async () => {
 			setCustomersLoading(true);
 			const { data, error } = await supabase.from("customers").select("*");
-
+			console.log(data);
 			if (error) {
 				setError(`Could not fetch customers, Reason: ${error.message}`);
 				setCustomers([]);
@@ -58,10 +57,10 @@ export default function OrderFindCustomer({
 			setCustomersLoading(false);
 		};
 		fetchCustomers();
-	}, []);
+	}, [supabase]);
 
 	return (
-		<Card className="" x-chunk="dashboard-05-chunk-0">
+		<>
 			<CardHeader className="pb-3">
 				<CardTitle>Kunde</CardTitle>
 				<CardDescription className="max-w-lg text-balance leading-relaxed">
@@ -79,9 +78,8 @@ export default function OrderFindCustomer({
 								className="w-full justify-between"
 							>
 								{customerName
-									? customers.find(
-											(framework) => framework.name === customerName,
-										)?.name
+									? customers.find((customer) => customer.name === customerName)
+											?.name
 									: "Kunden auswählen..."}
 								<ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
 							</Button>
@@ -102,7 +100,7 @@ export default function OrderFindCustomer({
 															? ""
 															: currentCustomerName,
 													);
-													onCustomerChange(Number(customer.id) ?? 0);
+													// onCustomerChange(Number(customer.id) ?? 0);
 													setOpen(false);
 												}}
 											>
@@ -136,7 +134,9 @@ export default function OrderFindCustomer({
 					/>
 				</div>
 			</CardContent>
-			<CardFooter />
-		</Card>
+			<CardFooter>
+				<input type="hidden" name="customer_id" value={selectedCustomer?.id} />
+			</CardFooter>
+		</>
 	);
 }
