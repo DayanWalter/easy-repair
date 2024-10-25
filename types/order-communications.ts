@@ -1,6 +1,8 @@
 export type OrderCommunication = {
-	id: string;
+	id?: string;
+	user_id?: string;
+	order_id: number;
 	text: string;
 	author: string;
-	created_at: string;
+	created_at?: string;
 };

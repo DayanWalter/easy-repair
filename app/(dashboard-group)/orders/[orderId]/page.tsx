@@ -63,7 +63,7 @@ export default async function SingleOrder({ params }: Props) {
 			// TODO: Add error handling
 		}
 		// if (action === "createMessage") {
-		// 	const { success } = await createOrderMessage(params.orderId, formData);
+		// 	const { success } = await createOrderMessage(formData);
 		// 	if (success) {
 		// 		// TODO: Add toast, wait and redirect
 		// 		redirect(`/orders/${params.orderId}`);
@@ -104,7 +104,7 @@ export default async function SingleOrder({ params }: Props) {
 							</Card>
 							{/* Kommunikation */}
 							<Card className="h-72 overflow-auto xl:col-span-2 ">
-								<OrderMessages messages={messages} />
+								<OrderMessages messages={messages} orderId={order.id} />
 							</Card>
 							{/* Zugänge */}
 							<Card>

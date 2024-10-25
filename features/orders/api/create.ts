@@ -1,6 +1,6 @@
 import { createServerActionClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
-import type { Order } from "@/types";
+import type { Order, OrderCommunication } from "@/types";
 
 export async function createOrder(formData: FormData) {
 	const supabase = createServerActionClient({ cookies });
@@ -53,7 +53,7 @@ export async function createOrder(formData: FormData) {
 	return { success: true, order: data[0] };
 }
 
-export async function createOrderMessage(formData: FormData) {
+export async function createOrderMessage(formData: FormData, orderId: number) {
 	const supabase = createServerActionClient({ cookies });
 
 	const {
@@ -63,15 +63,14 @@ export async function createOrderMessage(formData: FormData) {
 		throw new Error("User not authenticated");
 	}
 
-	const orderMessageData: any = {
+	const orderMessageData: OrderCommunication = {
 		author: formData.get("author") as string,
 		text: formData.get("text") as string,
-		order_id: Number(formData.get("order_id")),
-		created_at: new Date(),
+		order_id: orderId,
+		user_id: user.id,
 	};
-
 	const { data, error } = await supabase
-		.from("order_communications")
+		.from("order_communication")
 		.insert({
 			...orderMessageData,
 		})
