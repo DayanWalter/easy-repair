@@ -33,10 +33,14 @@ import { Separator } from "@/components/ui/separator";
 
 export default function OrderMessages({
 	messages,
+	orderId,
 }: {
 	messages: OrderCommunication[];
+	orderId: number;
 }) {
-	console.log(messages);
+	// Orderid wird falsch abgeleitet. Falls keine Nachrichten vorhanden
+	// (was am Anfang, solange es keine gibt der Fall ist),
+	// wird die orderId an sheet übergeben und der leitet dorthin um!!!
 
 	return (
 		<>
@@ -46,7 +50,7 @@ export default function OrderMessages({
 			</CardHeader>
 			<Separator />
 			<CardContent className="py-2">
-				<OrderMessagesSheet />
+				<OrderMessagesSheet orderId={orderId} />
 				{/* Communication-table */}
 				<Table>
 					<TableHeader>
