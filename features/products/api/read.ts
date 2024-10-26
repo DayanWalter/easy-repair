@@ -1,8 +1,8 @@
-import { createServerActionClient } from "@supabase/auth-helpers-nextjs";
+import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 
 export async function readProduct(productId: number) {
-	const supabase = createServerActionClient({ cookies });
+	const supabase = createServerComponentClient({ cookies });
 
 	// TODO: Add user_id to the query
 	const { data: product, error } = await supabase
@@ -20,7 +20,7 @@ export async function readProduct(productId: number) {
 }
 
 export async function readProducts() {
-	const supabase = createServerActionClient({ cookies });
+	const supabase = createServerComponentClient({ cookies });
 
 	// TODO: Add user_id to the query
 	const { data: products, error } = await supabase.from("products").select("*");

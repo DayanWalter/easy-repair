@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
 	Sheet,
@@ -12,18 +11,22 @@ import {
 	SheetTrigger,
 } from "@/components/ui/sheet";
 import { Textarea } from "@/components/ui/textarea";
-import { createOrderMessage } from "@/features/orders/api/create";
+import { createMessage } from "@/features/orders/messages/api/create";
 import { revalidatePath } from "next/cache";
 
-export default function OrderMessagesSheet({ orderId }: { orderId: number }) {
+export default function MessageCreateSheet({ orderId }: { orderId: number }) {
 	const handleCreateOrderMessage = async (formData: FormData) => {
 		"use server";
-		const { success } = await createOrderMessage(formData, orderId);
-		if (success) {
-			// Subscribe to realtime?
-			revalidatePath(`/orders/${orderId}`);
+		const action = formData.get("action");
+		if (action === "createMessage") {
+			const { success } = await createMessage(formData, orderId);
+			if (success) {
+				// Subscribe to realtime?
+				revalidatePath(`/orders/${orderId}`);
+			}
 		}
 	};
+
 	return (
 		<Sheet>
 			<SheetTrigger asChild>
@@ -40,17 +43,6 @@ export default function OrderMessagesSheet({ orderId }: { orderId: number }) {
 				<form action={handleCreateOrderMessage}>
 					<div className="grid gap-4 py-4">
 						<div className="grid grid-cols-4 items-center gap-4">
-							<Label htmlFor="author" className="">
-								Name
-							</Label>
-							<Input
-								id="author"
-								name="author"
-								placeholder="Ihr Name"
-								className="col-span-3"
-							/>
-						</div>
-						<div className="grid grid-cols-4 items-center gap-4">
 							<Label htmlFor="text" className="">
 								Nachricht
 							</Label>
@@ -59,6 +51,7 @@ export default function OrderMessagesSheet({ orderId }: { orderId: number }) {
 								placeholder="Ihre Nachricht"
 								name="text"
 								className="col-span-3"
+								required
 							/>
 						</div>
 					</div>
