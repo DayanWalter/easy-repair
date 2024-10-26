@@ -11,16 +11,33 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import {
+	createClientComponentClient,
+	type User,
+} from "@supabase/auth-helpers-nextjs";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function Avatar() {
 	const supabase = createClientComponentClient();
 	const router = useRouter();
+	const [user, setUser] = useState<User | null>(null);
+
+	useEffect(() => {
+		const getUser = async () => {
+			const {
+				data: { user },
+			} = await supabase.auth.getUser();
+			setUser(user);
+		};
+		getUser();
+	}, [supabase]);
+	console.log(user);
 	const handleSignOut = async () => {
 		await supabase.auth.signOut();
 		router.push("/login");
 	};
+
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
@@ -31,7 +48,7 @@ export default function Avatar() {
 				>
 					{/* Placeholder */}
 					<Image
-						src="/btc.png"
+						src={user?.user_metadata.avatar_url}
 						width={36}
 						height={36}
 						alt="Avatar"

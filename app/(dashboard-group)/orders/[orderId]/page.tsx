@@ -2,7 +2,6 @@ import { Button } from "@/components/ui/button";
 
 import { redirect } from "next/navigation";
 
-import OrderMessages from "@/features/orders/components/single/order-messages";
 import Header from "@/components/header/header";
 import OrderCustomer from "@/features/orders/components/single/order-customer";
 import OrderNumber from "@/features/orders/components/single/order-number";
@@ -19,15 +18,13 @@ import OrderEmployee from "@/features/orders/components/single/order-employee";
 import OrderTime from "@/features/orders/components/single/order-time";
 import OrderCosts from "@/features/orders/components/single/order-costs";
 
-import {
-	readCustomer,
-	readOrder,
-	readOrderMessages,
-} from "@/features/orders/api/read";
+import { readCustomer, readOrder } from "@/features/orders/api/read";
+
 import { updateOrder } from "@/features/orders/api/update";
 import { deleteOrder } from "@/features/orders/api/delete";
 import { Card } from "@/components/ui/card";
-import { createOrderMessage } from "@/features/orders/api/create";
+import Messages from "@/features/orders/messages/components/messages";
+// import { createOrderMessage } from "@/features/orders/api/create";
 
 type Props = {
 	params: {
@@ -39,7 +36,6 @@ export default async function SingleOrder({ params }: Props) {
 	// TODO: Add error handling
 	const order = await readOrder(Number(params.orderId));
 	const customer = await readCustomer(order.customer_id);
-	const messages = await readOrderMessages(Number(params.orderId));
 
 	const handleFormAction = async (formData: FormData) => {
 		"use server";
@@ -62,14 +58,6 @@ export default async function SingleOrder({ params }: Props) {
 			}
 			// TODO: Add error handling
 		}
-		// if (action === "createMessage") {
-		// 	const { success } = await createOrderMessage(formData);
-		// 	if (success) {
-		// 		// TODO: Add toast, wait and redirect
-		// 		redirect(`/orders/${params.orderId}`);
-		// 	}
-		// 	// TODO: Add error handling
-		// }
 	};
 
 	const breadcrumbItems = [
@@ -104,7 +92,7 @@ export default async function SingleOrder({ params }: Props) {
 							</Card>
 							{/* Kommunikation */}
 							<Card className="h-72 overflow-auto xl:col-span-2 ">
-								<OrderMessages messages={messages} orderId={order.id} />
+								<Messages params={params} />
 							</Card>
 							{/* Zugänge */}
 							<Card>

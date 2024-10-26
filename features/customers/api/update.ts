@@ -1,9 +1,9 @@
-import { createServerActionClient } from "@supabase/auth-helpers-nextjs";
+import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import type { Customer } from "@/types";
 
 export async function updateCustomer(customerId: number, formData: FormData) {
-	const supabase = createServerActionClient({ cookies });
+	const supabase = createServerComponentClient({ cookies });
 
 	const {
 		data: { user },

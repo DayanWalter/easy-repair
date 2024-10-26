@@ -1,4 +1,4 @@
-export type OrderCommunication = {
+export type Message = {
 	id?: string;
 	user_id?: string;
 	order_id: number;

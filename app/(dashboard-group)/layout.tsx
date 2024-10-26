@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 
 // Global Components
 import NavBar from "@/components/navbar/navbar";
+import Avatar from "@/components/avatar/avatar";
 
 export default async function DashboardGroupLayout({
 	children,
@@ -21,7 +22,12 @@ export default async function DashboardGroupLayout({
 	return (
 		<>
 			<NavBar />
-			<div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14">{children}</div>
+			<div className="flex flex-col sm:gap-2 sm:py-4 sm:pl-14">
+				<div className="flex justify-end px-4 sm:px-6 ">
+					<Avatar />
+				</div>
+				<div className="flex-1">{children}</div>
+			</div>
 		</>
 	);
 }
