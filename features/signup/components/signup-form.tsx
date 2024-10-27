@@ -15,7 +15,7 @@ import {
 	FormMessage,
 } from "@/components/ui/form";
 
-export default function RegisterForm() {
+export default function SignupForm() {
 	const formSchema = z
 		.object({
 			userName: z.string().min(5).max(50),

@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+"use client";
+import { useState } from "react";
 import {
 	Popover,
 	PopoverContent,
@@ -8,58 +9,55 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import type { Product } from "@/types";
 import { useRouter } from "next/navigation";
-import {
-	createClientComponentClient,
-	type User,
-} from "@supabase/auth-helpers-nextjs";
+// import { createClient, type User } from "@supabase/auth-helpers-nextjs";
 
-export const ProductDeletePopover = ({
+export default function ProductDeletePopover({
 	product,
 }: {
 	product: Product;
-}) => {
+}) {
 	const [error, setError] = useState<string | null>(null);
 	const [deleteText, setDeleteText] = useState("");
 	const router = useRouter();
-	const supabase = createClientComponentClient();
-	const [user, setUser] = useState<User | null>(null);
-	console.log(supabase);
-	console.log(user);
+	// const supabase = createClient();
+	// const [user, setUser] = useState<User | null>(null);
+	// console.log(supabase);
+	// console.log(user);
 	// const {
 	// 	data: { user },
 	// } = await supabase.auth.getUser();
-	useEffect(() => {
-		const getUser = async () => {
-			const {
-				data: { user },
-			} = await supabase.auth.getUser();
-			setUser(user);
-		};
-		getUser();
-	}, [supabase.auth]);
+	// useEffect(() => {
+	// 	const getUser = async () => {
+	// 		const {
+	// 			data: { user },
+	// 		} = await supabase.auth.getUser();
+	// 		setUser(user);
+	// 	};
+	// 	getUser();
+	// }, [supabase.auth]);
 
-	const handleDelete = async (id: number) => {
-		console.log(user?.id);
-		console.log(id);
-		if (user) {
-			const { data, error } = await supabase
-				.from("products")
-				.delete()
-				.eq("id", id)
-				.eq("user_id", user.id)
-				.select();
+	// const handleDelete = async (id: number) => {
+	// 	console.log(user?.id);
+	// 	console.log(id);
+	// 	if (user) {
+	// 		const { data, error } = await supabase
+	// 			.from("products")
+	// 			.delete()
+	// 			.eq("id", id)
+	// 			.eq("user_id", user.id)
+	// 			.select();
 
-			if (error) {
-				setError(`Could not delete product, Reason: ${error.message}`);
-				return;
-			}
-			if (data) {
-				console.log(data);
-				// router.refresh();
-				// router.push("/products");
-			}
-		}
-	};
+	// 		if (error) {
+	// 			setError(`Could not delete product, Reason: ${error.message}`);
+	// 			return;
+	// 		}
+	// 		if (data) {
+	// 			console.log(data);
+	// 			// router.refresh();
+	// 			// router.push("/products");
+	// 		}
+	// 	}
+	// };
 
 	return (
 		<Popover>
@@ -85,7 +83,7 @@ export const ProductDeletePopover = ({
 							<Button
 								onClick={() => {
 									if (deleteText.toLowerCase() === "delete") {
-										handleDelete(Number(product.id));
+										// handleDelete(Number(product.id));
 										setDeleteText("");
 									}
 								}}
@@ -101,4 +99,4 @@ export const ProductDeletePopover = ({
 			</PopoverContent>
 		</Popover>
 	);
-};
+}

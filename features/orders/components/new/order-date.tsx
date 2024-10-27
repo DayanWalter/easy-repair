@@ -6,7 +6,7 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
-import { DatePicker } from "./date-picker";
+import { DatePicker } from "@/features/orders/components/new";
 
 export default function OrderDate() {
 	return (

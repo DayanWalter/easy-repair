@@ -1,13 +1,10 @@
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-import { cookies } from "next/headers";
+import { createClient } from "@/utils/supabase/server";
 
-export async function deleteMessage(
+export default async function deleteMessage(
 	formData: FormData,
 	messageId: string | undefined,
 ) {
-	console.log("delete message", formData, messageId);
-
-	const supabase = createServerComponentClient({ cookies });
+	const supabase = await createClient();
 	const {
 		data: { user },
 	} = await supabase.auth.getUser();

@@ -11,11 +11,11 @@ import supabase from "@/database/supabaseClient";
 import type { Order } from "@/types";
 import { useRouter } from "next/navigation";
 
-export const OrderDeletePopover = ({
+export default function OrderDeletePopover({
 	order,
 }: {
 	order: Order;
-}) => {
+}) {
 	const [error, setError] = useState<string | null>(null);
 	const router = useRouter();
 	const [deleteText, setDeleteText] = useState("");
@@ -78,4 +78,4 @@ export const OrderDeletePopover = ({
 			</PopoverContent>
 		</Popover>
 	);
-};
+}

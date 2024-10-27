@@ -1,9 +1,11 @@
 import type { Message } from "@/types";
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-import { cookies } from "next/headers";
+import { createClient } from "@/utils/supabase/server";
 
-export async function createMessage(formData: FormData, orderId: number) {
-	const supabase = createServerComponentClient({ cookies });
+export default async function createMessage(
+	formData: FormData,
+	orderId: number,
+) {
+	const supabase = await createClient();
 
 	const {
 		data: { user },

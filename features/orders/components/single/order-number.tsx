@@ -10,7 +10,6 @@ import { Input } from "@/components/ui/input";
 import type { Order } from "@/types";
 
 export default function OrderNumber({ order }: { order: Order }) {
-	console.log(order.verified);
 	return (
 		<>
 			<CardHeader className="pb-3">

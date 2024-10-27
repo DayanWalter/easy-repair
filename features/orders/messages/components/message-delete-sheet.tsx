@@ -1,6 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import {
 	Sheet,
 	SheetClose,
@@ -11,13 +9,11 @@ import {
 	SheetTitle,
 	SheetTrigger,
 } from "@/components/ui/sheet";
-import { Textarea } from "@/components/ui/textarea";
 import { Trash2 } from "lucide-react";
-// import { deleteOrderMessage } from "@/features/orders/orderMessages/api/delete";
 import { revalidatePath } from "next/cache";
-import { deleteMessage } from "../api/delete";
+import { deleteMessage } from "@/features/orders/messages/api";
 
-export default function MessagesCreateSheet({
+export default function MessagesDeleteSheet({
 	messageId,
 	orderId,
 }: { messageId: string | undefined; orderId: number }) {
@@ -25,7 +21,6 @@ export default function MessagesCreateSheet({
 		"use server";
 		const action = formData.get("action");
 		if (action === "deleteMessage") {
-			console.log("delete message", formData);
 			const { success } = await deleteMessage(formData, messageId);
 			if (success) {
 				// Subscribe to realtime?

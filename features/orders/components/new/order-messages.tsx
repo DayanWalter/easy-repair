@@ -1,5 +1,4 @@
 import {
-	Card,
 	CardContent,
 	CardDescription,
 	CardFooter,
@@ -7,7 +6,7 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 
-export default function OrderCommunikation() {
+export default function OrderMessages() {
 	return (
 		<>
 			<CardHeader className="pb-2">

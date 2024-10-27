@@ -1,8 +1,7 @@
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-import { cookies } from "next/headers";
+import { createClient } from "@/utils/supabase/server";
 
-export async function deleteOrder(orderId: string) {
-	const supabase = createServerComponentClient({ cookies });
+export default async function deleteOrder(orderId: string) {
+	const supabase = await createClient();
 
 	const {
 		data: { user },

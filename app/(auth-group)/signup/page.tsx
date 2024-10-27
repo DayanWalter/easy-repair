@@ -1,11 +1,11 @@
 "use client";
-import RegisterForm from "@/components/register-form/register-form";
+import { SignupForm } from "@/features/signup";
 import { Button } from "@/components/ui/button";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { createClient } from "@/utils/supabase/client";
 import Link from "next/link";
 
-export default function Register() {
-	const supabase = createClientComponentClient();
+export default function Signup() {
+	const supabase = createClient();
 	const handleSignIn = async () => {
 		await supabase.auth.signInWithOAuth({
 			provider: "github",
@@ -25,7 +25,7 @@ export default function Register() {
 				</div>
 
 				{/* form */}
-				<RegisterForm />
+				<SignupForm />
 				{/* end of form */}
 				<Button onClick={handleSignIn} variant="outline" className="w-full">
 					Mit Github fortfahren
