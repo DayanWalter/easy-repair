@@ -3,27 +3,28 @@ import { Button } from "@/components/ui/button";
 import { redirect } from "next/navigation";
 
 import Header from "@/components/header/header";
-import OrderCustomer from "@/features/orders/components/single/order-customer";
-import OrderNumber from "@/features/orders/components/single/order-number";
-import OrderStatus from "@/features/orders/components/single/order-status";
-import OrderAccess from "@/features/orders/components/single/order-access";
-import OrderArticle from "@/features/orders/components/single/order-article";
-import OrderDate from "@/features/orders/components/single/order-date";
-import OrderErrorDescription from "@/features/orders/components/single/order-error-description";
-import OrderDiagnose from "@/features/orders/components/single/order-diagnose";
-import OrderOffer from "@/features/orders/components/single/order-offer";
-import OrderRepair from "@/features/orders/components/single/order-repair";
-import OrderComment from "@/features/orders/components/single/order-comment";
-import OrderEmployee from "@/features/orders/components/single/order-employee";
-import OrderTime from "@/features/orders/components/single/order-time";
-import OrderCosts from "@/features/orders/components/single/order-costs";
+import {
+	OrderCustomer,
+	OrderNumber,
+	OrderStatus,
+	OrderAccess,
+	OrderArticle,
+	OrderDate,
+	OrderErrorDescription,
+	OrderDiagnose,
+	OrderOffer,
+	OrderRepair,
+	OrderComment,
+	OrderEmployee,
+	OrderTime,
+	OrderCosts,
+} from "@/features/orders/components/single";
 
-import { readCustomer, readOrder } from "@/features/orders/api/read";
+import { readOrder, updateOrder, deleteOrder } from "@/features/orders";
+import { readCustomer } from "@/features/customers";
 
-import { updateOrder } from "@/features/orders/api/update";
-import { deleteOrder } from "@/features/orders/api/delete";
 import { Card } from "@/components/ui/card";
-import Messages from "@/features/orders/messages/components/messages";
+import { Messages } from "@/features/orders/messages/components";
 // import { createOrderMessage } from "@/features/orders/api/create";
 
 type Props = {
@@ -39,7 +40,6 @@ export default async function SingleOrder({ params }: Props) {
 
 	const handleFormAction = async (formData: FormData) => {
 		"use server";
-		console.log(formData);
 		const action = formData.get("action");
 
 		if (action === "update") {

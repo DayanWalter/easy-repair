@@ -27,7 +27,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { useEffect, useState } from "react";
 import type { Customer } from "@/types";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { createClient } from "@/utils/supabase/client";
 
 export default function OrderFindCustomer() {
 	const [open, setOpen] = useState(false);
@@ -38,13 +38,11 @@ export default function OrderFindCustomer() {
 	const selectedCustomer = customers.find(
 		(customer) => customer.name === customerName,
 	);
-	console.log(selectedCustomer);
-	const supabase = createClientComponentClient();
+	const supabase = createClient();
 	useEffect(() => {
 		const fetchCustomers = async () => {
 			setCustomersLoading(true);
 			const { data, error } = await supabase.from("customers").select("*");
-			console.log(data);
 			if (error) {
 				setError(`Could not fetch customers, Reason: ${error.message}`);
 				setCustomers([]);

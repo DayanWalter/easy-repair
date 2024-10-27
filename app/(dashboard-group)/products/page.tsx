@@ -23,7 +23,7 @@ import { Tabs, TabsContent } from "@/components/ui/tabs";
 
 import ProductTable from "@/features/products/components/product-table";
 // Features
-import { readProducts } from "@/features/products/api/read";
+import { readProducts } from "@/features/products";
 import Header from "@/components/header/header";
 
 export default async function Products() {

@@ -3,7 +3,7 @@
 import { Breadcrumb } from "@/components/breadcrumb/breadcrumb";
 import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
-import Avatar from "@/components/avatar/avatar";
+// import Avatar from "@/components/avatar/avatar";
 import type { BreadcrumbItem } from "@/types";
 
 export default function Header({

@@ -13,9 +13,12 @@ import { format } from "date-fns";
 import type { Message } from "@/types";
 import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { readMessages } from "../api/read";
-import MessageDeleteSheet from "./message-delete-sheet";
-import MessageCreateSheet from "./message-create-sheet";
+import { readMessages } from "@/features/orders/messages/api";
+
+import {
+	MessageDeleteSheet,
+	MessageCreateSheet,
+} from "@/features/orders/messages/components";
 
 export default async function Messages({
 	params,

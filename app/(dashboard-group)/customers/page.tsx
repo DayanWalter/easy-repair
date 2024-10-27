@@ -19,11 +19,15 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+
 import { Tabs, TabsContent } from "@/components/ui/tabs";
 
 // Features
-import CustomerTable from "@/features/customers/components/customer-table";
-import { readCustomers } from "@/features/customers/api/read";
+// import CustomerTable from "@/features/customers/components/customer-table";
+// import { readCustomers } from "@/features/customers/api/read";
+
+import { CustomerTable, readCustomers } from "@/features/customers";
+
 import Header from "@/components/header/header";
 
 export default async function Customers() {

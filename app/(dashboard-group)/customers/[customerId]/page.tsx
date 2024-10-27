@@ -14,9 +14,11 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 // Features
-import { readCustomer } from "@/features/customers/api/read";
-import { updateCustomer } from "@/features/customers/api/update";
-import { deleteCustomer } from "@/features/customers/api/delete";
+import {
+	readCustomer,
+	updateCustomer,
+	deleteCustomer,
+} from "@/features/customers";
 import Header from "@/components/header/header";
 
 type Props = {

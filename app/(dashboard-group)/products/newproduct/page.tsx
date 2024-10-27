@@ -14,7 +14,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 // Features
-import { createProduct } from "@/features/products/api/create";
+import { createProduct } from "@/features/products";
 import Header from "@/components/header/header";
 
 export default function NewProduct() {

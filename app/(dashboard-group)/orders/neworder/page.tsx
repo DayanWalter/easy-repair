@@ -2,26 +2,29 @@ import { redirect } from "next/navigation";
 
 // Global Components
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 
 // Features
-import { createOrder } from "@/features/orders/api/create";
-import OrderFindCustomer from "@/features/orders/components/new/order-find-customer";
-import OrderNumber from "@/features/orders/components/new/order-number";
-import OrderStatus from "@/features/orders/components/new/order-status";
-import OrderCommunikation from "@/features/orders/components/new/order-communikation";
-import OrderAccess from "@/features/orders/components/new/order-access";
-import OrderArticle from "@/features/orders/components/new/order-article";
-import OrderDate from "@/features/orders/components/new/order-date";
-import OrderErrorDescription from "@/features/orders/components/new/order-error-description";
-import OrderDiagnose from "@/features/orders/components/new/order-diagnose";
-import OrderOffer from "@/features/orders/components/new/order-offer";
-import OrderRepair from "@/features/orders/components/new/order-repair";
-import OrderComment from "@/features/orders/components/new/order-comment";
-import OrderEmployee from "@/features/orders/components/new/order-employee";
-import OrderTime from "@/features/orders/components/new/order-time";
-import OrderCosts from "@/features/orders/components/new/order-costs";
+import { createOrder } from "@/features/orders";
+import {
+	OrderFindCustomer,
+	OrderNumber,
+	OrderStatus,
+	OrderMessages,
+	OrderAccess,
+	OrderArticle,
+	OrderDate,
+	OrderErrorDescription,
+	OrderDiagnose,
+	OrderOffer,
+	OrderRepair,
+	OrderComment,
+	OrderEmployee,
+	OrderTime,
+	OrderCosts,
+} from "@/features/orders/components/new";
+
 import Header from "@/components/header/header";
-import { Card } from "@/components/ui/card";
 
 export default function NewOrder() {
 	const breadcrumbItems = [
@@ -57,7 +60,7 @@ export default function NewOrder() {
 							</Card>
 							{/* Kommunikation */}
 							<Card className="xl:col-span-2">
-								<OrderCommunikation />
+								<OrderMessages />
 							</Card>
 							{/* Zugänge */}
 							<Card>

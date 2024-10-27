@@ -21,7 +21,7 @@ import {
 import { Tabs, TabsContent } from "@/components/ui/tabs";
 
 // Features
-import { readOrders } from "@/features/orders/api/read";
+import { readOrders } from "@/features/orders";
 import OrderTable from "@/features/orders/components/order-table";
 import Header from "@/components/header/header";
 
