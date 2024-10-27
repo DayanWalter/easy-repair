@@ -29,18 +29,14 @@ export default async function Messages({
 
 	return (
 		<>
-			<CardHeader className="pb-2">
+			<CardHeader>
 				<CardTitle>Kommunikation</CardTitle>
 				<CardDescription>Dies ist der Kommunikationsverlauf</CardDescription>
 			</CardHeader>
-			<Separator />
 			<CardContent>
-				<div className="py-2">
-					<MessageCreateSheet orderId={Number(params.orderId)} />
-				</div>
 				{/* Communication-table */}
-				<ScrollArea className="h-72 rounded-md border">
-					<Table className="h-[50px]">
+				<ScrollArea className="h-96 rounded-md border">
+					<Table>
 						<TableBody>
 							{/* Communication */}
 							{messages?.map((message: Message) => (
@@ -72,8 +68,12 @@ export default async function Messages({
 						</TableBody>
 					</Table>
 				</ScrollArea>
+				{/* <div className="py-6">
+				</div> */}
 			</CardContent>
-			<CardFooter />
+			<CardFooter>
+				<MessageCreateSheet orderId={Number(params.orderId)} />
+			</CardFooter>
 		</>
 	);
 }

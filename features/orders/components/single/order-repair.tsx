@@ -14,9 +14,7 @@ export default function OrderRepair({ order }: { order: Order }) {
 		<>
 			<CardHeader className="pb-2">
 				<CardTitle>Reparatur</CardTitle>
-				<CardDescription>
-					Erklären Sie, was zur Behebung des Problems unternommen wurde.
-				</CardDescription>
+				<CardDescription>Wie wurde das Problem behoben? </CardDescription>
 			</CardHeader>
 			<CardContent>
 				<Textarea id="repair" name="repair" defaultValue={order?.repair} />

@@ -91,17 +91,18 @@ export default async function SingleOrder({ params }: Props) {
 								<OrderStatus order={order} />
 							</Card>
 							{/* Kommunikation */}
-							<Card className="h-72 overflow-auto xl:col-span-2 ">
+							<Card className="xl:col-span-2 xl:row-span-2">
 								<Messages params={params} />
+							</Card>
+							{/* Artikel */}
+							<Card>
+								<OrderArticle order={order} />
 							</Card>
 							{/* Zugänge */}
 							<Card>
 								<OrderAccess order={order} />
 							</Card>
-							{/* Artikel */}
-							<Card className="xl:col-span-3">
-								<OrderArticle order={order} />
-							</Card>
+
 							{/* Datum */}
 							<Card>
 								<OrderDate order={order} />
