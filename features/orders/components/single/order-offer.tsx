@@ -15,7 +15,7 @@ export default function OrderOffer({ order }: { order: Order }) {
 			<CardHeader className="pb-2">
 				<CardTitle>Angebot</CardTitle>
 				<CardDescription>
-					Beschreiben Sie die vorgeschlagenen Maßnahmen und die Kosten.
+					Welche Leistungen und Kosten umfasst Ihr Angebot?
 				</CardDescription>
 			</CardHeader>
 			<CardContent>

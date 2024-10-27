@@ -36,10 +36,12 @@ export default function OrderCosts({ order }: { order: Order }) {
 	return (
 		<>
 			{/* Lohnkosten */}
-			<Card x-chunk="dashboard-05-chunk-1">
+			<Card>
 				<CardHeader className="pb-2">
 					<CardTitle>Lohnkosten</CardTitle>
-					<CardDescription>Wie hoch sind die Lohnkosten?</CardDescription>
+					<CardDescription>
+						Wie hoch sind die gesamten Lohnkosten?
+					</CardDescription>
 				</CardHeader>
 				<CardContent>
 					<Input
@@ -53,7 +55,7 @@ export default function OrderCosts({ order }: { order: Order }) {
 				<CardFooter />
 			</Card>
 			{/* Materialkosten */}
-			<Card x-chunk="dashboard-05-chunk-1">
+			<Card>
 				<CardHeader className="pb-2">
 					<CardTitle>Materialkosten</CardTitle>
 					<CardDescription>Wie hoch sind die Materialkosten?</CardDescription>
@@ -70,10 +72,12 @@ export default function OrderCosts({ order }: { order: Order }) {
 				<CardFooter />
 			</Card>
 			{/* Gesamtkosten */}
-			<Card x-chunk="dashboard-05-chunk-1">
+			<Card>
 				<CardHeader className="pb-2">
 					<CardTitle>Gesamtkosten</CardTitle>
-					<CardDescription>Wie hoch sind die Gesamtkosten?</CardDescription>
+					<CardDescription>
+						Wie hoch sind die Gesamtkosten für diesen Auftrag?
+					</CardDescription>
 				</CardHeader>
 				<CardContent>
 					<Input

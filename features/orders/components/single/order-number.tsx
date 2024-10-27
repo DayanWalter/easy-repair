@@ -16,9 +16,9 @@ export default function OrderNumber({ order }: { order: Order }) {
 				<CardTitle>Auftragsnummer</CardTitle>
 			</CardHeader>
 			<CardContent>
-				<div className="grid gap-2">
+				<div className="grid gap-4">
 					<Input placeholder={order?.id} disabled />
-					<div className="flex items-center space-x-2">
+					<div className="flex items-center gap-2">
 						<Checkbox
 							id="verified"
 							name="verified"

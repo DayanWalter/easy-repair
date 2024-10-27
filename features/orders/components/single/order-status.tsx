@@ -31,7 +31,7 @@ export default function OrderStatus({ order }: { order: Order }) {
 				<CardTitle>Status</CardTitle>
 			</CardHeader>
 			<CardContent>
-				<div className="grid gap-2">
+				<div className="grid gap-4">
 					<Select name="state" value={state} onValueChange={setState}>
 						<SelectTrigger>
 							<SelectValue placeholder="Wählen Sie einen Status" />
@@ -50,7 +50,7 @@ export default function OrderStatus({ order }: { order: Order }) {
 							</SelectGroup>
 						</SelectContent>
 					</Select>
-					<div className="flex items-center space-x-2">
+					<div className="flex items-center gap-2">
 						<Checkbox id="again" name="again" defaultChecked={order?.again} />
 						<Label
 							htmlFor="again"

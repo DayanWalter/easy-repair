@@ -14,9 +14,7 @@ export default function OrderDiagnose({ order }: { order: Order }) {
 		<>
 			<CardHeader className="pb-2">
 				<CardTitle>Diagnose</CardTitle>
-				<CardDescription>
-					Geben Sie die Ursache des Problems an.
-				</CardDescription>
+				<CardDescription>Was ist die Ursache des Problems?</CardDescription>
 			</CardHeader>
 			<CardContent>
 				<Textarea

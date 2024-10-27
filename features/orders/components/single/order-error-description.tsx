@@ -15,7 +15,7 @@ export default function OrderErrorDescription({ order }: { order: Order }) {
 			<CardHeader className="pb-2">
 				<CardTitle>Fehlerbeschreibung</CardTitle>
 				<CardDescription>
-					Beschreiben Sie das aufgetretene Problem.
+					Welcher Fehler ist aufgetreten? Bitte beschreiben Sie kurz.
 				</CardDescription>
 			</CardHeader>
 			<CardContent>
