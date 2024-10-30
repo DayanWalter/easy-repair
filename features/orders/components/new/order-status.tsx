@@ -33,19 +33,15 @@ export default function OrderStatus() {
 						</SelectTrigger>
 						<SelectContent>
 							<SelectGroup>
-								<SelectItem value="Annahme">Annahme</SelectItem>
-								<SelectItem value="Technik">Technik</SelectItem>
-								<SelectItem value="Technik wartend">Technik wartend</SelectItem>
-								<SelectItem value="Kunden anrufen">Kunden anrufen</SelectItem>
-								<SelectItem value="Gerät wird abgeholt">
-									Gerät wird abgeholt
-								</SelectItem>
-								<SelectItem value="Teile bestellt">Teile bestellt</SelectItem>
+								<SelectItem value="Offen">Offen</SelectItem>
+								<SelectItem value="In Bearbeitung">In Bearbeitung</SelectItem>
+								<SelectItem value="Erledigt">Erledigt</SelectItem>
+								<SelectItem value="Abgerechnet">Abgerechnet</SelectItem>
 							</SelectGroup>
 						</SelectContent>
 					</Select>
-					<div className="flex items-center space-x-2">
-						<Checkbox name="again" />
+					<div className="flex items-center gap-2">
+						<Checkbox id="again" name="again" />
 						<label
 							htmlFor="again"
 							className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
