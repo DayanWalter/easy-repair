@@ -38,15 +38,10 @@ export default function OrderStatus({ order }: { order: Order }) {
 						</SelectTrigger>
 						<SelectContent>
 							<SelectGroup>
-								<SelectLabel>Status</SelectLabel>
-								<SelectItem value="Annahme">Annahme</SelectItem>
-								<SelectItem value="Technik">Technik</SelectItem>
-								<SelectItem value="Technik wartend">Technik wartend</SelectItem>
-								<SelectItem value="Kunden anrufen">Kunden anrufen</SelectItem>
-								<SelectItem value="Gerät wird abgeholt">
-									Gerät wird abgeholt
-								</SelectItem>
-								<SelectItem value="Teile bestellt">Teile bestellt</SelectItem>
+								<SelectItem value="Offen">Offen</SelectItem>
+								<SelectItem value="In Bearbeitung">In Bearbeitung</SelectItem>
+								<SelectItem value="Erledigt">Erledigt</SelectItem>
+								<SelectItem value="Abgerechnet">Abgerechnet</SelectItem>
 							</SelectGroup>
 						</SelectContent>
 					</Select>
