@@ -10,7 +10,8 @@
 		"dev": "next dev",
 		"build": "next build",
 		"start": "next start",
-		"lint": "next lint"
+		"lint": "next lint",
+		"generate": "npx supabase gen types typescript --project-id yozxlmouuqsxkpwyickl> types/database.types.ts"
 	},
 	"dependencies": {
 		"@hookform/resolvers": "^3.9.0",

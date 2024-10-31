@@ -7,9 +7,10 @@ import {
 	CardFooter,
 } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
-import type { Order } from "@/types";
 
-export default function OrderDiagnose({ order }: { order: Order }) {
+export default function OrderDiagnose({
+	order,
+}: { order: Database["public"]["Tables"]["orders"]["Row"] }) {
 	return (
 		<>
 			<CardHeader className="pb-2">
@@ -20,7 +21,7 @@ export default function OrderDiagnose({ order }: { order: Order }) {
 				<Textarea
 					id="diagnose"
 					name="diagnose"
-					defaultValue={order?.diagnose}
+					defaultValue={order?.diagnose ?? ""}
 				/>
 			</CardContent>
 			<CardFooter />

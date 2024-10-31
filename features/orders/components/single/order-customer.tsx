@@ -6,10 +6,11 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
-import type { Customer } from "@/types";
 import { Input } from "@/components/ui/input";
 
-export default function OrderCustomer({ customer }: { customer: Customer }) {
+export default function OrderCustomer({
+	customer,
+}: { customer: Database["public"]["Tables"]["customers"]["Row"] }) {
 	return (
 		<>
 			<CardHeader className="pb-3">

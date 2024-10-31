@@ -26,7 +26,6 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { useEffect, useState } from "react";
-import type { Customer } from "@/types";
 import { createClient } from "@/utils/supabase/client";
 
 export default function OrderFindCustomer() {
@@ -34,7 +33,9 @@ export default function OrderFindCustomer() {
 	const [customerName, setCustomerName] = useState("");
 	const [error, setError] = useState<string | null>(null);
 	const [customersLoading, setCustomersLoading] = useState<boolean>(false);
-	const [customers, setCustomers] = useState<Customer[]>([]);
+	const [customers, setCustomers] = useState<
+		Database["public"]["Tables"]["customers"]["Row"][]
+	>([]);
 	const selectedCustomer = customers.find(
 		(customer) => customer.name === customerName,
 	);
@@ -91,7 +92,7 @@ export default function OrderFindCustomer() {
 										{customers.map((customer) => (
 											<CommandItem
 												key={customer.name}
-												value={customer.name}
+												value={customer.name ?? ""}
 												onSelect={(currentCustomerName) => {
 													setCustomerName(
 														currentCustomerName === customerName

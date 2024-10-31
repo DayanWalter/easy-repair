@@ -1,5 +1,4 @@
 import {
-	Card,
 	CardHeader,
 	CardTitle,
 	CardContent,
@@ -7,9 +6,10 @@ import {
 } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
-import type { Order } from "@/types";
 
-export default function OrderNumber({ order }: { order: Order }) {
+export default function OrderNumber({
+	order,
+}: { order: Database["public"]["Tables"]["orders"]["Row"] }) {
 	return (
 		<>
 			<CardHeader className="pb-3">
@@ -17,12 +17,12 @@ export default function OrderNumber({ order }: { order: Order }) {
 			</CardHeader>
 			<CardContent>
 				<div className="grid gap-4">
-					<Input placeholder={order?.id} disabled />
+					<Input placeholder={order?.id.toString()} disabled />
 					<div className="flex items-center gap-2">
 						<Checkbox
 							id="verified"
 							name="verified"
-							defaultChecked={order?.verified}
+							defaultChecked={order?.verified ?? false}
 						/>
 						<label
 							htmlFor="verified"

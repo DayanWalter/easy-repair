@@ -1,5 +1,4 @@
 import { createClient } from "@/utils/supabase/server";
-import type { Customer } from "@/types";
 
 export default async function createCustomer(formData: FormData) {
 	const supabase = await createClient();
@@ -11,13 +10,13 @@ export default async function createCustomer(formData: FormData) {
 		throw new Error("User not authenticated");
 	}
 
-	const customerData: Customer = {
+	const customerData: Database["public"]["Tables"]["customers"]["Insert"] = {
 		name: formData.get("name") as string,
 		adress: formData.get("adress") as string,
 		phone: formData.get("phone") as string,
 		email: formData.get("email") as string,
 		user_id: user.id,
-		updated_at: new Date(),
+		updated_at: new Date().toISOString(),
 	};
 
 	const { data, error } = await supabase

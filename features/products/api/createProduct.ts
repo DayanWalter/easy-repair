@@ -1,5 +1,4 @@
 import { createClient } from "@/utils/supabase/server";
-import type { Product } from "@/types";
 
 export default async function createProduct(formData: FormData) {
 	const supabase = await createClient();
@@ -11,7 +10,7 @@ export default async function createProduct(formData: FormData) {
 		throw new Error("User not authenticated");
 	}
 
-	const productData: Product = {
+	const productData: Database["public"]["Tables"]["products"]["Insert"] = {
 		name: formData.get("name") as string,
 		description: formData.get("description") as string,
 		price: formData.get("price") as unknown as number,
@@ -21,7 +20,7 @@ export default async function createProduct(formData: FormData) {
 		manufacturer: formData.get("manufacturer") as string,
 		image: formData.get("image") as string,
 		user_id: user.id,
-		updated_at: new Date(),
+		updated_at: new Date().toISOString(),
 	};
 
 	const { data, error } = await supabase

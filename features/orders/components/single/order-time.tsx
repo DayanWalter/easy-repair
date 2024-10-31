@@ -7,9 +7,10 @@ import {
 	CardFooter,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import type { Order } from "@/types";
 
-export default function OrderTime({ order }: { order: Order }) {
+export default function OrderTime({
+	order,
+}: { order: Database["public"]["Tables"]["orders"]["Row"] }) {
 	return (
 		<>
 			<CardHeader className="pb-2">
@@ -22,7 +23,7 @@ export default function OrderTime({ order }: { order: Order }) {
 					step="0.01"
 					id="repair_time"
 					name="repair_time"
-					defaultValue={order?.repair_time}
+					defaultValue={order?.repair_time ?? ""}
 				/>
 			</CardContent>
 			<CardFooter />

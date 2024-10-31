@@ -7,16 +7,17 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import supabase from "@/database/supabaseClient";
-import type { Customer } from "@/types";
 
 export const CustomerDeletePopover = ({
 	customer,
 	customers,
 	setCustomers,
 }: {
-	customer: Customer;
-	customers: Customer[];
-	setCustomers: React.Dispatch<React.SetStateAction<Customer[]>>;
+	customer: Database["public"]["Tables"]["customers"]["Row"];
+	customers: Database["public"]["Tables"]["customers"]["Row"][];
+	setCustomers: React.Dispatch<
+		React.SetStateAction<Database["public"]["Tables"]["customers"]["Row"][]>
+	>;
 }) => {
 	const [error, setError] = useState<string | null>(null);
 	const [deleteText, setDeleteText] = useState("");

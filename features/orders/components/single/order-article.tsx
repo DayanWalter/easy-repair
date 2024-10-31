@@ -7,9 +7,10 @@ import {
 } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import type { Order } from "@/types";
 
-export default function OrderArticle({ order }: { order: Order }) {
+export default function OrderArticle({
+	order,
+}: { order: Database["public"]["Tables"]["orders"]["Row"] }) {
 	return (
 		<>
 			<CardHeader className="pb-2">
@@ -22,7 +23,7 @@ export default function OrderArticle({ order }: { order: Order }) {
 						<Input
 							id="article_device"
 							name="article_device"
-							defaultValue={order?.article_device}
+							defaultValue={order?.article_device ?? ""}
 						/>
 					</div>
 					<div>
@@ -30,7 +31,7 @@ export default function OrderArticle({ order }: { order: Order }) {
 						<Input
 							id="article_manufacturer"
 							name="article_manufacturer"
-							defaultValue={order?.article_manufacturer}
+							defaultValue={order?.article_manufacturer ?? ""}
 						/>
 					</div>
 					<div>
@@ -38,7 +39,7 @@ export default function OrderArticle({ order }: { order: Order }) {
 						<Input
 							id="article_accessory"
 							name="article_accessory"
-							defaultValue={order?.article_accessory}
+							defaultValue={order?.article_accessory ?? ""}
 						/>
 					</div>
 				</div>

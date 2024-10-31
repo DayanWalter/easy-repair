@@ -1,5 +1,4 @@
 import {
-	Card,
 	CardHeader,
 	CardTitle,
 	CardDescription,
@@ -7,9 +6,10 @@ import {
 	CardFooter,
 } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
-import type { Order } from "@/types";
 
-export default function OrderOffer({ order }: { order: Order }) {
+export default function OrderOffer({
+	order,
+}: { order: Database["public"]["Tables"]["orders"]["Row"] }) {
 	return (
 		<>
 			<CardHeader className="pb-2">
@@ -19,7 +19,7 @@ export default function OrderOffer({ order }: { order: Order }) {
 				</CardDescription>
 			</CardHeader>
 			<CardContent>
-				<Textarea id="offer" name="offer" defaultValue={order?.offer} />
+				<Textarea id="offer" name="offer" defaultValue={order?.offer ?? ""} />
 			</CardContent>
 			<CardFooter />
 		</>

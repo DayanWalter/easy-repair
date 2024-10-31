@@ -10,7 +10,6 @@ import {
 
 import { Table, TableRow } from "@/components/ui/table";
 import { format } from "date-fns";
-import type { Message } from "@/types";
 import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { readMessages } from "@/features/orders/messages/api";
@@ -39,32 +38,34 @@ export default async function Messages({
 					<Table>
 						<TableBody>
 							{/* Communication */}
-							{messages?.map((message: Message) => (
-								<TableRow key={message.id}>
-									<TableCell>
-										<div className="text-sm font-medium md:inline">
-											{message.text}
-										</div>
-										<div className="text-muted-foreground">
-											{message.author}
-										</div>
-									</TableCell>
-									<TableCell className="flex items-center">
-										{message.created_at
-											? format(
-													new Date(message.created_at),
-													"dd.MM.yyyy, HH:mm",
-												)
-											: "N/A"}{" "}
-									</TableCell>
-									<TableCell>
-										<MessageDeleteSheet
-											orderId={Number(params.orderId)}
-											messageId={message.id}
-										/>
-									</TableCell>
-								</TableRow>
-							))}
+							{messages?.map(
+								(message: Database["public"]["Tables"]["messages"]["Row"]) => (
+									<TableRow key={message.id}>
+										<TableCell>
+											<div className="text-sm font-medium md:inline">
+												{message.text}
+											</div>
+											<div className="text-muted-foreground">
+												{message.author}
+											</div>
+										</TableCell>
+										<TableCell className="flex items-center">
+											{message.created_at
+												? format(
+														new Date(message.created_at),
+														"dd.MM.yyyy, HH:mm",
+													)
+												: "N/A"}{" "}
+										</TableCell>
+										<TableCell>
+											<MessageDeleteSheet
+												orderId={Number(params.orderId)}
+												messageId={message.id.toString()}
+											/>
+										</TableCell>
+									</TableRow>
+								),
+							)}
 						</TableBody>
 					</Table>
 				</ScrollArea>

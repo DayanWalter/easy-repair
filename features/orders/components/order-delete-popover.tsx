@@ -8,13 +8,12 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import supabase from "@/database/supabaseClient";
-import type { Order } from "@/types";
 import { useRouter } from "next/navigation";
 
 export default function OrderDeletePopover({
 	order,
 }: {
-	order: Order;
+	order: Database["public"]["Tables"]["orders"]["Row"];
 }) {
 	const [error, setError] = useState<string | null>(null);
 	const router = useRouter();

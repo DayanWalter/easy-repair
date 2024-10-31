@@ -7,13 +7,14 @@ import {
 	CardContent,
 	CardFooter,
 } from "@/components/ui/card";
-import type { Order } from "@/types";
 
 import { useState } from "react";
 import DatePickerWithUpdate from "./date-picker-with-update";
 import { Label } from "@/components/ui/label";
 
-export default function OrderDateUpdate({ order }: { order: Order }) {
+export default function OrderDateUpdate({
+	order,
+}: { order: Database["public"]["Tables"]["orders"]["Row"] }) {
 	const [dateStart, setDateStart] = useState<Date | undefined>(
 		order.date_start ? new Date(order.date_start) : undefined,
 	);
