@@ -1,6 +1,5 @@
 "use client";
 
-import type { Customer } from "@/types";
 import {
 	Table,
 	TableBody,
@@ -13,9 +12,11 @@ import { useRouter } from "next/navigation";
 
 export default function CustomerTable({
 	customers,
-}: { customers: Customer[] }) {
+}: { customers: Database["public"]["Tables"]["customers"]["Row"][] }) {
 	const router = useRouter();
-	const handleClick = (customer: Customer) => {
+	const handleClick = (
+		customer: Database["public"]["Tables"]["customers"]["Row"],
+	) => {
 		router.push(`/customers/${customer.id}`);
 	};
 

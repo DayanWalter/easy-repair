@@ -17,6 +17,8 @@ export type Database = {
           id: number
           name: string | null
           phone: string | null
+          updated_at: string | null
+          user_id: string | null
         }
         Insert: {
           adress?: string | null
@@ -25,6 +27,8 @@ export type Database = {
           id?: number
           name?: string | null
           phone?: string | null
+          updated_at?: string | null
+          user_id?: string | null
         }
         Update: {
           adress?: string | null
@@ -33,16 +37,27 @@ export type Database = {
           id?: number
           name?: string | null
           phone?: string | null
+          updated_at?: string | null
+          user_id?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "customers_user_id_fkey1"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
       }
-      order_communication: {
+      messages: {
         Row: {
           author: string | null
           created_at: string
           id: number
           order_id: number | null
           text: string | null
+          user_id: string | null
         }
         Insert: {
           author?: string | null
@@ -50,6 +65,7 @@ export type Database = {
           id?: number
           order_id?: number | null
           text?: string | null
+          user_id?: string | null
         }
         Update: {
           author?: string | null
@@ -57,6 +73,7 @@ export type Database = {
           id?: number
           order_id?: number | null
           text?: string | null
+          user_id?: string | null
         }
         Relationships: [
           {
@@ -64,6 +81,13 @@ export type Database = {
             columns: ["order_id"]
             isOneToOne: false
             referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "order_communication_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
             referencedColumns: ["id"]
           },
         ]
@@ -94,6 +118,7 @@ export type Database = {
           repair_time: string | null
           state: string | null
           total_costs: number | null
+          user_id: string | null
           verified: boolean | null
         }
         Insert: {
@@ -121,6 +146,7 @@ export type Database = {
           repair_time?: string | null
           state?: string | null
           total_costs?: number | null
+          user_id?: string | null
           verified?: boolean | null
         }
         Update: {
@@ -148,6 +174,7 @@ export type Database = {
           repair_time?: string | null
           state?: string | null
           total_costs?: number | null
+          user_id?: string | null
           verified?: boolean | null
         }
         Relationships: [
@@ -156,6 +183,13 @@ export type Database = {
             columns: ["customer_id"]
             isOneToOne: false
             referencedRelation: "customers"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "orders_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
             referencedColumns: ["id"]
           },
         ]
@@ -173,6 +207,7 @@ export type Database = {
           sku: string | null
           stock: number | null
           updated_at: string | null
+          user_id: string
         }
         Insert: {
           category?: string | null
@@ -186,6 +221,7 @@ export type Database = {
           sku?: string | null
           stock?: number | null
           updated_at?: string | null
+          user_id: string
         }
         Update: {
           category?: string | null
@@ -199,6 +235,36 @@ export type Database = {
           sku?: string | null
           stock?: number | null
           updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "products_user_id_fkey1"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          avatar_url: string
+          id: string
+          name: string
+          username: string
+        }
+        Insert: {
+          avatar_url: string
+          id: string
+          name: string
+          username: string
+        }
+        Update: {
+          avatar_url?: string
+          id?: string
+          name?: string
+          username?: string
         }
         Relationships: []
       }

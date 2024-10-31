@@ -7,9 +7,10 @@ import {
 	CardFooter,
 } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
-import type { Order } from "@/types";
 
-export default function OrderErrorDescription({ order }: { order: Order }) {
+export default function OrderErrorDescription({
+	order,
+}: { order: Database["public"]["Tables"]["orders"]["Row"] }) {
 	return (
 		<>
 			<CardHeader className="pb-2">
@@ -22,7 +23,7 @@ export default function OrderErrorDescription({ order }: { order: Order }) {
 				<Textarea
 					id="error_description"
 					name="error_description"
-					defaultValue={order?.error_description}
+					defaultValue={order?.error_description ?? ""}
 				/>
 			</CardContent>
 			<CardFooter />

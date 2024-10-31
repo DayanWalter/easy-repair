@@ -10,9 +10,10 @@ import {
 	CardFooter,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import type { Order } from "@/types";
 
-export default function OrderCosts({ order }: { order: Order }) {
+export default function OrderCosts({
+	order,
+}: { order: Database["public"]["Tables"]["orders"]["Row"] }) {
 	const [laborCosts, setLaborCosts] = useState(order.labor_costs || 0);
 	const [materialCosts, setMaterialCosts] = useState(order.material_costs || 0);
 	const [totalCosts, setTotalCosts] = useState(order.total_costs || 0);

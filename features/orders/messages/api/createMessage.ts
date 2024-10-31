@@ -1,4 +1,3 @@
-import type { Message } from "@/types";
 import { createClient } from "@/utils/supabase/server";
 
 export default async function createMessage(
@@ -13,7 +12,7 @@ export default async function createMessage(
 	if (!user) {
 		throw new Error("User not authenticated");
 	}
-	const messageData: Message = {
+	const messageData: Database["public"]["Tables"]["messages"]["Insert"] = {
 		author: user.user_metadata.name,
 		text: formData.get("text") as string,
 		order_id: orderId,

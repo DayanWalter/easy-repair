@@ -19,10 +19,11 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import type { Order } from "@/types";
 import { useState } from "react";
 
-export default function OrderStatus({ order }: { order: Order }) {
+export default function OrderStatus({
+	order,
+}: { order: Database["public"]["Tables"]["orders"]["Row"] }) {
 	const [state, setState] = useState(order?.state || "");
 
 	return (
@@ -46,7 +47,11 @@ export default function OrderStatus({ order }: { order: Order }) {
 						</SelectContent>
 					</Select>
 					<div className="flex items-center gap-2">
-						<Checkbox id="again" name="again" defaultChecked={order?.again} />
+						<Checkbox
+							id="again"
+							name="again"
+							defaultChecked={order?.again ?? false}
+						/>
 						<Label
 							htmlFor="again"
 							className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -55,7 +60,7 @@ export default function OrderStatus({ order }: { order: Order }) {
 						</Label>
 					</div>
 					<Label htmlFor="old_order_id">Alte Auftragsnummer</Label>
-					<Input name="old_order_id" defaultValue={order?.old_order_id} />
+					<Input name="old_order_id" defaultValue={order?.old_order_id ?? ""} />
 				</div>
 			</CardContent>
 			<CardFooter />

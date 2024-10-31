@@ -1,5 +1,4 @@
 "use client";
-import type { Product } from "@/types";
 import {
 	Table,
 	TableBody,
@@ -10,9 +9,13 @@ import {
 } from "@/components/ui/table";
 import { useRouter } from "next/navigation";
 
-export default function ProductTable({ products }: { products: Product[] }) {
+export default function ProductTable({
+	products,
+}: { products: Database["public"]["Tables"]["products"]["Row"][] }) {
 	const router = useRouter();
-	const handleClick = (product: Product) => {
+	const handleClick = (
+		product: Database["public"]["Tables"]["products"]["Row"],
+	) => {
 		router.push(`/products/${product.id}`);
 	};
 

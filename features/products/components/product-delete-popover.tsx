@@ -7,14 +7,13 @@ import {
 } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import type { Product } from "@/types";
 import { useRouter } from "next/navigation";
 // import { createClient, type User } from "@supabase/auth-helpers-nextjs";
 
 export default function ProductDeletePopover({
 	product,
 }: {
-	product: Product;
+	product: Database["public"]["Tables"]["products"]["Row"];
 }) {
 	const [error, setError] = useState<string | null>(null);
 	const [deleteText, setDeleteText] = useState("");

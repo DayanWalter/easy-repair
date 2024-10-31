@@ -7,9 +7,10 @@ import {
 	CardFooter,
 } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
-import type { Order } from "@/types";
 
-export default function OrderRepair({ order }: { order: Order }) {
+export default function OrderRepair({
+	order,
+}: { order: Database["public"]["Tables"]["orders"]["Row"] }) {
 	return (
 		<>
 			<CardHeader className="pb-2">
@@ -17,7 +18,11 @@ export default function OrderRepair({ order }: { order: Order }) {
 				<CardDescription>Wie wurde das Problem behoben? </CardDescription>
 			</CardHeader>
 			<CardContent>
-				<Textarea id="repair" name="repair" defaultValue={order?.repair} />
+				<Textarea
+					id="repair"
+					name="repair"
+					defaultValue={order?.repair ?? ""}
+				/>
 			</CardContent>
 			<CardFooter />
 		</>

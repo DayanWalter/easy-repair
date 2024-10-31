@@ -1,5 +1,4 @@
 import { createClient } from "@/utils/supabase/server";
-import type { Order } from "@/types";
 
 export default async function createOrder(formData: FormData) {
 	const supabase = await createClient();
@@ -10,7 +9,7 @@ export default async function createOrder(formData: FormData) {
 	if (!user) {
 		throw new Error("User not authenticated");
 	}
-	const orderData: Order = {
+	const orderData: Database["public"]["Tables"]["orders"]["Insert"] = {
 		customer_id: Number(formData.get("customer_id")),
 		verified: formData.get("verified") === "on",
 		state: formData.get("state") as string,
@@ -21,9 +20,9 @@ export default async function createOrder(formData: FormData) {
 		article_device: formData.get("article_device") as string,
 		article_manufacturer: formData.get("article_manufacturer") as string,
 		article_accessory: formData.get("article_accessory") as string,
-		date_start: new Date(formData.get("date_start") as string),
-		date_done: new Date(formData.get("date_done") as string),
-		date_taken: new Date(formData.get("date_taken") as string),
+		date_start: formData.get("date_start") as string,
+		date_done: formData.get("date_done") as string,
+		date_taken: formData.get("date_taken") as string,
 		error_description: formData.get("error_description") as string,
 		diagnose: formData.get("diagnose") as string,
 		offer: formData.get("offer") as string,

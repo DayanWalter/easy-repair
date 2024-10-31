@@ -1,5 +1,4 @@
 "use client";
-import type { Order } from "@/types";
 import {
 	Table,
 	TableBody,
@@ -12,9 +11,15 @@ import { useRouter } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import { format } from "date-fns";
 
-export default function OrderTable({ orders }: { orders: Order[] }) {
+export default function OrderTable({
+	orders,
+}: {
+	orders: Database["public"]["Tables"]["orders"]["Row"][];
+}) {
 	const router = useRouter();
-	const handleClick = (order: Order) => {
+	const handleClick = (
+		order: Database["public"]["Tables"]["orders"]["Row"],
+	) => {
 		router.push(`/orders/${order.id}`);
 	};
 

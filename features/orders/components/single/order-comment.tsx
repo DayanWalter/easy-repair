@@ -7,9 +7,10 @@ import {
 	CardFooter,
 } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
-import type { Order } from "@/types";
 
-export default function OrderComment({ order }: { order: Order }) {
+export default function OrderComment({
+	order,
+}: { order: Database["public"]["Tables"]["orders"]["Row"] }) {
 	return (
 		<>
 			<CardHeader className="pb-2">
@@ -19,7 +20,11 @@ export default function OrderComment({ order }: { order: Order }) {
 				</CardDescription>
 			</CardHeader>
 			<CardContent>
-				<Textarea id="comment" name="comment" defaultValue={order?.comment} />
+				<Textarea
+					id="comment"
+					name="comment"
+					defaultValue={order?.comment ?? ""}
+				/>
 			</CardContent>
 			<CardFooter />
 		</>

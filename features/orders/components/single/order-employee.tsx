@@ -17,10 +17,11 @@ import {
 	SelectLabel,
 	SelectItem,
 } from "@/components/ui/select";
-import type { Order } from "@/types";
 import { useState } from "react";
 
-export default function OrderEmployee({ order }: { order: Order }) {
+export default function OrderEmployee({
+	order,
+}: { order: Database["public"]["Tables"]["orders"]["Row"] }) {
 	const [employee, setEmployee] = useState(order?.employee || "");
 
 	return (
