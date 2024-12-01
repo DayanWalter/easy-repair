@@ -1,3 +1,4 @@
+"use server";
 import { createClient } from "@/utils/supabase/server";
 
 export default async function createCustomer(formData: FormData) {
@@ -16,7 +17,6 @@ export default async function createCustomer(formData: FormData) {
 		phone: formData.get("phone") as string,
 		email: formData.get("email") as string,
 		user_id: user.id,
-		updated_at: new Date().toISOString(),
 	};
 
 	const { data, error } = await supabase

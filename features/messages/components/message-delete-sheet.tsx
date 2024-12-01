@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/sheet";
 import { Trash2 } from "lucide-react";
 import { revalidatePath } from "next/cache";
-import { deleteMessage } from "@/features/orders/messages/api";
+import { deleteMessage } from "@/features/messages/api";
 
 export default function MessagesDeleteSheet({
 	messageId,

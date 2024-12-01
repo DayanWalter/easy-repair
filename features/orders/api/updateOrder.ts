@@ -17,9 +17,15 @@ export default async function updateOrder(orderId: string, formData: FormData) {
 		article_device: formData.get("article_device") as string,
 		article_manufacturer: formData.get("article_manufacturer") as string,
 		comment: formData.get("comment") as string,
-		date_done: formData.get("date_done") as string,
-		date_start: formData.get("date_start") as string,
-		date_taken: formData.get("date_taken") as string,
+		date_start: formData.get("date_start")
+			? (formData.get("date_start") as string)
+			: null,
+		date_done: formData.get("date_done")
+			? (formData.get("date_done") as string)
+			: null,
+		date_taken: formData.get("date_taken")
+			? (formData.get("date_taken") as string)
+			: null,
 		diagnose: formData.get("diagnose") as string,
 		employee: formData.get("employee") as string,
 		error_description: formData.get("error_description") as string,

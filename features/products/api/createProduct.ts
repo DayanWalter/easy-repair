@@ -1,3 +1,4 @@
+"use server";
 import { createClient } from "@/utils/supabase/server";
 
 export default async function createProduct(formData: FormData) {
@@ -13,9 +14,9 @@ export default async function createProduct(formData: FormData) {
 	const productData: Database["public"]["Tables"]["products"]["Insert"] = {
 		name: formData.get("name") as string,
 		description: formData.get("description") as string,
-		price: formData.get("price") as unknown as number,
+		price: formData.get("price") ? Number(formData.get("price")) : null,
 		category: formData.get("category") as string,
-		stock: formData.get("stock") as unknown as number,
+		stock: formData.get("stock") ? Number(formData.get("stock")) : null,
 		sku: formData.get("sku") as string,
 		manufacturer: formData.get("manufacturer") as string,
 		image: formData.get("image") as string,

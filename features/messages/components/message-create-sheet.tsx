@@ -11,7 +11,7 @@ import {
 	SheetTrigger,
 } from "@/components/ui/sheet";
 import { Textarea } from "@/components/ui/textarea";
-import { createMessage } from "@/features/orders/messages/api";
+import { createMessage } from "@/features/messages/api";
 import { revalidatePath } from "next/cache";
 
 export default function MessageCreateSheet({ orderId }: { orderId: number }) {

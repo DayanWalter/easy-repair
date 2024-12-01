@@ -17,8 +17,8 @@ export default function OrderNumber() {
 			<CardContent>
 				<div className="grid gap-2">
 					<Input value="Wird automatisch vergeben" readOnly />
-					<div className="flex items-center space-x-2">
-						<Checkbox name="verified" />
+					<div className="flex items-center gap-2">
+						<Checkbox id="verified" name="verified" />
 						<label
 							htmlFor="verified"
 							className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
