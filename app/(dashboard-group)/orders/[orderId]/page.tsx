@@ -24,7 +24,7 @@ import { readOrder, updateOrder, deleteOrder } from "@/features/orders";
 import { readCustomer } from "@/features/customers";
 
 import { Card } from "@/components/ui/card";
-import { Messages } from "@/features/orders/messages/components";
+import { Messages } from "@/features/messages/components";
 // import { createOrderMessage } from "@/features/orders/api/create";
 
 type Props = {

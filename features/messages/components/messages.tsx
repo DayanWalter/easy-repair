@@ -10,14 +10,13 @@ import {
 
 import { Table, TableRow } from "@/components/ui/table";
 import { format } from "date-fns";
-import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { readMessages } from "@/features/orders/messages/api";
+import { readMessages } from "@/features/messages/api";
 
 import {
 	MessageDeleteSheet,
 	MessageCreateSheet,
-} from "@/features/orders/messages/components";
+} from "@/features/messages/components";
 
 export default async function Messages({
 	params,

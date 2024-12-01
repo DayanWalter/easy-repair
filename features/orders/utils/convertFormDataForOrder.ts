@@ -1,16 +1,7 @@
-"use server";
-import { createClient } from "@/utils/supabase/server";
-
-export default async function createOrder(formData: FormData) {
-	const supabase = await createClient();
-
-	const {
-		data: { user },
-	} = await supabase.auth.getUser();
-	if (!user) {
-		throw new Error("User not authenticated");
-	}
-	const orderData: Database["public"]["Tables"]["orders"]["Insert"] = {
+export default function convertFormDataForOrder(
+	formData: FormData,
+): Database["public"]["Tables"]["orders"]["Insert"] {
+	return {
 		customer_id: Number(formData.get("customer_id")),
 		verified: formData.get("verified") === "on",
 		state: formData.get("state") as string,
@@ -40,20 +31,5 @@ export default async function createOrder(formData: FormData) {
 		labor_costs: Number(formData.get("labor_costs")),
 		material_costs: Number(formData.get("material_costs")),
 		total_costs: Number(formData.get("total_costs")),
-		user_id: user.id,
 	};
-
-	const { data, error } = await supabase
-		.from("orders")
-		.insert({
-			...orderData,
-		})
-		.select();
-
-	if (error) {
-		console.error("Error creating order:", error);
-		throw new Error("Failed to create order");
-	}
-
-	return { success: true, order: data[0] };
 }
