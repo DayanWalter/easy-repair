@@ -1,7 +1,9 @@
+"use server";
+
 import { createClient } from "@/utils/supabase/server";
 
 export default async function updateCustomer(
-	customerId: number,
+	customerId: string,
 	formData: FormData,
 ) {
 	const supabase = await createClient();

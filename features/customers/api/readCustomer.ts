@@ -1,7 +1,7 @@
 import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
 
-export default async function readCustomer(customerId: number) {
+export default async function readCustomer(customerId: string) {
 	const supabase = await createClient();
 
 	// TODO: Add user_id to the query

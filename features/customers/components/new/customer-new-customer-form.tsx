@@ -23,19 +23,19 @@ const customerSchema = z.object({
 		.string({ message: "Name ist erforderlich" })
 		.min(2, "Name muss mindestens 2 Zeichen lang sein")
 		.max(50, "Name darf maximal 50 Zeichen lang sein"),
-	adress: z
-		.string({ message: "Adresse ist erforderlich" })
-		.min(5, "Adresse muss mindestens 5 Zeichen lang sein")
-		.max(100, "Adresse darf maximal 100 Zeichen lang sein"),
-	phone: z
-		.string({ message: "Telefonnummer ist erforderlich" })
-		.min(5, "Telefonnummer muss mindestens 5 Zeichen lang sein")
-		.max(20, "Telefonnummer darf maximal 20 Zeichen lang sein")
-		.optional(),
-	email: z
-		.string({ message: "E-Mail ist erforderlich" })
-		.email("Ungültige E-Mail-Adresse")
-		.optional(),
+	// adress: z
+	// 	.string({ message: "Adresse ist erforderlich" })
+	// 	.min(5, "Adresse muss mindestens 5 Zeichen lang sein")
+	// 	.max(100, "Adresse darf maximal 100 Zeichen lang sein"),
+	// phone: z
+	// 	.string({ message: "Telefonnummer ist erforderlich" })
+	// 	.min(5, "Telefonnummer muss mindestens 5 Zeichen lang sein")
+	// 	.max(20, "Telefonnummer darf maximal 20 Zeichen lang sein")
+	// 	.optional(),
+	// email: z
+	// 	.string({ message: "E-Mail ist erforderlich" })
+	// 	.email("Ungültige E-Mail-Adresse")
+	// 	.optional(),
 });
 export default function NewCustomerForm() {
 	const { toast } = useToast();
@@ -55,10 +55,7 @@ export default function NewCustomerForm() {
 					description: issue.message,
 				});
 			}
-			return {
-				error: "Validierungsfehler",
-				details: result.error.errors.map((e) => e.message).join(", "),
-			};
+			return;
 		}
 		// // Else create the customer
 		const { success } = await createCustomer(formData);

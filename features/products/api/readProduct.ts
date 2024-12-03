@@ -1,6 +1,6 @@
 import { createClient } from "@/utils/supabase/server";
 
-export default async function readProduct(productId: number) {
+export default async function readProduct(productId: string) {
 	const supabase = await createClient();
 
 	// TODO: Add user_id to the query
