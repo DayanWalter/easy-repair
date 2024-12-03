@@ -18,13 +18,12 @@ export default function MessagesDeleteSheet({
 	orderId,
 }: { messageId: string | undefined; orderId: number }) {
 	const handleDeleteOrderMessage = async (formData: FormData) => {
-		"use server";
 		const action = formData.get("action");
 		if (action === "deleteMessage") {
 			const { success } = await deleteMessage(formData, messageId);
 			if (success) {
-				// Subscribe to realtime?
-				revalidatePath(`/orders/${orderId}`);
+				// Optimistic UI
+				// revalidatePath(`/orders/${orderId}`);
 			}
 		}
 	};

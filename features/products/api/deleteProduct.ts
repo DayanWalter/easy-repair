@@ -1,7 +1,8 @@
-import { createClient } from "@/utils/supabase/server";
-import { cookies } from "next/headers";
+"use server";
 
-export default async function deleteProduct(productId: number) {
+import { createClient } from "@/utils/supabase/server";
+
+export default async function deleteProduct(productId: string) {
 	const supabase = await createClient();
 
 	const {

@@ -17,14 +17,26 @@ import {
 	MessageDeleteSheet,
 	MessageCreateSheet,
 } from "@/features/messages/components";
+import { useEffect, useState } from "react";
 
-export default async function Messages({
+export default function Messages({
 	params,
 }: {
 	params: { orderId: string };
 }) {
-	const messages = await readMessages(Number(params.orderId));
+	// const messages = await readMessages(Number(params.orderId));
+	const [messages, setMessages] = useState<
+		Database["public"]["Tables"]["messages"]["Row"][]
+	>([]);
 
+	useEffect(() => {
+		const fetchMessages = async () => {
+			const fetchedMessages = await readMessages(Number(params.orderId));
+			setMessages(fetchedMessages);
+		};
+
+		fetchMessages();
+	}, [params.orderId]);
 	return (
 		<>
 			<CardHeader>

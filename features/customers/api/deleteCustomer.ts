@@ -1,7 +1,9 @@
+"use server";
+
 import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
 
-export default async function deleteCustomer(customerId: number) {
+export default async function deleteCustomer(customerId: string) {
 	const supabase = await createClient();
 
 	const {

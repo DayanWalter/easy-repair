@@ -12,17 +12,24 @@ import {
 } from "@/components/ui/sheet";
 import { Textarea } from "@/components/ui/textarea";
 import { createMessage } from "@/features/messages/api";
+import { useToast } from "@/hooks/use-toast";
 import { revalidatePath } from "next/cache";
+import { useRouter } from "next/navigation";
 
 export default function MessageCreateSheet({ orderId }: { orderId: number }) {
+	const { toast } = useToast();
+	const router = useRouter();
+
 	const handleCreateOrderMessage = async (formData: FormData) => {
-		"use server";
 		const action = formData.get("action");
 		if (action === "createMessage") {
 			const { success } = await createMessage(formData, orderId);
 			if (success) {
-				// Subscribe to realtime?
-				revalidatePath(`/orders/${orderId}`);
+				// Optimistic UI
+				// revalidatePath(`/orders/${orderId}`);
+				// router.push(`/orders/${orderId}`);
+				// router.refresh();
+				console.log("success");
 			}
 		}
 	};

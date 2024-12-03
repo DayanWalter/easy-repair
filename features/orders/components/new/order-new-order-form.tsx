@@ -27,12 +27,13 @@ const orderSchema = z.object({
 	customer_id: z
 		.number({ message: "Wählen Sie einen Kunden aus" })
 		.min(1, "Kundenname ist erforderlich"),
+	state: z.string().min(1, "Status ist erforderlich"),
 });
 export default function NewOrderForm() {
 	const { toast } = useToast();
 	const router = useRouter();
 
-	const handleCreateOrder = async (formData: FormData) => {
+	const handleFormAction = async (formData: FormData) => {
 		// Convert FormData to a regular object
 		const orderData = convertFormDataForOrder(formData);
 
@@ -48,10 +49,7 @@ export default function NewOrderForm() {
 					description: issue.message,
 				});
 			}
-			return {
-				error: "Validierungsfehler",
-				details: result.error.errors.map((e) => e.message).join(", "),
-			};
+			return;
 		}
 
 		// Else create the order
@@ -67,81 +65,79 @@ export default function NewOrderForm() {
 		}
 	};
 	return (
-		<form action={handleCreateOrder}>
-			<main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
-				<div className="grid auto-rows-max items-start gap-4 md:gap-8 lg:col-span-2 ">
-					<div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-5 ">
-						{/* Kunde */}
-						<Card>
-							<OrderFindCustomer />
-						</Card>
-						{/* Auftragsnummer */}
-						<Card>
-							<OrderNumber />
-						</Card>
-						{/* Status */}
-						<Card>
-							<OrderStatus />
-						</Card>
-						{/* Kommunikation */}
-						<Card className="xl:col-span-2 xl:row-span-2">
-							<OrderMessages />
-						</Card>
-						{/* Zugänge */}
-						<Card>
-							<OrderAccess />
-						</Card>
-						{/* Artikel */}
-						<Card>
-							<OrderArticle />
-						</Card>
-						{/* Datum */}
-						<Card>
-							<OrderDate />
-						</Card>
-						{/* Fehlerbeschreibung */}
-						<Card>
-							<OrderErrorDescription />
-						</Card>
-						{/* Diagnose */}
-						<Card>
-							<OrderDiagnose />
-						</Card>
-						{/* Angebot */}
-						<Card>
-							<OrderOffer />
-						</Card>
-						{/* Reparatur */}
-						<Card>
-							<OrderRepair />
-						</Card>
-						{/* Anmerkungen */}
-						<Card>
-							<OrderComment />
-						</Card>
-						{/* Mitarbeiter */}
-						<Card>
-							<OrderEmployee />
-						</Card>
-						{/* Zeit */}
-						<Card>
-							<OrderTime />
-						</Card>
-						{/* Lohnkosten */}
-						{/* Materialkosten */}
-						{/* Gesamtkosten */}
-						<OrderCosts />
-					</div>
-					<Button
-						type="submit"
-						size={"lg"}
-						variant="default"
-						className="max-w-[250px] justify-self-end"
-					>
-						Auftrag erstellen
-					</Button>
+		<form action={handleFormAction}>
+			<div className="grid auto-rows-max items-start gap-4 md:gap-8 lg:col-span-2 ">
+				<div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-5 ">
+					{/* Kunde */}
+					<Card>
+						<OrderFindCustomer />
+					</Card>
+					{/* Auftragsnummer */}
+					<Card>
+						<OrderNumber />
+					</Card>
+					{/* Status */}
+					<Card>
+						<OrderStatus />
+					</Card>
+					{/* Kommunikation */}
+					<Card className="xl:col-span-2 xl:row-span-2">
+						<OrderMessages />
+					</Card>
+					{/* Zugänge */}
+					<Card>
+						<OrderAccess />
+					</Card>
+					{/* Artikel */}
+					<Card>
+						<OrderArticle />
+					</Card>
+					{/* Datum */}
+					<Card>
+						<OrderDate />
+					</Card>
+					{/* Fehlerbeschreibung */}
+					<Card>
+						<OrderErrorDescription />
+					</Card>
+					{/* Diagnose */}
+					<Card>
+						<OrderDiagnose />
+					</Card>
+					{/* Angebot */}
+					<Card>
+						<OrderOffer />
+					</Card>
+					{/* Reparatur */}
+					<Card>
+						<OrderRepair />
+					</Card>
+					{/* Anmerkungen */}
+					<Card>
+						<OrderComment />
+					</Card>
+					{/* Mitarbeiter */}
+					<Card>
+						<OrderEmployee />
+					</Card>
+					{/* Zeit */}
+					<Card>
+						<OrderTime />
+					</Card>
+					{/* Lohnkosten */}
+					{/* Materialkosten */}
+					{/* Gesamtkosten */}
+					<OrderCosts />
 				</div>
-			</main>
+				<Button
+					type="submit"
+					size={"lg"}
+					variant="default"
+					className="max-w-[250px] justify-self-end"
+				>
+					Auftrag erstellen
+				</Button>
+			</div>
 		</form>
 	);
 }

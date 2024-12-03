@@ -24,20 +24,20 @@ const productSchema = z.object({
 		.string({ message: "Name ist erforderlich" })
 		.min(2, "Name muss mindestens 2 Zeichen lang sein")
 		.max(50, "Name darf maximal 50 Zeichen lang sein"),
-	description: z
-		.string({ message: "Beschreibung ist erforderlich" })
-		.min(5, "Beschreibung muss mindestens 5 Zeichen lang sein")
-		.max(500, "Beschreibung darf maximal 500 Zeichen lang sein"),
-	// price: z
-	//     .number({ message: "Preis ist erforderlich" })
-	//     .min(0, "Preis muss größer oder gleich 0 sein"),
+	// description: z
+	// 	.string({ message: "Beschreibung ist erforderlich" })
+	// 	.min(5, "Beschreibung muss mindestens 5 Zeichen lang sein")
+	// 	.max(500, "Beschreibung darf maximal 500 Zeichen lang sein"),
+	price: z
+		.number({ message: "Preis ist erforderlich" })
+		.min(0, "Preis muss größer oder gleich 0 sein"),
 	// category: z
 	//     .string({ message: "Kategorie ist erforderlich" })
 	//     .min(2, "Kategorie muss mindestens 2 Zeichen lang sein"),
-	// stock: z
-	//     .number({ message: "Lagerbestand ist erforderlich" })
-	//     .int("Lagerbestand muss eine ganze Zahl sein")
-	//     .min(0, "Lagerbestand muss größer oder gleich 0 sein"),
+	stock: z
+		.number({ message: "Lagerbestand ist erforderlich" })
+		.int("Lagerbestand muss eine ganze Zahl sein")
+		.min(0, "Lagerbestand muss größer oder gleich 0 sein"),
 	// sku: z
 	//     .string({ message: "SKU ist erforderlich" })
 	//     .min(2, "SKU muss mindestens 2 Zeichen lang sein"),
@@ -53,7 +53,7 @@ export default function NewProductForm() {
 	const { toast } = useToast();
 	const router = useRouter();
 
-	const handleCreateProduct = async (formData: FormData) => {
+	const handleFormAction = async (formData: FormData) => {
 		// Convert FormData to a regular object
 		const productData = convertFormDataForProduct(formData);
 		console.log(productData);
@@ -69,12 +69,9 @@ export default function NewProductForm() {
 					description: issue.message,
 				});
 			}
-			return {
-				error: "Validierungsfehler",
-				details: result.error.errors.map((e) => e.message).join(", "),
-			};
+			return;
 		}
-		// 	// // Else create the product
+		// Else create the product
 		const { success } = await createProduct(formData);
 		if (success) {
 			toast({
@@ -86,7 +83,7 @@ export default function NewProductForm() {
 		}
 	};
 	return (
-		<form action={handleCreateProduct}>
+		<form action={handleFormAction}>
 			<main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
 				<div className="grid auto-rows-max items-start gap-4 md:gap-8 lg:col-span-2">
 					<div className="grid xl:grid-cols-2">
