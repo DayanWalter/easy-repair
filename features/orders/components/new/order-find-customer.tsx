@@ -120,21 +120,27 @@ export default function OrderFindCustomer() {
 						</PopoverContent>
 					</Popover>
 					<Input
-						type="phone"
+						type="tel"
 						id="phone"
-						placeholder={selectedCustomer?.phone || "Keinen Kunden ausgewählt"}
+						value={selectedCustomer?.phone ?? ""}
+						placeholder="Keinen Kunden ausgewählt"
 						disabled
 					/>
 					<Input
 						type="email"
 						id="email"
-						placeholder={selectedCustomer?.email || "Keinen Kunden ausgewählt"}
+						value={selectedCustomer?.email ?? ""}
+						placeholder="Keinen Kunden ausgewählt"
 						disabled
 					/>
 				</div>
 			</CardContent>
 			<CardFooter>
-				<input type="hidden" name="customer_id" value={selectedCustomer?.id} />
+				<input
+					type="hidden"
+					name="customer_id"
+					value={selectedCustomer?.id ?? ""}
+				/>
 			</CardFooter>
 		</>
 	);

@@ -14,17 +14,20 @@ export default function DatePickerWithUpdate({
 	setDate,
 	label,
 	name,
+	id,
 }: {
 	date: Date | undefined;
 	setDate: (date: Date | undefined) => void;
 	label: string;
 	name: string;
+	id: string;
 }) {
 	return (
 		<div className="grid gap-2">
 			<Popover>
 				<PopoverTrigger asChild>
 					<Button
+						id={id}
 						variant={"outline"}
 						className={cn(
 							"justify-start text-left font-normal",

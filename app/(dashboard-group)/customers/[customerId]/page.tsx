@@ -1,24 +1,8 @@
-import { redirect } from "next/navigation";
-
 // Global Components
-import { Button } from "@/components/ui/button";
-import {
-	Card,
-	CardContent,
-	CardDescription,
-	CardFooter,
-	CardHeader,
-	CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { Card } from "@/components/ui/card";
 
 // Features
-import {
-	readCustomer,
-	updateCustomer,
-	deleteCustomer,
-} from "@/features/customers";
+import { readCustomer } from "@/features/customers";
 import Header from "@/components/header/header";
 import SingleCustomerForm from "@/features/customers/components/single/customer-single-customer-form";
 

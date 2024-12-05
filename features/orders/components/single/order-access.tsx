@@ -12,7 +12,7 @@ export default function OrderAccess({
 	order,
 }: { order: Database["public"]["Tables"]["orders"]["Row"] }) {
 	return (
-		<>
+		<Card>
 			<CardHeader className="pb-2">
 				<CardTitle>Zugänge</CardTitle>
 			</CardHeader>
@@ -37,6 +37,6 @@ export default function OrderAccess({
 				</div>
 			</CardContent>
 			<CardFooter />
-		</>
+		</Card>
 	);
 }

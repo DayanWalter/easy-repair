@@ -12,13 +12,13 @@ import {
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { createClient } from "@/utils/supabase/client";
-import { User } from "@supabase/supabase-js";
+import type { User } from "@supabase/supabase-js";
 
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function Avatar() {
-	const supabase =  createClient();
+	const supabase = createClient();
 	const router = useRouter();
 	const [user, setUser] = useState<User | null>(null);
 
@@ -49,7 +49,7 @@ export default function Avatar() {
 				>
 					{/* Placeholder */}
 					<Image
-						src={user?.user_metadata.avatar_url}
+						src={user?.user_metadata.avatar_url || "/btc.png"}
 						width={36}
 						height={36}
 						alt="Avatar"

@@ -12,7 +12,7 @@ export default function OrderTime({
 	order,
 }: { order: Database["public"]["Tables"]["orders"]["Row"] }) {
 	return (
-		<>
+		<Card>
 			<CardHeader className="pb-2">
 				<CardTitle>Reparaturzeit in Std.</CardTitle>
 				<CardDescription>Wie lange hat die Reparatur gedauert?</CardDescription>
@@ -27,6 +27,6 @@ export default function OrderTime({
 				/>
 			</CardContent>
 			<CardFooter />
-		</>
+		</Card>
 	);
 }

@@ -7,7 +7,8 @@ import {
 } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import supabase from "@/database/supabaseClient";
+// import supabase from "@/database/supabaseClient";
+import { createClient } from "@/utils/supabase/client";
 import { useRouter } from "next/navigation";
 
 export default function OrderDeletePopover({
@@ -15,6 +16,7 @@ export default function OrderDeletePopover({
 }: {
 	order: Database["public"]["Tables"]["orders"]["Row"];
 }) {
+	const supabase = createClient();
 	const [error, setError] = useState<string | null>(null);
 	const router = useRouter();
 	const [deleteText, setDeleteText] = useState("");
