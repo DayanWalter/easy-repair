@@ -12,7 +12,7 @@ export default function OrderErrorDescription({
 	order,
 }: { order: Database["public"]["Tables"]["orders"]["Row"] }) {
 	return (
-		<>
+		<Card>
 			<CardHeader className="pb-2">
 				<CardTitle>Fehlerbeschreibung</CardTitle>
 				<CardDescription>
@@ -27,6 +27,6 @@ export default function OrderErrorDescription({
 				/>
 			</CardContent>
 			<CardFooter />
-		</>
+		</Card>
 	);
 }

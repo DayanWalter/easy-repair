@@ -12,7 +12,7 @@ export default function OrderArticle({
 	order,
 }: { order: Database["public"]["Tables"]["orders"]["Row"] }) {
 	return (
-		<>
+		<Card>
 			<CardHeader className="pb-2">
 				<CardTitle>Artikel</CardTitle>
 			</CardHeader>
@@ -45,6 +45,6 @@ export default function OrderArticle({
 				</div>
 			</CardContent>
 			<CardFooter />
-		</>
+		</Card>
 	);
 }

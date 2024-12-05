@@ -6,7 +6,8 @@ import {
 } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import supabase from "@/database/supabaseClient";
+// import supabase from "@/database/supabaseClient";
+import { createClient } from "@/utils/supabase/client";
 
 export const CustomerDeletePopover = ({
 	customer,
@@ -19,6 +20,7 @@ export const CustomerDeletePopover = ({
 		React.SetStateAction<Database["public"]["Tables"]["customers"]["Row"][]>
 	>;
 }) => {
+	const supabase = createClient();
 	const [error, setError] = useState<string | null>(null);
 	const [deleteText, setDeleteText] = useState("");
 

@@ -12,7 +12,7 @@ export default function OrderCustomer({
 	customer,
 }: { customer: Database["public"]["Tables"]["customers"]["Row"] }) {
 	return (
-		<>
+		<Card>
 			<CardHeader className="pb-3">
 				<CardTitle>Kunde</CardTitle>
 				<CardDescription className="max-w-lg text-balance leading-relaxed">
@@ -22,26 +22,32 @@ export default function OrderCustomer({
 			<CardContent>
 				<div className="grid gap-2">
 					<Input
-						type="name"
+						type="text"
 						id="name"
-						placeholder={customer?.name || "Kein Name vorhanden"}
+						value={customer?.name || ""}
+						placeholder="Kein Name vorhanden"
 						disabled
+						autoComplete="off"
 					/>
 					<Input
-						type="phone"
+						type="tel"
 						id="phone"
-						placeholder={customer?.phone || "Keine Telefonnummer vorhanden"}
+						value={customer?.phone || ""}
+						placeholder="Keine Telefonnummer vorhanden"
 						disabled
+						autoComplete="off"
 					/>
 					<Input
 						type="email"
 						id="email"
-						placeholder={customer?.email || "Keine E-Mail vorhanden"}
+						value={customer?.email || ""}
+						placeholder="Keine E-Mail vorhanden"
 						disabled
+						autoComplete="off"
 					/>
 				</div>
 			</CardContent>
 			<CardFooter />
-		</>
+		</Card>
 	);
 }

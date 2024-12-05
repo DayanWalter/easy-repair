@@ -12,7 +12,7 @@ export default function OrderRepair({
 	order,
 }: { order: Database["public"]["Tables"]["orders"]["Row"] }) {
 	return (
-		<>
+		<Card>
 			<CardHeader className="pb-2">
 				<CardTitle>Reparatur</CardTitle>
 				<CardDescription>Wie wurde das Problem behoben? </CardDescription>
@@ -25,6 +25,6 @@ export default function OrderRepair({
 				/>
 			</CardContent>
 			<CardFooter />
-		</>
+		</Card>
 	);
 }

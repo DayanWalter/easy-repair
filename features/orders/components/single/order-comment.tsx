@@ -12,7 +12,7 @@ export default function OrderComment({
 	order,
 }: { order: Database["public"]["Tables"]["orders"]["Row"] }) {
 	return (
-		<>
+		<Card>
 			<CardHeader className="pb-2">
 				<CardTitle>Anmerkungen</CardTitle>
 				<CardDescription>
@@ -27,6 +27,6 @@ export default function OrderComment({
 				/>
 			</CardContent>
 			<CardFooter />
-		</>
+		</Card>
 	);
 }

@@ -27,7 +27,7 @@ export default function OrderStatus({
 	const [state, setState] = useState(order?.state || "");
 
 	return (
-		<>
+		<Card>
 			<CardHeader className="pb-2">
 				<CardTitle>Status</CardTitle>
 			</CardHeader>
@@ -60,10 +60,14 @@ export default function OrderStatus({
 						</Label>
 					</div>
 					<Label htmlFor="old_order_id">Alte Auftragsnummer</Label>
-					<Input name="old_order_id" defaultValue={order?.old_order_id ?? ""} />
+					<Input
+						name="old_order_id"
+						id="old_order_id"
+						defaultValue={order?.old_order_id ?? ""}
+					/>
 				</div>
 			</CardContent>
 			<CardFooter />
-		</>
+		</Card>
 	);
 }

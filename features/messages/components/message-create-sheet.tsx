@@ -13,27 +13,53 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { createMessage } from "@/features/messages/api";
 import { useToast } from "@/hooks/use-toast";
-import { revalidatePath } from "next/cache";
-import { useRouter } from "next/navigation";
+import type { Message } from "../types/message";
 
-export default function MessageCreateSheet({ orderId }: { orderId: number }) {
+export default function MessageCreateSheet({
+	orderId,
+	addOptimisticMessage,
+}: {
+	orderId: number;
+	addOptimisticMessage: (params: {
+		action: "add" | "delete";
+		newMessage: Message;
+	}) => void;
+}) {
 	const { toast } = useToast();
-	const router = useRouter();
-
+	// Client action
 	const handleCreateOrderMessage = async (formData: FormData) => {
 		const action = formData.get("action");
 		if (action === "createMessage") {
+			// Create optimistic message
+			const optimisticMessage = {
+				id: Date.now(),
+				text: formData.get("text") as string,
+				order_id: orderId,
+				created_at: new Date().toISOString(),
+				author: "You", // Change to auth context
+				user_id: "1",
+			};
+			// Add optimistic update
+			addOptimisticMessage({
+				newMessage: optimisticMessage,
+				action: "add",
+			});
+
 			const { success } = await createMessage(formData, orderId);
 			if (success) {
-				// Optimistic UI
-				// revalidatePath(`/orders/${orderId}`);
-				// router.push(`/orders/${orderId}`);
-				// router.refresh();
-				console.log("success");
+				toast({
+					title: "Nachricht erstellt",
+					description: "Nachricht wurde erfolgreich erstellt",
+				});
+			} else {
+				toast({
+					variant: "destructive",
+					title: "Fehler beim Erstellen der Nachricht",
+					description: "Nachricht konnte nicht erstellt werden",
+				});
 			}
 		}
 	};
-
 	return (
 		<Sheet>
 			<SheetTrigger asChild>
@@ -63,7 +89,7 @@ export default function MessageCreateSheet({ orderId }: { orderId: number }) {
 						</div>
 					</div>
 					<SheetFooter className="mt-4">
-						<SheetClose>
+						<SheetClose asChild>
 							<Button
 								type="submit"
 								name="action"

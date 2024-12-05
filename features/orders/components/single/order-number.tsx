@@ -3,6 +3,7 @@ import {
 	CardTitle,
 	CardContent,
 	CardFooter,
+	Card,
 } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
@@ -11,13 +12,17 @@ export default function OrderNumber({
 	order,
 }: { order: Database["public"]["Tables"]["orders"]["Row"] }) {
 	return (
-		<>
+		<Card>
 			<CardHeader className="pb-3">
 				<CardTitle>Auftragsnummer</CardTitle>
 			</CardHeader>
 			<CardContent>
 				<div className="grid gap-4">
-					<Input placeholder={order?.id.toString()} disabled />
+					<Input
+						name="order_number"
+						placeholder={order?.id.toString()}
+						disabled
+					/>
 					<div className="flex items-center gap-2">
 						<Checkbox
 							id="verified"
@@ -34,6 +39,6 @@ export default function OrderNumber({
 				</div>
 			</CardContent>
 			<CardFooter />
-		</>
+		</Card>
 	);
 }

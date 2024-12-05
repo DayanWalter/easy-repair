@@ -26,7 +26,7 @@ export default function OrderDateUpdate({
 	);
 
 	return (
-		<>
+		<Card>
 			<CardHeader className="pb-2">
 				<CardTitle>Datum</CardTitle>
 			</CardHeader>
@@ -35,6 +35,7 @@ export default function OrderDateUpdate({
 					<div>
 						<Label htmlFor="date_start">Annahme</Label>
 						<DatePickerWithUpdate
+							id="date_start"
 							date={dateStart}
 							setDate={setDateStart}
 							label="Annahme"
@@ -44,6 +45,7 @@ export default function OrderDateUpdate({
 					<div>
 						<Label htmlFor="date_done">Fertiggestellt</Label>
 						<DatePickerWithUpdate
+							id="date_done"
 							date={dateDone}
 							setDate={setDateDone}
 							label="Fertiggestellt"
@@ -53,6 +55,7 @@ export default function OrderDateUpdate({
 					<div>
 						<Label htmlFor="date_taken">Abgeholt</Label>
 						<DatePickerWithUpdate
+							id="date_taken"
 							date={dateTaken}
 							setDate={setDateTaken}
 							label="Abgeholt"
@@ -62,6 +65,6 @@ export default function OrderDateUpdate({
 				</div>
 			</CardContent>
 			<CardFooter />
-		</>
+		</Card>
 	);
 }

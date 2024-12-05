@@ -1,6 +1,7 @@
 "use server";
 
 import { createClient } from "@/utils/supabase/server";
+import { revalidatePath } from "next/cache";
 
 export default async function createMessage(
 	formData: FormData,
@@ -31,6 +32,7 @@ export default async function createMessage(
 		console.error("Error creating message:", error);
 		throw new Error("Failed to create message");
 	}
+	revalidatePath(`/orders/${orderId}`);
 
 	return { success: true, message: data[0] };
 }

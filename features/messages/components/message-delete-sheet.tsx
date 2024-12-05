@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import {
 	Sheet,
@@ -10,20 +12,50 @@ import {
 	SheetTrigger,
 } from "@/components/ui/sheet";
 import { Trash2 } from "lucide-react";
-import { revalidatePath } from "next/cache";
 import { deleteMessage } from "@/features/messages/api";
+import { useToast } from "@/hooks/use-toast";
+import type { Message } from "../types/message";
 
 export default function MessagesDeleteSheet({
 	messageId,
 	orderId,
-}: { messageId: string | undefined; orderId: number }) {
+	removeOptimisticMessage,
+}: {
+	messageId: number;
+	orderId: number;
+	removeOptimisticMessage: (params: {
+		action: "add" | "delete";
+		newMessage: Message;
+	}) => void;
+}) {
+	const { toast } = useToast();
 	const handleDeleteOrderMessage = async (formData: FormData) => {
 		const action = formData.get("action");
 		if (action === "deleteMessage") {
-			const { success } = await deleteMessage(formData, messageId);
+			// Remove optimistic message
+			removeOptimisticMessage({
+				action: "delete",
+				newMessage: {
+					id: messageId,
+					author: null,
+					created_at: new Date().toISOString(),
+					order_id: orderId,
+					text: null,
+					user_id: null,
+				},
+			});
+			const { success } = await deleteMessage(orderId, messageId);
 			if (success) {
-				// Optimistic UI
-				// revalidatePath(`/orders/${orderId}`);
+				toast({
+					title: "Nachricht gelöscht",
+					description: "Nachricht wurde erfolgreich gelöscht",
+				});
+			} else {
+				toast({
+					variant: "destructive",
+					title: "Fehler beim Löschen der Nachricht",
+					description: "Nachricht konnte nicht gelöscht werden",
+				});
 			}
 		}
 	};
@@ -44,7 +76,7 @@ export default function MessagesDeleteSheet({
 				</SheetHeader>
 				<form action={handleDeleteOrderMessage}>
 					<SheetFooter className="mt-4">
-						<SheetClose>
+						<SheetClose asChild>
 							<Button
 								type="submit"
 								name="action"
