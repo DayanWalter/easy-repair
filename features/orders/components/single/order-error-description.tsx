@@ -19,7 +19,7 @@ export default function OrderErrorDescription({
 					Welcher Fehler ist aufgetreten? Bitte beschreiben Sie kurz.
 				</CardDescription>
 			</CardHeader>
-			<CardContent>
+			<CardContent className="flex-1">
 				<Textarea
 					id="error_description"
 					name="error_description"

@@ -103,7 +103,18 @@ export default async function Customers() {
 									<CardDescription>Übersicht Ihrer Kunden.</CardDescription>
 								</CardHeader>
 								<CardContent>
-									<CustomerTable customers={customers ?? []} />
+									{customers && customers.length > 0 ? (
+										<CustomerTable customers={customers ?? []} />
+									) : (
+										<Card>
+											<CardHeader>
+												<CardTitle>Keine Kunden gefunden</CardTitle>
+											</CardHeader>
+											<CardContent>
+												<p>Es wurden noch keine Kunden erstellt.</p>
+											</CardContent>
+										</Card>
+									)}
 								</CardContent>
 							</Card>
 						</TabsContent>
