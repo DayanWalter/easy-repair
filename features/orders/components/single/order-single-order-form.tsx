@@ -61,26 +61,40 @@ export default function SingleOrderForm({
 		// Else update...
 		const action = formData.get("action");
 		if (action === "update") {
-			const { success } = await updateOrder(params.orderId, formData);
-			if (success) {
+			const { data, error } = await updateOrder(params.orderId, formData);
+			if (data && data.length > 0) {
 				toast({
-					title: "Auftrag erfolgreich aktualisiert",
+					title: "Auftrag aktualisiert",
 					description: "Auftrag wurde erfolgreich aktualisiert",
 				});
 				router.push("/orders");
 				router.refresh();
 			}
+			if ((data && data.length === 0) || error) {
+				toast({
+					variant: "destructive",
+					title: "Auftrag nicht aktualisiert",
+					description: "Fehler beim Aktualisieren des Auftrags",
+				});
+			}
 		}
 		// ...or delete the order
 		if (action === "delete") {
-			const { success } = await deleteOrder(params.orderId);
-			if (success) {
+			const { data, error } = await deleteOrder(params.orderId);
+			if (data && data.length > 0) {
 				toast({
-					title: "Auftrag erfolgreich gelöscht",
+					title: "Auftrag gelöscht",
 					description: "Auftrag wurde erfolgreich gelöscht",
 				});
 				router.push("/orders");
 				router.refresh();
+			}
+			if ((data && data.length === 0) || error) {
+				toast({
+					variant: "destructive",
+					title: "Auftrag nicht gelöscht",
+					description: "Fehler beim Löschen des Auftrags",
+				});
 			}
 		}
 	};

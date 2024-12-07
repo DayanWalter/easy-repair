@@ -39,7 +39,6 @@ export default async function updateOrder(orderId: string, formData: FormData) {
 		repair_time: formData.get("repair_time") as string,
 		state: formData.get("state") as string,
 		total_costs: Number(formData.get("total_costs")),
-		user_id: user.id,
 		verified: formData.get("verified") === "on",
 	};
 
@@ -53,8 +52,7 @@ export default async function updateOrder(orderId: string, formData: FormData) {
 
 	if (error) {
 		console.error("Error updating order:", error);
-		throw new Error("Failed to update order");
 	}
 
-	return { success: true, order: data[0] };
+	return { data, error };
 }
