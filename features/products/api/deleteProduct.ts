@@ -12,15 +12,15 @@ export default async function deleteProduct(productId: string) {
 		throw new Error("User not authenticated");
 	}
 
-	const { error } = await supabase
+	const { data, error } = await supabase
 		.from("products")
 		.delete()
-		.eq("id", productId);
+		.eq("id", productId)
+		.select();
 
 	if (error) {
 		console.error("Error deleting product:", error);
-		throw new Error("Failed to delete product");
 	}
 
-	return { success: true };
+	return { data, error };
 }

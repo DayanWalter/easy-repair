@@ -44,6 +44,7 @@ export default function SingleCustomerForm({
 }) {
 	const { toast } = useToast();
 	const router = useRouter();
+
 	const handleFormAction = async (formData: FormData) => {
 		// Convert FormData to a regular object
 		const customerData = convertFormDataForCustomer(formData);
@@ -60,6 +61,7 @@ export default function SingleCustomerForm({
 			}
 		}
 		const action = formData.get("action");
+
 		if (action === "update") {
 			const { data, error } = await updateCustomer(params.customerId, formData);
 			if (data && data.length > 0) {

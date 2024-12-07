@@ -76,8 +76,8 @@ export default function SingleProductForm({
 		const action = formData.get("action");
 
 		if (action === "update") {
-			const { success } = await updateProduct(params.productId, formData);
-			if (success) {
+			const { data, error } = await updateProduct(params.productId, formData);
+			if (data && data.length > 0) {
 				toast({
 					title: "Produkt erfolgreich aktualisiert",
 					description: "Produkt wurde erfolgreich aktualisiert",
@@ -85,16 +85,30 @@ export default function SingleProductForm({
 				router.push("/products");
 				router.refresh();
 			}
+			if ((data && data.length === 0) || error) {
+				toast({
+					variant: "destructive",
+					title: "Produkt nicht aktualisiert",
+					description: "Fehler beim Aktualisieren des Produkts",
+				});
+			}
 		}
 		if (action === "delete") {
-			const { success } = await deleteProduct(params.productId);
-			if (success) {
+			const { data, error } = await deleteProduct(params.productId);
+			if (data && data.length > 0) {
 				toast({
 					title: "Produkt erfolgreich gelöscht",
 					description: "Produkt wurde erfolgreich gelöscht",
 				});
 				router.push("/products");
 				router.refresh();
+			}
+			if ((data && data.length === 0) || error) {
+				toast({
+					variant: "destructive",
+					title: "Produkt nicht gelöscht",
+					description: "Fehler beim Löschen des Produkts",
+				});
 			}
 		}
 	};
