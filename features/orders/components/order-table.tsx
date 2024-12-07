@@ -22,7 +22,7 @@ export default function OrderTable({
 	) => {
 		router.push(`/orders/${order.id}`);
 	};
-
+	console.log(orders);
 	return (
 		<Table>
 			<TableHeader>
@@ -43,7 +43,7 @@ export default function OrderTable({
 					>
 						<TableCell>
 							<div className="font-medium">Auftragsnr.: {order.id}</div>
-							<div className="hidden text-sm text-muted-foreground md:inline">
+							<div className="text-sm text-muted-foreground md:inline">
 								Kundennr.: {order.customer_id}
 							</div>
 						</TableCell>
