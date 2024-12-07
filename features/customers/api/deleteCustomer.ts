@@ -1,7 +1,6 @@
 "use server";
 
 import { createClient } from "@/utils/supabase/server";
-import { cookies } from "next/headers";
 
 export default async function deleteCustomer(customerId: string) {
 	const supabase = await createClient();
@@ -13,15 +12,15 @@ export default async function deleteCustomer(customerId: string) {
 		throw new Error("User not authenticated");
 	}
 
-	const { error } = await supabase
+	const { data, error } = await supabase
 		.from("customers")
 		.delete()
-		.eq("id", customerId);
+		.eq("id", customerId)
+		.select();
 
 	if (error) {
 		console.error("Error deleting customer:", error);
-		throw new Error("Failed to delete customer");
 	}
 
-	return { success: true };
+	return { data, error };
 }

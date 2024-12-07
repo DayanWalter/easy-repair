@@ -61,19 +61,25 @@ export default function SingleCustomerForm({
 		}
 		const action = formData.get("action");
 		if (action === "update") {
-			const { success } = await updateCustomer(params.customerId, formData);
-			if (success) {
+			const { data, error } = await updateCustomer(params.customerId, formData);
+			if (data && data.length > 0) {
 				toast({
-					title: "Kunde erfolgreich aktualisiert",
+					title: "Kunde aktualisiert",
 					description: "Kunde wurde erfolgreich aktualisiert",
 				});
 				router.push("/customers");
 				router.refresh();
 			}
-			// TODO: Add error handling
+			if ((data && data.length === 0) || error) {
+				toast({
+					variant: "destructive",
+					title: "Kunde nicht aktualisiert",
+					description: "Fehler beim Aktualisieren des Kunden",
+				});
+			}
 		} else if (action === "delete") {
-			const { success } = await deleteCustomer(params.customerId);
-			if (success) {
+			const { data, error } = await deleteCustomer(params.customerId);
+			if (data && data.length > 0) {
 				toast({
 					title: "Kunde erfolgreich gelöscht",
 					description: "Kunde wurde erfolgreich gelöscht",
@@ -81,7 +87,13 @@ export default function SingleCustomerForm({
 				router.push("/customers");
 				router.refresh();
 			}
-			// TODO: Add error handling
+			if ((data && data.length === 0) || error) {
+				toast({
+					variant: "destructive",
+					title: "Kunde nicht gelöscht",
+					description: "Fehler beim Löschen des Kunden",
+				});
+			}
 		}
 	};
 	return (
