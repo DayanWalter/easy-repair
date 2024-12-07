@@ -59,7 +59,7 @@ export default function OrderFindCustomer() {
 	}, [supabase]);
 
 	return (
-		<>
+		<Card>
 			<CardHeader className="pb-3">
 				<CardTitle>Kunde</CardTitle>
 				<CardDescription className="max-w-lg text-balance leading-relaxed">
@@ -142,6 +142,6 @@ export default function OrderFindCustomer() {
 					value={selectedCustomer?.id ?? ""}
 				/>
 			</CardFooter>
-		</>
+		</Card>
 	);
 }

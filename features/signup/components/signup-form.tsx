@@ -14,14 +14,19 @@ import {
 	FormLabel,
 	FormMessage,
 } from "@/components/ui/form";
+import { createClient } from "@/utils/supabase/client";
+import { useToast } from "@/hooks/use-toast";
+import { useRouter } from "next/navigation";
 
 export default function SignupForm() {
+	const { toast } = useToast();
+	const router = useRouter();
 	const formSchema = z
 		.object({
 			userName: z.string().min(5).max(50),
 			email: z.string().min(2).max(50).email(),
-			password: z.string().min(4),
-			confirmPassword: z.string().min(4),
+			password: z.string().min(6),
+			confirmPassword: z.string().min(6),
 		})
 		.refine((data) => data.password === data.confirmPassword, {
 			message: "Passwörter stimmen nicht überein",
@@ -37,11 +42,34 @@ export default function SignupForm() {
 			confirmPassword: "",
 		},
 	});
-	function onSubmit(values: z.infer<typeof formSchema>) {
-		// Do something with the form values.
-		// ✅ This will be type-safe and validated.
+	const onSubmit = async (values: z.infer<typeof formSchema>) => {
+		const supabase = createClient();
 		console.log(values);
-	}
+		const { data, error } = await supabase.auth.signUp({
+			email: values.email,
+			password: values.password,
+			options: {
+				// Create new public profile
+				data: {
+					name: values.userName,
+					user_name: values.userName,
+					avatar_url: "",
+				},
+				emailRedirectTo: `${process.env.NEXT_PUBLIC_AUTH_CALLBACK_URL}`,
+			},
+		});
+		console.log(data, error);
+		// Check if user is authenticated
+		if (data?.user?.aud === "authenticated") {
+			console.log("authenticated");
+			toast({
+				variant: "default",
+				title: "Das hat geklappt!",
+				description: "Sie werden weitergeleitet.",
+			});
+			router.push("/login");
+		}
+	};
 
 	return (
 		<>
@@ -69,7 +97,12 @@ export default function SignupForm() {
 							<FormItem>
 								<FormLabel>Email</FormLabel>
 								<FormControl>
-									<Input type="email" placeholder="m@example.com" {...field} />
+									<Input
+										autoComplete="email"
+										type="email"
+										placeholder="m@example.com"
+										{...field}
+									/>
 								</FormControl>
 								<FormMessage />
 							</FormItem>
@@ -84,7 +117,12 @@ export default function SignupForm() {
 								<FormLabel>Passwort</FormLabel>
 
 								<FormControl>
-									<Input type="password" placeholder="" {...field} />
+									<Input
+										autoComplete="new-password"
+										type="password"
+										placeholder=""
+										{...field}
+									/>
 								</FormControl>
 								<FormMessage />
 							</FormItem>
@@ -99,7 +137,12 @@ export default function SignupForm() {
 								<FormLabel>Passwort bestätigen</FormLabel>
 
 								<FormControl>
-									<Input type="password" placeholder="" {...field} />
+									<Input
+										autoComplete="new-password"
+										type="password"
+										placeholder=""
+										{...field}
+									/>
 								</FormControl>
 								<FormMessage />
 							</FormItem>

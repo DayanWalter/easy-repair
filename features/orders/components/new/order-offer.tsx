@@ -10,7 +10,7 @@ import { Textarea } from "@/components/ui/textarea";
 
 export default function OrderOffer() {
 	return (
-		<>
+		<Card>
 			<CardHeader className="pb-2">
 				<CardTitle>Angebot</CardTitle>
 				<CardDescription>
@@ -21,6 +21,6 @@ export default function OrderOffer() {
 				<Textarea name="offer" />
 			</CardContent>
 			<CardFooter />
-		</>
+		</Card>
 	);
 }

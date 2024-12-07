@@ -10,7 +10,7 @@ import { Label } from "@/components/ui/label";
 
 export default function OrderArticle() {
 	return (
-		<>
+		<Card>
 			<CardHeader className="pb-2">
 				<CardTitle>Artikel</CardTitle>
 			</CardHeader>
@@ -31,6 +31,6 @@ export default function OrderArticle() {
 				</div>
 			</CardContent>
 			<CardFooter />
-		</>
+		</Card>
 	);
 }

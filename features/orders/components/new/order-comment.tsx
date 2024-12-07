@@ -10,7 +10,7 @@ import { Textarea } from "@/components/ui/textarea";
 
 export default function OrderComment() {
 	return (
-		<>
+		<Card>
 			<CardHeader className="pb-2">
 				<CardTitle>Anmerkungen</CardTitle>
 				<CardDescription>
@@ -21,6 +21,6 @@ export default function OrderComment() {
 				<Textarea name="comment" />
 			</CardContent>
 			<CardFooter />
-		</>
+		</Card>
 	);
 }

@@ -10,7 +10,7 @@ import { Textarea } from "@/components/ui/textarea";
 
 export default function OrderError() {
 	return (
-		<>
+		<Card>
 			<CardHeader className="pb-2">
 				<CardTitle>Fehlerbeschreibung</CardTitle>
 				<CardDescription>
@@ -21,6 +21,6 @@ export default function OrderError() {
 				<Textarea name="error_description" />
 			</CardContent>
 			<CardFooter />
-		</>
+		</Card>
 	);
 }

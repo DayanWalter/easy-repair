@@ -29,8 +29,7 @@ export default function OrderCosts() {
 
 	return (
 		<>
-			{/* Lohnkosten */}
-			<Card x-chunk="dashboard-05-chunk-1">
+			<Card>
 				<CardHeader className="pb-2">
 					<CardTitle>Lohnkosten</CardTitle>
 					<CardDescription>Wie hoch sind die Lohnkosten?</CardDescription>
@@ -45,8 +44,7 @@ export default function OrderCosts() {
 				</CardContent>
 				<CardFooter />
 			</Card>
-			{/* Materialkosten */}
-			<Card x-chunk="dashboard-05-chunk-1">
+			<Card>
 				<CardHeader className="pb-2">
 					<CardTitle>Materialkosten</CardTitle>
 					<CardDescription>Wie hoch sind die Materialkosten?</CardDescription>
@@ -61,8 +59,7 @@ export default function OrderCosts() {
 				</CardContent>
 				<CardFooter />
 			</Card>
-			{/* Gesamtkosten */}
-			<Card x-chunk="dashboard-05-chunk-1">
+			<Card>
 				<CardHeader className="pb-2">
 					<CardTitle>Gesamtkosten</CardTitle>
 					<CardDescription>Wie hoch sind die Gesamtkosten?</CardDescription>

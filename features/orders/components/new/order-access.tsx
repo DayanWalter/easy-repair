@@ -10,7 +10,7 @@ import { Label } from "@/components/ui/label";
 
 export default function OrderAccess() {
 	return (
-		<>
+		<Card>
 			<CardHeader className="pb-2">
 				<CardTitle>Zugänge</CardTitle>
 			</CardHeader>
@@ -27,6 +27,6 @@ export default function OrderAccess() {
 				</div>
 			</CardContent>
 			<CardFooter />
-		</>
+		</Card>
 	);
 }

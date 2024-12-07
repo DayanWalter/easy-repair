@@ -10,7 +10,7 @@ import { Input } from "@/components/ui/input";
 
 export default function OrderNumber() {
 	return (
-		<>
+		<Card>
 			<CardHeader className="pb-3">
 				<CardTitle>Auftragsnummer</CardTitle>
 			</CardHeader>
@@ -29,6 +29,6 @@ export default function OrderNumber() {
 				</div>
 			</CardContent>
 			<CardFooter />
-		</>
+		</Card>
 	);
 }
