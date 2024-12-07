@@ -28,7 +28,6 @@ export default async function updateCustomer(
 			...customerData,
 		})
 		.eq("id", customerId)
-
 		.select();
 
 	if (error) {

@@ -24,7 +24,6 @@ export default async function updateProduct(
 		sku: formData.get("sku") as string,
 		manufacturer: formData.get("manufacturer") as string,
 		image: formData.get("image") as string,
-		user_id: user.id,
 		updated_at: new Date().toISOString(),
 	};
 	const { data, error } = await supabase
@@ -37,8 +36,7 @@ export default async function updateProduct(
 
 	if (error) {
 		console.error("Error updating product:", error);
-		throw new Error("Failed to update product");
 	}
 
-	return { success: true, product: data[0] };
+	return { data, error };
 }
