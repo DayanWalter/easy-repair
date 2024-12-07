@@ -10,7 +10,7 @@ import { Textarea } from "@/components/ui/textarea";
 
 export default function OrderRepair() {
 	return (
-		<>
+		<Card>
 			<CardHeader className="pb-2">
 				<CardTitle>Reparatur</CardTitle>
 				<CardDescription>
@@ -21,6 +21,6 @@ export default function OrderRepair() {
 				<Textarea name="repair" />
 			</CardContent>
 			<CardFooter />
-		</>
+		</Card>
 	);
 }

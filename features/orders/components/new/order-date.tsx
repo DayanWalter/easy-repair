@@ -10,7 +10,7 @@ import { DatePicker } from "@/features/orders/components/new";
 
 export default function OrderDate() {
 	return (
-		<>
+		<Card>
 			<CardHeader className="pb-2">
 				<CardTitle>Datum</CardTitle>
 			</CardHeader>
@@ -31,6 +31,6 @@ export default function OrderDate() {
 				</div>
 			</CardContent>
 			<CardFooter />
-		</>
+		</Card>
 	);
 }

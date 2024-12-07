@@ -15,11 +15,16 @@ import {
 	FormLabel,
 	FormMessage,
 } from "@/components/ui/form";
+import { createClient } from "@/utils/supabase/client";
+import { useRouter } from "next/navigation";
+import { useToast } from "@/hooks/use-toast";
 
 export default function LoginForm() {
+	const router = useRouter();
+	const { toast } = useToast();
 	const formSchema = z.object({
-		email: z.string().min(2).max(50).email(),
-		password: z.string().min(5).max(50),
+		email: z.string().email(),
+		password: z.string().min(6).max(50),
 	});
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
@@ -28,11 +33,33 @@ export default function LoginForm() {
 			password: "",
 		},
 	});
-	function onSubmit(values: z.infer<typeof formSchema>) {
-		// Do something with the form values.
-		// ✅ This will be type-safe and validated.
+	const onSubmit = async (values: z.infer<typeof formSchema>) => {
+		const supabase = createClient();
 		console.log(values);
-	}
+		const { data, error } = await supabase.auth.signInWithPassword({
+			email: values.email,
+			password: values.password,
+		});
+		console.log(data, error);
+		// Check if user is authenticated
+		if (data?.user?.aud === "authenticated") {
+			toast({
+				variant: "default",
+				title: "Willkommen!",
+				description: "Sie werden weitergeleitet.",
+			});
+			router.push("/");
+		}
+		// If error is invalid_credentials, show error message
+		if (error?.code === "invalid_credentials") {
+			console.log(error.code);
+			toast({
+				variant: "destructive",
+				title: "Validierungsfehler",
+				description: "Falscher Benutzername oder Passwort.",
+			});
+		}
+	};
 
 	return (
 		<>
@@ -46,7 +73,11 @@ export default function LoginForm() {
 							<FormItem>
 								<FormLabel>Email</FormLabel>
 								<FormControl>
-									<Input type="email" placeholder="m@example.com" {...field} />
+									<Input
+										type="email"
+										placeholder="mail@example.com"
+										{...field}
+									/>
 								</FormControl>
 								<FormMessage />
 							</FormItem>

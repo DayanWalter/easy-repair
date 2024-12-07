@@ -21,7 +21,7 @@ import {
 
 export default function OrderStatus() {
 	return (
-		<>
+		<Card>
 			<CardHeader className="pb-2">
 				<CardTitle>Status</CardTitle>
 			</CardHeader>
@@ -54,6 +54,6 @@ export default function OrderStatus() {
 				</div>
 			</CardContent>
 			<CardFooter />
-		</>
+		</Card>
 	);
 }

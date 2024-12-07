@@ -10,7 +10,7 @@ import { Input } from "@/components/ui/input";
 
 export default function OrderTime() {
 	return (
-		<>
+		<Card>
 			<CardHeader className="pb-2">
 				<CardTitle>Zeit</CardTitle>
 				<CardDescription>Wie lange hat die Reparatur gedauert?</CardDescription>
@@ -19,6 +19,6 @@ export default function OrderTime() {
 				<Input name="repair_time" type="text" />
 			</CardContent>
 			<CardFooter />
-		</>
+		</Card>
 	);
 }

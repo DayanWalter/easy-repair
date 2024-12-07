@@ -4,7 +4,6 @@ import React from "react";
 import OrderFindCustomer from "./order-find-customer";
 import OrderNumber from "./order-number";
 import OrderStatus from "./order-status";
-import OrderMessages from "./order-messages";
 import OrderAccess from "./order-access";
 import OrderArticle from "./order-article";
 import OrderDate from "./order-date";
@@ -13,7 +12,6 @@ import OrderDiagnose from "./order-diagnose";
 import OrderOffer from "./order-offer";
 import OrderRepair from "./order-repair";
 import OrderComment from "./order-comment";
-import OrderEmployee from "./order-employee";
 import OrderTime from "./order-time";
 import OrderCosts from "./order-costs";
 import { Button } from "@/components/ui/button";
@@ -68,65 +66,18 @@ export default function NewOrderForm() {
 		<form action={handleFormAction}>
 			<div className="grid auto-rows-max items-start gap-4 md:gap-8 lg:col-span-2 ">
 				<div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-5 ">
-					{/* Kunde */}
-					<Card>
-						<OrderFindCustomer />
-					</Card>
-					{/* Auftragsnummer */}
-					<Card>
-						<OrderNumber />
-					</Card>
-					{/* Status */}
-					<Card>
-						<OrderStatus />
-					</Card>
-					{/* Kommunikation */}
-					<Card className="xl:col-span-2 xl:row-span-2">
-						<OrderMessages />
-					</Card>
-					{/* Zugänge */}
-					<Card>
-						<OrderAccess />
-					</Card>
-					{/* Artikel */}
-					<Card>
-						<OrderArticle />
-					</Card>
-					{/* Datum */}
-					<Card>
-						<OrderDate />
-					</Card>
-					{/* Fehlerbeschreibung */}
-					<Card>
-						<OrderErrorDescription />
-					</Card>
-					{/* Diagnose */}
-					<Card>
-						<OrderDiagnose />
-					</Card>
-					{/* Angebot */}
-					<Card>
-						<OrderOffer />
-					</Card>
-					{/* Reparatur */}
-					<Card>
-						<OrderRepair />
-					</Card>
-					{/* Anmerkungen */}
-					<Card>
-						<OrderComment />
-					</Card>
-					{/* Mitarbeiter */}
-					<Card>
-						<OrderEmployee />
-					</Card>
-					{/* Zeit */}
-					<Card>
-						<OrderTime />
-					</Card>
-					{/* Lohnkosten */}
-					{/* Materialkosten */}
-					{/* Gesamtkosten */}
+					<OrderFindCustomer />
+					<OrderNumber />
+					<OrderStatus />
+					<OrderAccess />
+					<OrderArticle />
+					<OrderDate />
+					<OrderErrorDescription />
+					<OrderDiagnose />
+					<OrderOffer />
+					<OrderRepair />
+					<OrderComment />
+					<OrderTime />
 					<OrderCosts />
 				</div>
 				<Button
