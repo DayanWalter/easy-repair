@@ -14,14 +14,16 @@ export default async function deleteMessage(
 	if (!user) {
 		throw new Error("User not authenticated");
 	}
-	const { error } = await supabase
+	const { data, error } = await supabase
 		.from("messages")
 		.delete()
-		.eq("id", messageId);
+		.eq("id", messageId)
+		.select();
+
 	if (error) {
 		console.error("Error deleting message:", error);
-		throw new Error("Failed to delete message");
 	}
+
 	revalidatePath(`/orders/${orderId}`);
-	return { success: true };
+	return { data, error };
 }

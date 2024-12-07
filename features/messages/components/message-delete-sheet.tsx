@@ -44,13 +44,15 @@ export default function MessagesDeleteSheet({
 					user_id: null,
 				},
 			});
-			const { success } = await deleteMessage(orderId, messageId);
-			if (success) {
+			const { data, error } = await deleteMessage(orderId, messageId);
+			if (data && data.length > 0) {
 				toast({
 					title: "Nachricht gelöscht",
 					description: "Nachricht wurde erfolgreich gelöscht",
 				});
-			} else {
+			}
+
+			if ((data && data.length === 0) || error) {
 				toast({
 					variant: "destructive",
 					title: "Fehler beim Löschen der Nachricht",
