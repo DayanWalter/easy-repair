@@ -22,10 +22,6 @@ import {
 
 import { Tabs, TabsContent } from "@/components/ui/tabs";
 
-// Features
-// import CustomerTable from "@/features/customers/components/customer-table";
-// import { readCustomers } from "@/features/customers/api/read";
-
 import { CustomerTable, readCustomers } from "@/features/customers";
 
 import Header from "@/components/header/header";
