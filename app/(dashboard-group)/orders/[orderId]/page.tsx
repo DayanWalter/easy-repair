@@ -10,8 +10,10 @@ export default async function SingleOrderPage({
 	params,
 }: { params: { orderId: string } }) {
 	const order = await readOrder(Number(params.orderId));
-	const customer = await readCustomer(order.customer_id);
-	const messages = await readMessages(Number(params.orderId));
+	const customer: Database["public"]["Tables"]["customers"]["Row"] =
+		await readCustomer(order.customer_id);
+	const messages: Database["public"]["Tables"]["messages"]["Row"][] =
+		await readMessages(Number(params.orderId));
 
 	const breadcrumbItems = [
 		{

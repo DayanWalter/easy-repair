@@ -5,9 +5,12 @@ import { Separator } from "@/components/ui/separator";
 import { useRouter } from "next/navigation";
 import React from "react";
 
-export default function OrderDetails({ order }: { order: any }) {
+export default function OrderDetails({
+	order,
+}: {
+	order: Database["public"]["Tables"]["orders"]["Row"];
+}) {
 	const router = useRouter();
-	console.log(order);
 	const handleClick = () => {
 		router.push(`/orders/${order.id}`);
 	};
@@ -23,11 +26,11 @@ export default function OrderDetails({ order }: { order: any }) {
 				<ul className="grid gap-3">
 					<li className="flex items-center justify-between">
 						<span className="text-muted-foreground">Lohnkosten</span>
-						<span>{order.labor_costs.toFixed(2)}€</span>
+						<span>{(order.labor_costs ?? 0).toFixed(2)}€</span>
 					</li>
 					<li className="flex items-center justify-between">
 						<span className="text-muted-foreground">Materialkosten</span>
-						<span>{order.material_costs.toFixed(2)}€</span>
+						<span>{(order.material_costs ?? 0).toFixed(2)}€</span>
 					</li>
 
 					{/* Weitere Details hier */}
@@ -36,18 +39,16 @@ export default function OrderDetails({ order }: { order: any }) {
 				<ul className="grid gap-3">
 					<li className="flex items-center justify-between">
 						<span className="text-muted-foreground">Subtotal</span>
-						<span>{order.total_costs.toFixed(2)}€</span>
+						<span>{(order.total_costs ?? 0).toFixed(2)}€</span>
 					</li>
 					<li className="flex items-center justify-between">
 						<span className="text-muted-foreground">19% Steuern</span>
-						<span>{(order.total_costs * 0.19).toFixed(2)}€</span>
+						<span>{((order.total_costs ?? 0) * 0.19).toFixed(2)}€</span>
 					</li>
 
 					<li className="flex items-center justify-between font-semibold">
 						<span className="text-muted-foreground">Total</span>
-						<span>
-							{(order.total_costs + order.total_costs * 0.19).toFixed(2)}€
-						</span>
+						<span>{((order.total_costs ?? 0) * 1.19).toFixed(2)}€</span>
 					</li>
 				</ul>
 			</div>

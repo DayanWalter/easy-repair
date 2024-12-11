@@ -22,7 +22,6 @@ export default function OrderTable({
 	) => {
 		router.push(`/orders/${order.id}`);
 	};
-	console.log(orders);
 	return (
 		<Table>
 			<TableHeader>

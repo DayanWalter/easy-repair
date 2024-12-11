@@ -26,13 +26,14 @@ import { OrderTable } from "@/features/orders/components";
 import { filterOrdersByPeriod } from "@/features/dashboard/utils/filterOrdersByPeriod";
 
 import OrderExportButton from "@/features/dashboard/components/order-export-button";
+import type { CostMetrics } from "../dashboard.types";
 
 export default function OrderTableWithTabs({
 	orders,
 	costs,
 }: {
-	orders: any[];
-	costs: any;
+	orders: Database["public"]["Tables"]["orders"]["Row"][];
+	costs: CostMetrics;
 }) {
 	const [currentTab, setCurrentTab] = useState<"week" | "month" | "year">(
 		"week",
@@ -102,19 +103,7 @@ export default function OrderTableWithTabs({
 					<CardHeader>
 						<CardTitle>Bestellungen dieses Jahres</CardTitle>
 						<CardDescription>
-							Gesamtumsatz:{" "}
-							{orders
-								.reduce(
-									(sum, order) =>
-										sum +
-										(new Date(order.date_start).getFullYear() ===
-										new Date().getFullYear()
-											? order.total_costs
-											: 0),
-									0,
-								)
-								.toFixed(2)}
-							€
+							Gesamtumsatz: {costs.thisYear.toFixed(2)}€
 						</CardDescription>
 					</CardHeader>
 					<CardContent>

@@ -1,4 +1,6 @@
-export function exportOrdersToCSV(orders: any[]) {
+export function exportOrdersToCSV(
+	orders: Database["public"]["Tables"]["orders"]["Row"][],
+) {
 	// Define CSV headers
 	const headers = [
 		"Auftragsnr.",
@@ -28,7 +30,7 @@ export function exportOrdersToCSV(orders: any[]) {
 	].join("\n");
 
 	// Create blob and download
-	const blob = new Blob(["\ufeff" + csvContent], {
+	const blob = new Blob([`\ufeff${csvContent}`], {
 		type: "text/csv;charset=utf-8;",
 	}); // Adding BOM for Excel
 	const url = URL.createObjectURL(blob);

@@ -71,16 +71,19 @@ export default async function Orders() {
 										</Button>
 									</DropdownMenuTrigger>
 									<DropdownMenuContent align="end">
-										<DropdownMenuLabel>Filter by</DropdownMenuLabel>
+										<DropdownMenuLabel>Filter by Status</DropdownMenuLabel>
 										<DropdownMenuSeparator />
 										<DropdownMenuCheckboxItem checked>
-											Fulfilled
+											Offen
 										</DropdownMenuCheckboxItem>
 										<DropdownMenuCheckboxItem>
-											Declined
+											In Bearbeitung
 										</DropdownMenuCheckboxItem>
 										<DropdownMenuCheckboxItem>
-											Refunded
+											Erledigt
+										</DropdownMenuCheckboxItem>
+										<DropdownMenuCheckboxItem>
+											Abgerechnet
 										</DropdownMenuCheckboxItem>
 									</DropdownMenuContent>
 								</DropdownMenu>
