@@ -24,10 +24,12 @@ import { Tabs, TabsContent } from "@/components/ui/tabs";
 import { readOrders } from "@/features/orders";
 import OrderTable from "@/features/orders/components/order-table";
 import Header from "@/components/header/header";
+import OrderTableWithTabs from "@/features/orders/components/page/order-table-with-tabs";
 
 export default async function Orders() {
 	const breadcrumbItems = [{ href: "/orders", label: "Bestellungen" }];
-	const orders = await readOrders();
+	const orders: Database["public"]["Tables"]["orders"]["Row"][] =
+		await readOrders();
 
 	return (
 		<>
