@@ -30,14 +30,11 @@ import {
 } from "@/features/dashboard/utils/filterOrderByState";
 
 import OrderExportButton from "@/features/dashboard/components/order-export-button";
-import type { CostMetrics } from "../dashboard.types";
 
 export default function OrderTableWithTabs({
 	orders,
-	costs,
 }: {
 	orders: Database["public"]["Tables"]["orders"]["Row"][];
-	costs: CostMetrics;
 }) {
 	const [currentTab, setCurrentTab] = useState<"week" | "month" | "year">(
 		"week",
@@ -119,9 +116,7 @@ export default function OrderTableWithTabs({
 				<Card>
 					<CardHeader>
 						<CardTitle>Bestellungen dieser Woche</CardTitle>
-						<CardDescription>
-							Gesamtumsatz: {costs.thisWeek.toFixed(2)}€
-						</CardDescription>
+						<CardDescription>Gesamtumsatz:</CardDescription>
 					</CardHeader>
 					<CardContent>
 						<OrderTable orders={getFilteredOrders("week")} />
@@ -132,9 +127,7 @@ export default function OrderTableWithTabs({
 				<Card>
 					<CardHeader>
 						<CardTitle>Bestellungen dieses Monats</CardTitle>
-						<CardDescription>
-							Gesamtumsatz: {costs.thisMonth.toFixed(2)}€
-						</CardDescription>
+						<CardDescription>Gesamtumsatz:</CardDescription>
 					</CardHeader>
 					<CardContent>
 						<OrderTable orders={getFilteredOrders("month")} />
@@ -145,9 +138,7 @@ export default function OrderTableWithTabs({
 				<Card>
 					<CardHeader>
 						<CardTitle>Bestellungen dieses Jahres</CardTitle>
-						<CardDescription>
-							Gesamtumsatz: {costs.thisYear.toFixed(2)}€
-						</CardDescription>
+						<CardDescription>Gesamtumsatz:</CardDescription>
 					</CardHeader>
 					<CardContent>
 						<OrderTable orders={getFilteredOrders("year")} />
