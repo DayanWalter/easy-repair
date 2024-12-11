@@ -15,7 +15,9 @@ import { useEffect, useState } from "react";
 import { format } from "date-fns";
 import { useToast } from "@/hooks/use-toast";
 
-export default function OrderNavigation({ orders }: { orders: any }) {
+export default function OrderNavigation({
+	orders,
+}: { orders: Database["public"]["Tables"]["orders"]["Row"][] }) {
 	const [currentIndex, setCurrentIndex] = useState(0);
 
 	useEffect(() => {
@@ -52,10 +54,10 @@ export default function OrderNavigation({ orders }: { orders: any }) {
 							variant="outline"
 							className="h-6 w-6 opacity-0 transition-opacity group-hover:opacity-100"
 							onClick={() => {
-								navigator.clipboard.writeText(currentOrder.id);
+								navigator.clipboard.writeText(currentOrder.id.toString());
 								toast({
 									title: "Order ID copied to clipboard",
-									description: currentOrder.id,
+									description: currentOrder.id.toString(),
 								});
 							}}
 						>
@@ -64,7 +66,11 @@ export default function OrderNavigation({ orders }: { orders: any }) {
 						</Button>
 					</CardTitle>
 					<CardDescription>
-						Date: {format(new Date(currentOrder.date_start), "MMMM dd, yyyy")}
+						Date:{" "}
+						{format(
+							new Date(currentOrder.date_start ?? new Date()),
+							"MMMM dd, yyyy",
+						)}
 					</CardDescription>
 				</div>
 

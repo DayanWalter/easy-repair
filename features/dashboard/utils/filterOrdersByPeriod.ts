@@ -1,7 +1,7 @@
 import { getEndOfWeek } from "./dateCalculations";
 import { getStartOfWeek } from "./dateCalculations";
 
-// Hilfsfunktion zum Filtern der Orders nach Zeitraum
+// Helper function to filter orders by period
 export const filterOrdersByPeriod = (
 	orders: Database["public"]["Tables"]["orders"]["Row"][],
 	period: "week" | "month" | "year",

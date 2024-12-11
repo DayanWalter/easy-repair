@@ -45,12 +45,16 @@ import {
 	PaginationItem,
 } from "@/components/ui/pagination";
 import OrderNavigation from "@/features/dashboard/components/order-navigation";
-import OrderExportButton from "@/features/dashboard/components/order-export-button";
 import OrderTableWithTabs from "@/features/dashboard/components/order-table-with-tabs";
+import type { CostMetrics } from "@/features/dashboard/dashboard.types";
+
 export default async function Dashboard() {
 	const breadcrumbItems = [{ href: "/dashboard", label: "Dashboard" }];
-	const orders = await readOrders();
-	const costs = calculateCosts(orders);
+	const orders: Database["public"]["Tables"]["orders"]["Row"][] =
+		await readOrders();
+
+	const costs: CostMetrics = calculateCosts(orders);
+
 	return (
 		<>
 			<Header breadcrumbItems={breadcrumbItems} />
