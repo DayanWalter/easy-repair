@@ -25,6 +25,7 @@ import { Tabs, TabsContent } from "@/components/ui/tabs";
 import { CustomerTable, readCustomers } from "@/features/customers";
 
 import Header from "@/components/header/header";
+import CustomerTableExport from "@/features/customers/components/page/customer-table-export";
 
 export default async function Customers() {
 	const breadcrumbItems = [{ href: "/customers", label: "Kunden" }];
@@ -54,43 +55,7 @@ export default async function Customers() {
 							</CardFooter>
 						</Card>
 					</div>
-					<Tabs defaultValue="customers">
-						<div className="flex items-center">
-							<div className="ml-auto flex items-center gap-2">
-								<Button
-									size="sm"
-									variant="outline"
-									className="h-7 gap-1 text-sm"
-								>
-									<File className="h-3.5 w-3.5" />
-									<span className="sr-only sm:not-sr-only">Export</span>
-								</Button>
-							</div>
-						</div>
-
-						<TabsContent value="customers">
-							<Card x-chunk="dashboard-05-chunk-3">
-								<CardHeader className="px-7">
-									<CardTitle>Kunden</CardTitle>
-									<CardDescription>Übersicht Ihrer Kunden.</CardDescription>
-								</CardHeader>
-								<CardContent>
-									{customers && customers.length > 0 ? (
-										<CustomerTable customers={customers ?? []} />
-									) : (
-										<Card>
-											<CardHeader>
-												<CardTitle>Keine Kunden gefunden</CardTitle>
-											</CardHeader>
-											<CardContent>
-												<p>Es wurden noch keine Kunden erstellt.</p>
-											</CardContent>
-										</Card>
-									)}
-								</CardContent>
-							</Card>
-						</TabsContent>
-					</Tabs>
+					<CustomerTableExport customers={customers} />
 				</div>
 			</main>
 		</>
