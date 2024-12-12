@@ -22,14 +22,14 @@ import {
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-import { OrderTable } from "@/features/orders/components";
+import OrderTable from "@/components/order-table";
 import { filterOrdersByPeriod } from "@/features/dashboard/utils/filterOrdersByPeriod";
 import {
 	filterOrdersByState,
 	type FilterState,
-} from "@/features/dashboard/utils/filterOrderByState";
+} from "@/utils/filterOrderByState";
 
-import OrderExportButton from "@/features/dashboard/components/order-export-button";
+import ExportButton from "@/components/export-button";
 import type { CostMetrics } from "../dashboard.types";
 
 export default function OrderTableWithTabs({
@@ -112,7 +112,7 @@ export default function OrderTableWithTabs({
 							</DropdownMenuCheckboxItem>
 						</DropdownMenuContent>
 					</DropdownMenu>
-					<OrderExportButton orders={getFilteredOrders(currentTab)} />
+					<ExportButton orders={getFilteredOrders(currentTab)} />
 				</div>
 			</div>
 			<TabsContent value="week">
