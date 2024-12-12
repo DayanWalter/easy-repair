@@ -38,6 +38,12 @@ export default function Avatar() {
 		await supabase.auth.signOut();
 		router.push("/login");
 	};
+	const handleSupport = () => {
+		window.open("https://www.dayanwalter.com", "_blank");
+	};
+	const handleSettings = () => {
+		router.push("/settings");
+	};
 
 	return (
 		<DropdownMenu>
@@ -47,7 +53,7 @@ export default function Avatar() {
 					size="icon"
 					className="overflow-hidden rounded-full"
 				>
-					{/* Placeholder */}
+					{/* Placeholder or image */}
 					<Image
 						src={user?.user_metadata.avatar_url || "/btc.png"}
 						width={36}
@@ -60,8 +66,8 @@ export default function Avatar() {
 			<DropdownMenuContent align="end">
 				<DropdownMenuLabel>My Account</DropdownMenuLabel>
 				<DropdownMenuSeparator />
-				<DropdownMenuItem>Settings</DropdownMenuItem>
-				<DropdownMenuItem>Support</DropdownMenuItem>
+				<DropdownMenuItem onClick={handleSettings}>Settings</DropdownMenuItem>
+				<DropdownMenuItem onClick={handleSupport}>Support</DropdownMenuItem>
 				<DropdownMenuSeparator />
 				<DropdownMenuItem onClick={handleSignOut}>Logout</DropdownMenuItem>
 			</DropdownMenuContent>

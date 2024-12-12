@@ -25,6 +25,7 @@ import ProductTable from "@/features/products/components/product-table";
 // Features
 import { readProducts } from "@/features/products";
 import Header from "@/components/header/header";
+import ProductTableExport from "@/features/products/components/page/product-table-export";
 
 export default async function Products() {
 	const breadcrumbItems = [{ href: "/products", label: "Produkte" }];
@@ -54,50 +55,7 @@ export default async function Products() {
 							</CardFooter>
 						</Card>
 					</div>
-					<Tabs defaultValue="products">
-						<div className="flex items-center">
-							{/* <TabsList>
-								<TabsTrigger value="products">Products</TabsTrigger>
-								<TabsTrigger value="services">Services</TabsTrigger>
-							</TabsList> */}
-							<div className="ml-auto flex items-center gap-2">
-								<Button
-									size="sm"
-									variant="outline"
-									className="h-7 gap-1 text-sm"
-								>
-									<File className="h-3.5 w-3.5" />
-									<span className="sr-only sm:not-sr-only">Export</span>
-								</Button>
-							</div>
-						</div>
-						{/* Table */}
-						<TabsContent value="products">
-							<Card x-chunk="dashboard-05-chunk-3">
-								<CardHeader className="px-7">
-									<CardTitle>Produkte</CardTitle>
-									<CardDescription>
-										Ihr Produktkatalog auf einen Blick. Einfaches Hinzufügen,
-										Bearbeiten und Organisieren Ihrer Artikel.
-									</CardDescription>
-								</CardHeader>
-								<CardContent>
-									{products && products.length > 0 ? (
-										<ProductTable products={products ?? []} />
-									) : (
-										<Card>
-											<CardHeader>
-												<CardTitle>Keine Produkte gefunden</CardTitle>
-											</CardHeader>
-											<CardContent>
-												<p>Es wurden noch keine Produkte erstellt.</p>
-											</CardContent>
-										</Card>
-									)}
-								</CardContent>
-							</Card>
-						</TabsContent>
-					</Tabs>
+					<ProductTableExport products={products} />
 				</div>
 			</main>
 		</>

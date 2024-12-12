@@ -105,7 +105,18 @@ export default function OrderTableFilterExport({
 							<CardDescription>Übersicht Ihrer Bestellungen.</CardDescription>
 						</CardHeader>
 						<CardContent>
-							<OrderTable orders={filterOrdersByState(orders, filters)} />
+							{orders && orders.length > 0 ? (
+								<OrderTable orders={filterOrdersByState(orders, filters)} />
+							) : (
+								<Card>
+									<CardHeader>
+										<CardTitle>Keine Bestellungen gefunden</CardTitle>
+									</CardHeader>
+									<CardContent>
+										<p>Es wurden noch keine Bestellungen erstellt.</p>
+									</CardContent>
+								</Card>
+							)}
 						</CardContent>
 					</Card>
 				</TabsContent>
