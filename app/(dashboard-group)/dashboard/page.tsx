@@ -121,6 +121,9 @@ export default async function Dashboard() {
 					<OrderTableWithTabs orders={orders} costs={costs} />
 				</div>
 				<OrderNavigation orders={orders} />
+				{/* Keep this here */}
+				{/* grid gap-3 */}
+				{/* ml-auto mr-0 w-auto */}
 			</main>
 		</>
 	);

@@ -2,61 +2,53 @@ import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export default function SettingsLoading() {
-	return (
-		<div className="container mx-auto py-8">
-			<Skeleton className="h-8 w-48 mb-6" /> {/* Für "Einstellungen" Titel */}
-			<div className="space-y-6">
-				{/* Profil Einstellungen Skeleton */}
-				<Card className="p-6">
-					<Skeleton className="h-7 w-32 mb-4" /> {/* Für "Profil" */}
-					<div className="flex items-center gap-4 mb-6">
-						<Skeleton className="h-12 w-12 rounded-full" /> {/* Für Avatar */}
-						<Skeleton className="h-10 w-40" />{" "}
-						{/* Für "Profilbild ändern" Button */}
-					</div>
-					<div className="space-y-4">
-						<div>
-							<Skeleton className="h-5 w-16 mb-2" /> {/* Für "Name" Label */}
-							<Skeleton className="h-10 max-w-md" /> {/* Für Name Input */}
-						</div>
-						<div>
-							<Skeleton className="h-5 w-16 mb-2" /> {/* Für "E-Mail" Label */}
-							<Skeleton className="h-10 max-w-md" /> {/* Für Email Input */}
-						</div>
-					</div>
-				</Card>
+  return (
+    <div className="container mx-auto py-8">
+      <Skeleton className="mb-6 h-8 w-48" />
+      <div className="space-y-6">
+        <Card className="p-6">
+          <Skeleton className="mb-4 h-7 w-32" />
+          <div className="mb-6 flex items-center gap-4">
+            <Skeleton className="h-12 w-12 rounded-full" />
+            <Skeleton className="h-10 w-40" />
+          </div>
+          <div className="space-y-4">
+            <div>
+              <Skeleton className="mb-2 h-5 w-16" />
+              <Skeleton className="h-10 max-w-md" />
+            </div>
+            <div>
+              <Skeleton className="mb-2 h-5 w-16" />
+              <Skeleton className="h-10 max-w-md" />
+            </div>
+          </div>
+        </Card>
 
-				{/* Export Einstellungen Skeleton */}
-				<Card className="p-6">
-					<Skeleton className="h-7 w-48 mb-4" /> {/* Für "Daten & Export" */}
-					<div className="space-y-4">
-						<div>
-							<Skeleton className="h-10 w-40 inline-block mr-3" />{" "}
-							{/* Für "Produkte exportieren" */}
-							<Skeleton className="h-10 w-40 inline-block" />{" "}
-							{/* Für "Kunden exportieren" */}
-						</div>
-						<Skeleton className="h-4 w-[80%]" /> {/* Für Beschreibungstext */}
-					</div>
-				</Card>
+        <Card className="p-6">
+          <Skeleton className="mb-4 h-7 w-48" />
+          <div className="space-y-4">
+            <div>
+              <Skeleton className="mr-3 inline-block h-10 w-40" />
+              <Skeleton className="inline-block h-10 w-40" />
+            </div>
+            <Skeleton className="h-4 w-[80%]" />
+          </div>
+        </Card>
 
-				{/* Benachrichtigungen Skeleton */}
-				<Card className="p-6">
-					<Skeleton className="h-7 w-48 mb-4" />{" "}
-					{/* Für "Benachrichtigungen" */}
-					<div className="space-y-4">
-						<div className="flex items-center space-x-2">
-							<Skeleton className="h-5 w-5" /> {/* Für Checkbox */}
-							<Skeleton className="h-5 w-48" />{" "}
-							{/* Für "E-Mail Benachrichtigungen" */}
-						</div>
-						<div className="flex items-center space-x-2">
-							<Skeleton className="h-5 w-5" /> {/* Für Checkbox */}
-							<Skeleton className="h-5 w-40" /> {/* Für "Marketing E-Mails" */}
-						</div>
-					</div>
-				</Card>
-			</div>
-		</div>
-	);
+        <Card className="p-6">
+          <Skeleton className="mb-4 h-7 w-48" />
+          <div className="space-y-4">
+            <div className="flex items-center space-x-2">
+              <Skeleton className="h-5 w-5" />
+              <Skeleton className="h-5 w-48" />
+            </div>
+            <div className="flex items-center space-x-2">
+              <Skeleton className="h-5 w-5" />
+              <Skeleton className="h-5 w-40" />
+            </div>
+          </div>
+        </Card>
+      </div>
+    </div>
+  );
 }
