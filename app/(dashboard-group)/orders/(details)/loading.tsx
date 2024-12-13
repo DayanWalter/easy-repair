@@ -7,7 +7,7 @@ import {
 	CardHeader,
 } from "@/components/ui/card";
 
-export default function OrderLoading() {
+export default function OrderDetailsLoading() {
 	const breadcrumbItems = [
 		{
 			label: "Bestellungen",

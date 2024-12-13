@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 
-export default function LoadingSingleCustomer() {
+export default function LoadingProductDetails() {
 	return (
 		<>
 			{/* Header Skeleton */}

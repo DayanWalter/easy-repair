@@ -1,4 +1,4 @@
-import { File, ListFilter } from "lucide-react";
+import { Download, File, ListFilter } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -16,7 +16,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Tabs, TabsContent } from "@/components/ui/tabs";
 import SkeletonRow from "@/components/skeleton-row/skeleton-row";
 
-export default function LoadingCustomers() {
+export default function LoadingDashboard() {
 	return (
 		<>
 			{/* Header Skeleton */}
@@ -45,26 +45,13 @@ export default function LoadingCustomers() {
 					<Tabs defaultValue="customers">
 						<div className="flex items-center">
 							<div className="ml-auto flex items-center gap-2">
-								<DropdownMenu>
-									<DropdownMenuTrigger asChild>
-										<Button
-											variant="outline"
-											size="sm"
-											className="h-7 gap-1 text-sm"
-											disabled
-										>
-											<ListFilter className="h-3.5 w-3.5" />
-											<span className="sr-only sm:not-sr-only">Filter</span>
-										</Button>
-									</DropdownMenuTrigger>
-								</DropdownMenu>
 								<Button
 									size="sm"
 									variant="outline"
 									className="h-7 gap-1 text-sm"
 									disabled
 								>
-									<File className="h-3.5 w-3.5" />
+									<Download className="h-3.5 w-3.5" />
 									<span className="sr-only sm:not-sr-only">Export</span>
 								</Button>
 							</div>

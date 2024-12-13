@@ -65,7 +65,7 @@ export default function SignupForm() {
 			toast({
 				variant: "default",
 				title: "Das hat geklappt!",
-				description: "Sie werden weitergeleitet.",
+				description: "Überprüfen Sie Ihre E-Mail, um Ihr Konto zu aktivieren.",
 			});
 			router.push("/login");
 		}
