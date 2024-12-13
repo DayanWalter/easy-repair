@@ -7,7 +7,6 @@ import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
-import { FormItem } from "@/components/ui/form";
 
 export default function Settings() {
 	const [email, setEmail] = useState("user@example.com");

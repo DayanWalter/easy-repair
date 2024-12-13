@@ -35,12 +35,12 @@ export default function LoginForm() {
 	});
 	const onSubmit = async (values: z.infer<typeof formSchema>) => {
 		const supabase = createClient();
-		console.log(values);
+		// console.log(values);
 		const { data, error } = await supabase.auth.signInWithPassword({
 			email: values.email,
 			password: values.password,
 		});
-		console.log(data, error);
+		// console.log(data, error);
 		// Check if user is authenticated
 		if (data?.user?.aud === "authenticated") {
 			toast({
@@ -57,6 +57,13 @@ export default function LoginForm() {
 				variant: "destructive",
 				title: "Validierungsfehler",
 				description: "Falscher Benutzername oder Passwort.",
+			});
+		}
+		if (error?.code === "email_not_confirmed") {
+			toast({
+				variant: "destructive",
+				title: "Email nicht bestätigt",
+				description: "Überprüfen Sie Ihre E-Mails, um Ihr Konto zu aktivieren.",
 			});
 		}
 	};
