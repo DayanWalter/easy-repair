@@ -14,7 +14,7 @@ Live Preview: [Easy-Repair](https://easy-repair.vercel.app/)
 
 Easy-Repair is designed to help repair businesses manage their orders, customers, and inventory efficiently.
 
-### Features
+## Features
 
 ### Order Management
 
