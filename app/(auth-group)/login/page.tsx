@@ -20,18 +20,15 @@ export default function Login() {
         <div className="grid gap-2 text-center">
           <h1 className="text-3xl font-bold">Login</h1>
           <p className="text-balance text-muted-foreground">
-            Enter your email below to log in to your account{" "}
+            Enter your email below to log in to your account
           </p>
         </div>
-
-        {/* form */}
         <LoginForm />
-        {/* end of form */}
         <Button onClick={handleSignIn} variant="outline" className="w-full">
           Sign in with Github
         </Button>
         <div className="mt-4 text-center text-sm">
-          Don't have an account?{" "}
+          Don't have an account?
           <Link href="/signup" className="underline">
             Sign up
           </Link>

@@ -43,8 +43,8 @@ export default async function Customers() {
               <CardHeader className="pb-3">
                 <CardTitle>Your Customers</CardTitle>
                 <CardDescription className="max-w-lg text-balance leading-relaxed">
-                  Here you'll find a comprehensive overview of your customer
-                  data.
+                  Here you&apos;ll find a comprehensive overview of your
+                  customer data.
                 </CardDescription>
               </CardHeader>
               <CardFooter>
