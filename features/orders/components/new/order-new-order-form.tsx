@@ -22,73 +22,70 @@ import { useRouter } from "next/navigation";
 import convertFormDataForOrder from "@/features/orders/utils/convertFormDataForOrder";
 
 const orderSchema = z.object({
-	customer_id: z
-		.number({ message: "Wählen Sie einen Kunden aus" })
-		.min(1, "Kundenname ist erforderlich"),
-	state: z.string().min(1, "Status ist erforderlich"),
+  customer_id: z
+    .number({ message: "Please select a customer" })
+    .min(1, "Customer name is required"),
+  state: z.string().min(1, "Status is required"),
 });
+
 export default function NewOrderForm() {
-	const { toast } = useToast();
-	const router = useRouter();
+  const { toast } = useToast();
+  const router = useRouter();
 
-	const handleFormAction = async (formData: FormData) => {
-		// Convert FormData to a regular object
-		const orderData = convertFormDataForOrder(formData);
+  const handleFormAction = async (formData: FormData) => {
+    const orderData = convertFormDataForOrder(formData);
+    const result = orderSchema.safeParse(orderData);
 
-		// Validate the data with Zod
-		const result = orderSchema.safeParse(orderData);
+    if (!result.success) {
+      for (const issue of result.error.issues) {
+        toast({
+          variant: "destructive",
+          title: "Validation Error",
+          description: issue.message,
+        });
+      }
+      return;
+    }
 
-		// If Zod validation fails, show error messages
-		if (!result.success) {
-			for (const issue of result.error.issues) {
-				toast({
-					variant: "destructive",
-					title: "Validierungsfehler",
-					description: issue.message,
-				});
-			}
-			return;
-		}
+    const { success } = await createOrder(formData);
 
-		// Else create the order
-		const { success } = await createOrder(formData);
+    if (success) {
+      toast({
+        title: "Order Created Successfully",
+        description: "Order has been successfully created",
+      });
+      router.push("/orders");
+      router.refresh();
+    }
+  };
 
-		if (success) {
-			toast({
-				title: "Auftrag erfolgreich erstellt",
-				description: "Auftrag wurde erfolgreich erstellt",
-			});
-			router.push("/orders");
-			router.refresh();
-		}
-	};
-	return (
-		<form action={handleFormAction}>
-			<div className="grid auto-rows-max items-start gap-4 md:gap-8 lg:col-span-2 ">
-				<div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-5 ">
-					<OrderFindCustomer />
-					<OrderNumber />
-					<OrderStatus />
-					<OrderAccess />
-					<OrderArticle />
-					<OrderDate />
-					<OrderErrorDescription />
-					<OrderDiagnose />
-					<OrderOffer />
-					<OrderRepair />
-					<OrderComment />
-					<OrderTime />
-					<OrderCosts />
-				</div>
-				<Button
-					type="submit"
-					size={"lg"}
-					variant="default"
-					className="max-w-[250px] justify-self-end"
-				>
-					Auftrag erstellen
-				</Button>
-			</div>
-		</form>
-	);
+  return (
+    <form action={handleFormAction}>
+      <div className="grid auto-rows-max items-start gap-4 md:gap-8 lg:col-span-2">
+        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
+          <OrderFindCustomer />
+          <OrderNumber />
+          <OrderStatus />
+          <OrderAccess />
+          <OrderArticle />
+          <OrderDate />
+          <OrderErrorDescription />
+          <OrderDiagnose />
+          <OrderOffer />
+          <OrderRepair />
+          <OrderComment />
+          <OrderTime />
+          <OrderCosts />
+        </div>
+        <Button
+          type="submit"
+          size={"lg"}
+          variant="default"
+          className="max-w-[250px] justify-self-end"
+        >
+          Create Order
+        </Button>
+      </div>
+    </form>
+  );
 }

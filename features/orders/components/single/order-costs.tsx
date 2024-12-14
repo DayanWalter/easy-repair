@@ -33,10 +33,8 @@ export default function OrderCosts({
     <>
       <Card>
         <CardHeader className="pb-2">
-          <CardTitle>Lohnkosten</CardTitle>
-          <CardDescription>
-            Wie hoch sind die gesamten Lohnkosten?
-          </CardDescription>
+          <CardTitle>Labor Costs</CardTitle>
+          <CardDescription>What are the total labor costs?</CardDescription>
         </CardHeader>
         <CardContent>
           <Input
@@ -45,14 +43,15 @@ export default function OrderCosts({
             step="0.01"
             value={laborCostsInput}
             onChange={(e) => setLaborCostsInput(e.target.value)}
+            placeholder="Labor costs"
           />
         </CardContent>
         <CardFooter />
       </Card>
       <Card>
         <CardHeader className="pb-2">
-          <CardTitle>Materialkosten</CardTitle>
-          <CardDescription>Wie hoch sind die Materialkosten?</CardDescription>
+          <CardTitle>Material Costs</CardTitle>
+          <CardDescription>What are the material costs?</CardDescription>
         </CardHeader>
         <CardContent>
           <Input
@@ -61,15 +60,16 @@ export default function OrderCosts({
             step="0.01"
             value={materialCostsInput}
             onChange={(e) => setMaterialCostsInput(e.target.value)}
+            placeholder="Material costs"
           />
         </CardContent>
         <CardFooter />
       </Card>
       <Card>
         <CardHeader className="pb-2">
-          <CardTitle>Gesamtkosten</CardTitle>
+          <CardTitle>Total Costs</CardTitle>
           <CardDescription>
-            Wie hoch sind die Gesamtkosten für diesen Auftrag?
+            What are the total costs for this order?
           </CardDescription>
         </CardHeader>
         <CardContent>

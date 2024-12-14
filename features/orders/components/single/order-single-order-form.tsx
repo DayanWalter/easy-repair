@@ -20,14 +20,13 @@ import {
 } from "@/features/orders/components/single";
 
 import { Button } from "@/components/ui/button";
-
 import { useToast } from "@/hooks/use-toast";
 import { z } from "zod";
 import convertFormDataForOrder from "../../utils/convertFormDataForOrder";
 import OrderDeleteSheet from "./order-delete-sheet";
 
 const orderSchema = z.object({
-  state: z.string().min(1, "Status ist erforderlich"),
+  state: z.string().min(1, "Status is required"),
 });
 
 export default function SingleOrderForm({
@@ -43,30 +42,27 @@ export default function SingleOrderForm({
   const router = useRouter();
 
   const handleFormAction = async (formData: FormData) => {
-    console.log("use serverhandleFormAction");
-    // Convert FormData to a regular object
     const orderData = convertFormDataForOrder(formData);
-    // Validate the data with Zod
     const result = orderSchema.safeParse(orderData);
-    // If Zod validation fails, show error messages
+
     if (!result.success) {
       for (const issue of result.error.issues) {
         toast({
           variant: "destructive",
-          title: "Validierungsfehler",
+          title: "Validation Error",
           description: issue.message,
         });
       }
       return;
     }
-    // Else update...
+
     const action = formData.get("action");
     if (action === "update") {
       const { data, error } = await updateOrder(params.orderId, formData);
       if (data && data.length > 0) {
         toast({
-          title: "Auftrag aktualisiert",
-          description: "Auftrag wurde erfolgreich aktualisiert",
+          title: "Order Updated",
+          description: "Order has been successfully updated",
         });
         router.push("/orders");
         router.refresh();
@@ -74,12 +70,13 @@ export default function SingleOrderForm({
       if ((data && data.length === 0) || error) {
         toast({
           variant: "destructive",
-          title: "Auftrag nicht aktualisiert",
-          description: "Fehler beim Aktualisieren des Auftrags",
+          title: "Order Not Updated",
+          description: "Error updating order",
         });
       }
     }
   };
+
   return (
     <>
       <form action={handleFormAction}>
@@ -93,7 +90,7 @@ export default function SingleOrderForm({
               variant="default"
               className="max-w-[250px] justify-self-end"
             >
-              Auftrag ändern
+              Update Order
             </Button>
             <OrderDeleteSheet orderId={order.id} />
           </div>

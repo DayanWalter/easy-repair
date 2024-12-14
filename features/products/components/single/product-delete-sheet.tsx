@@ -30,8 +30,8 @@ export default function ProductDeleteSheet({
       const { data, error } = await deleteProduct(String(productId));
       if (data && data.length > 0) {
         toast({
-          title: "Produkt gelöscht",
-          description: "Produkt wurde erfolgreich gelöscht",
+          title: "Product Deleted",
+          description: "Product was successfully deleted",
         });
       }
       router.push("/products");
@@ -40,8 +40,8 @@ export default function ProductDeleteSheet({
       if ((data && data.length === 0) || error) {
         toast({
           variant: "destructive",
-          title: "Fehler beim Löschen des Produkts",
-          description: "Produkt konnte nicht gelöscht werden",
+          title: "Error Deleting Product",
+          description: "Product could not be deleted",
         });
       }
     }
@@ -57,14 +57,14 @@ export default function ProductDeleteSheet({
           variant={"destructive"}
           className="max-w-[250px] justify-self-end"
         >
-          Produkt löschen
+          Delete Product
         </Button>
       </SheetTrigger>
       <SheetContent>
         <SheetHeader>
-          <SheetTitle>Produkt löschen</SheetTitle>
+          <SheetTitle>Delete Product</SheetTitle>
           <SheetDescription className="py-2">
-            Wollen Sie dieses Produkt wirklich löschen?
+            Are you sure you want to delete this product?
           </SheetDescription>
         </SheetHeader>
         <form action={handleDeleteProduct}>
@@ -78,7 +78,7 @@ export default function ProductDeleteSheet({
                 variant="destructive"
                 className="max-w-[250px] justify-self-end"
               >
-                Löschen{" "}
+                Delete
               </Button>
             </SheetClose>
           </SheetFooter>

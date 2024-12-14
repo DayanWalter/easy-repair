@@ -15,7 +15,6 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { deleteOrder } from "../..";
 import { useRouter } from "next/navigation";
-// import type { Message } from "../types/message";
 
 export default function OrderDeleteSheet({ orderId }: { orderId: number }) {
   const { toast } = useToast();
@@ -27,8 +26,8 @@ export default function OrderDeleteSheet({ orderId }: { orderId: number }) {
       const { data, error } = await deleteOrder(String(orderId));
       if (data && data.length > 0) {
         toast({
-          title: "Bestellung gelöscht",
-          description: "Bestellung wurde erfolgreich gelöscht",
+          title: "Order Deleted",
+          description: "Order was successfully deleted",
         });
       }
       router.push("/orders");
@@ -37,8 +36,8 @@ export default function OrderDeleteSheet({ orderId }: { orderId: number }) {
       if ((data && data.length === 0) || error) {
         toast({
           variant: "destructive",
-          title: "Fehler beim Löschen der Bestellung",
-          description: "Bestellung konnte nicht gelöscht werden",
+          title: "Error Deleting Order",
+          description: "Order could not be deleted",
         });
       }
     }
@@ -54,14 +53,14 @@ export default function OrderDeleteSheet({ orderId }: { orderId: number }) {
           variant={"destructive"}
           className="max-w-[250px] justify-self-end"
         >
-          Auftrag löschen
+          Delete Order
         </Button>
       </SheetTrigger>
       <SheetContent>
         <SheetHeader>
-          <SheetTitle>Bestellung löschen</SheetTitle>
+          <SheetTitle>Delete Order</SheetTitle>
           <SheetDescription className="py-2">
-            Wollen Sie diese Bestellung wirklich löschen?
+            Are you sure you want to delete this order?
           </SheetDescription>
         </SheetHeader>
         <form action={handleDeleteOrder}>
@@ -75,7 +74,7 @@ export default function OrderDeleteSheet({ orderId }: { orderId: number }) {
                 variant="destructive"
                 className="max-w-[250px] justify-self-end"
               >
-                Löschen{" "}
+                Delete
               </Button>
             </SheetClose>
           </SheetFooter>
