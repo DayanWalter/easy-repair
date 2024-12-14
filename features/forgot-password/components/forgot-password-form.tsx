@@ -23,7 +23,7 @@ export default function ForgotPasswordForm() {
   const router = useRouter();
 
   const formSchema = z.object({
-    email: z.string().email("Ungültige E-Mail-Adresse"),
+    email: z.string().email("Invalid email address"),
   });
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -46,16 +46,15 @@ export default function ForgotPasswordForm() {
     if (error) {
       toast({
         variant: "destructive",
-        title: "Fehler",
-        description:
-          "Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.",
+        title: "Error",
+        description: "An error occurred. Please try again.",
       });
       return;
     }
 
     toast({
-      title: "E-Mail versendet",
-      description: "Überprüfen Sie Ihren Posteingang für weitere Anweisungen.",
+      title: "Email Sent",
+      description: "Check your inbox for further instructions.",
     });
     router.push("/login");
   };
@@ -78,7 +77,7 @@ export default function ForgotPasswordForm() {
         />
 
         <Button type="submit" className="w-full">
-          Passwort zurücksetzen
+          Reset Password
         </Button>
       </form>
     </Form>

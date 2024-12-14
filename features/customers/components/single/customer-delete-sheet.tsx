@@ -30,8 +30,8 @@ export default function CustomerDeleteSheet({
       const { data, error } = await deleteCustomer(String(customerId));
       if (data && data.length > 0) {
         toast({
-          title: "Kunde gelöscht",
-          description: "Kunde wurde erfolgreich gelöscht",
+          title: "Customer Deleted",
+          description: "Customer was successfully deleted",
         });
       }
       router.push("/customers");
@@ -40,8 +40,8 @@ export default function CustomerDeleteSheet({
       if ((data && data.length === 0) || error) {
         toast({
           variant: "destructive",
-          title: "Fehler beim Löschen des Kunden",
-          description: "Kunde konnte nicht gelöscht werden",
+          title: "Error Deleting Customer",
+          description: "Customer could not be deleted",
         });
       }
     }
@@ -57,14 +57,14 @@ export default function CustomerDeleteSheet({
           variant={"destructive"}
           className="max-w-[250px] justify-self-end"
         >
-          Kunde löschen
+          Delete Customer
         </Button>
       </SheetTrigger>
       <SheetContent>
         <SheetHeader>
-          <SheetTitle>Kunde löschen</SheetTitle>
+          <SheetTitle>Delete Customer</SheetTitle>
           <SheetDescription className="py-2">
-            Wollen Sie diesen Kunden wirklich löschen?
+            Are you sure you want to delete this customer?
           </SheetDescription>
         </SheetHeader>
         <form action={handleDeleteCustomer}>
@@ -78,7 +78,7 @@ export default function CustomerDeleteSheet({
                 variant="destructive"
                 className="max-w-[250px] justify-self-end"
               >
-                Löschen{" "}
+                Delete
               </Button>
             </SheetClose>
           </SheetFooter>

@@ -20,33 +20,16 @@ import { z } from "zod";
 import ProductDeleteSheet from "./product-delete-sheet";
 const productSchema = z.object({
   name: z
-    .string({ message: "Name ist erforderlich" })
-    .min(2, "Name muss mindestens 2 Zeichen lang sein")
-    .max(50, "Name darf maximal 50 Zeichen lang sein"),
-  // description: z
-  // 	.string({ message: "Beschreibung ist erforderlich" })
-  // 	.min(5, "Beschreibung muss mindestens 5 Zeichen lang sein")
-  // 	.max(500, "Beschreibung darf maximal 500 Zeichen lang sein"),
+    .string({ message: "Name is required" })
+    .min(2, "Name must be at least 2 characters long")
+    .max(50, "Name must not exceed 50 characters"),
   price: z
-    .number({ message: "Preis ist erforderlich" })
-    .min(0, "Preis muss größer oder gleich 0 sein"),
-  // category: z
-  //     .string({ message: "Kategorie ist erforderlich" })
-  //     .min(2, "Kategorie muss mindestens 2 Zeichen lang sein"),
+    .number({ message: "Price is required" })
+    .min(0, "Price must be greater than or equal to 0"),
   stock: z
-    .number({ message: "Lagerbestand ist erforderlich" })
-    .int("Lagerbestand muss eine ganze Zahl sein")
-    .min(0, "Lagerbestand muss größer oder gleich 0 sein"),
-  // sku: z
-  //     .string({ message: "SKU ist erforderlich" })
-  //     .min(2, "SKU muss mindestens 2 Zeichen lang sein"),
-  // manufacturer: z
-  //     .string({ message: "Hersteller ist erforderlich" })
-  //     .min(2, "Hersteller muss mindestens 2 Zeichen lang sein"),
-  // image: z
-  //     .string({ message: "Bild-URL ist erforderlich" })
-  //     .url("Ungültige URL")
-  //     .optional(),
+    .number({ message: "Stock is required" })
+    .int("Stock must be a whole number")
+    .min(0, "Stock must be greater than or equal to 0"),
 });
 export default function SingleProductForm({
   product,
@@ -59,16 +42,14 @@ export default function SingleProductForm({
   const router = useRouter();
 
   const handleFormAction = async (formData: FormData) => {
-    // Convert FormData to a regular object
     const productData = convertFormDataForProduct(formData);
-    // Validate the data with Zod
     const result = productSchema.safeParse(productData);
-    // If Zod validation fails, show error messages
+
     if (!result.success) {
       for (const issue of result.error.issues) {
         toast({
           variant: "destructive",
-          title: "Validierungsfehler",
+          title: "Validation Error",
           description: issue.message,
         });
       }
@@ -80,8 +61,8 @@ export default function SingleProductForm({
       const { data, error } = await updateProduct(params.productId, formData);
       if (data && data.length > 0) {
         toast({
-          title: "Produkt erfolgreich aktualisiert",
-          description: "Produkt wurde erfolgreich aktualisiert",
+          title: "Product Updated",
+          description: "Product was successfully updated",
         });
         router.push("/products");
         router.refresh();
@@ -89,34 +70,17 @@ export default function SingleProductForm({
       if ((data && data.length === 0) || error) {
         toast({
           variant: "destructive",
-          title: "Produkt nicht aktualisiert",
-          description: "Fehler beim Aktualisieren des Produkts",
-        });
-      }
-    }
-    if (action === "delete") {
-      const { data, error } = await deleteProduct(params.productId);
-      if (data && data.length > 0) {
-        toast({
-          title: "Produkt erfolgreich gelöscht",
-          description: "Produkt wurde erfolgreich gelöscht",
-        });
-        router.push("/products");
-        router.refresh();
-      }
-      if ((data && data.length === 0) || error) {
-        toast({
-          variant: "destructive",
-          title: "Produkt nicht gelöscht",
-          description: "Fehler beim Löschen des Produkts",
+          title: "Product Not Updated",
+          description: "Error updating product",
         });
       }
     }
   };
+
   return (
     <form action={handleFormAction}>
       <CardHeader className="pb-3">
-        <CardTitle>Produkt</CardTitle>
+        <CardTitle>Product</CardTitle>
         <CardDescription className="max-w-lg text-balance leading-relaxed" />
       </CardHeader>
       <CardContent>
@@ -126,45 +90,45 @@ export default function SingleProductForm({
             type="text"
             id="name"
             name="name"
-            placeholder="Name des Produkts"
+            placeholder="Product name"
             defaultValue={product?.name}
           />
 
-          <Label htmlFor="description">Beschreibung</Label>
+          <Label htmlFor="description">Description</Label>
           <Input
             type="text"
             id="description"
             name="description"
-            placeholder="Beschreibung des Produkts"
+            placeholder="Product description"
             defaultValue={product?.description || ""}
           />
 
-          <Label htmlFor="price">Preis</Label>
+          <Label htmlFor="price">Price</Label>
           <Input
             type="number"
             id="price"
             step="0.01"
             name="price"
-            placeholder="Preis des Produkts"
+            placeholder="Product price"
             defaultValue={product?.price || 0}
           />
 
-          <Label htmlFor="category">Kategorie</Label>
+          <Label htmlFor="category">Category</Label>
           <Input
             type="text"
             id="category"
             name="category"
-            placeholder="Kategorie des Produkts"
+            placeholder="Product category"
             defaultValue={product?.category || ""}
           />
 
-          <Label htmlFor="stock">Lagerbestand</Label>
+          <Label htmlFor="stock">Stock</Label>
           <Input
             type="number"
             id="stock"
             step="1"
             name="stock"
-            placeholder="Lagerbestand des Produkts"
+            placeholder="Product stock"
             defaultValue={product?.stock || 0}
           />
 
@@ -173,20 +137,20 @@ export default function SingleProductForm({
             type="text"
             id="sku"
             name="sku"
-            placeholder="SKU des Produkts"
+            placeholder="Product SKU"
             defaultValue={product?.sku || ""}
           />
 
-          <Label htmlFor="manufacturer">Hersteller</Label>
+          <Label htmlFor="manufacturer">Manufacturer</Label>
           <Input
             type="text"
             id="manufacturer"
             name="manufacturer"
-            placeholder="Hersteller des Produkts"
+            placeholder="Product manufacturer"
             defaultValue={product?.manufacturer || ""}
           />
 
-          <Label htmlFor="image">Bild-URL</Label>
+          <Label htmlFor="image">Image URL</Label>
           <Input
             type="text"
             id="image"
@@ -198,7 +162,7 @@ export default function SingleProductForm({
       </CardContent>
       <CardFooter className="flex justify-between">
         <Button type="submit" name="action" value="update">
-          Produkt aktualisieren
+          Update Product
         </Button>
         <ProductDeleteSheet productId={product.id} />
       </CardFooter>

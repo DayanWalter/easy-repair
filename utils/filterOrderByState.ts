@@ -1,26 +1,26 @@
 export interface FilterState {
-	offen: boolean;
-	inBearbeitung: boolean;
-	erledigt: boolean;
-	abgerechnet: boolean;
+  open: boolean;
+  inProgress: boolean;
+  completed: boolean;
+  billed: boolean;
 }
 
 export const filterOrdersByState = (
-	orders: Database["public"]["Tables"]["orders"]["Row"][],
-	filters: FilterState,
+  orders: Database["public"]["Tables"]["orders"]["Row"][],
+  filters: FilterState,
 ) => {
-	return orders.filter((order) => {
-		switch (order.state) {
-			case "Offen":
-				return filters.offen;
-			case "In Bearbeitung":
-				return filters.inBearbeitung;
-			case "Erledigt":
-				return filters.erledigt;
-			case "Abgerechnet":
-				return filters.abgerechnet;
-			default:
-				return false;
-		}
-	});
+  return orders.filter((order) => {
+    switch (order.state) {
+      case "Open":
+        return filters.open;
+      case "In Progress":
+        return filters.inProgress;
+      case "Completed":
+        return filters.completed;
+      case "Billed":
+        return filters.billed;
+      default:
+        return false;
+    }
+  });
 };

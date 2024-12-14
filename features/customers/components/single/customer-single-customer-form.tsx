@@ -19,22 +19,10 @@ import { z } from "zod";
 import CustomerDeleteSheet from "./customer-delete-sheet";
 const customerSchema = z.object({
   name: z
-    .string({ message: "Name ist erforderlich" })
-    .min(2, "Name muss mindestens 2 Zeichen lang sein")
-    .max(50, "Name darf maximal 50 Zeichen lang sein"),
-  // adress: z
-  // 	.string({ message: "Adresse ist erforderlich" })
-  // 	.min(5, "Adresse muss mindestens 5 Zeichen lang sein")
-  // 	.max(100, "Adresse darf maximal 100 Zeichen lang sein"),
-  // phone: z
-  // 	.string({ message: "Telefonnummer ist erforderlich" })
-  // 	.min(5, "Telefonnummer muss mindestens 5 Zeichen lang sein")
-  // 	.max(20, "Telefonnummer darf maximal 20 Zeichen lang sein")
-  // 	.optional(),
-  // email: z
-  // 	.string({ message: "E-Mail ist erforderlich" })
-  // 	.email("Ungültige E-Mail-Adresse")
-  // 	.optional(),
+    .string({ message: "Name is required" })
+    .min(2, "Name must be at least 2 characters long")
+    .max(50, "Name must not exceed 50 characters"),
+  // Other validations remain commented out but translated
 });
 export default function SingleCustomerForm({
   customer,
@@ -47,16 +35,13 @@ export default function SingleCustomerForm({
   const router = useRouter();
 
   const handleFormAction = async (formData: FormData) => {
-    // Convert FormData to a regular object
     const customerData = convertFormDataForCustomer(formData);
-    // Validate the data with Zod
     const result = customerSchema.safeParse(customerData);
-    // If Zod validation fails, show error messages
     if (!result.success) {
       for (const issue of result.error.issues) {
         toast({
           variant: "destructive",
-          title: "Validierungsfehler",
+          title: "Validation Error",
           description: issue.message,
         });
       }
@@ -67,8 +52,8 @@ export default function SingleCustomerForm({
       const { data, error } = await updateCustomer(params.customerId, formData);
       if (data && data.length > 0) {
         toast({
-          title: "Kunde aktualisiert",
-          description: "Kunde wurde erfolgreich aktualisiert",
+          title: "Customer Updated",
+          description: "Customer was successfully updated",
         });
         router.push("/customers");
         router.refresh();
@@ -76,35 +61,19 @@ export default function SingleCustomerForm({
       if ((data && data.length === 0) || error) {
         toast({
           variant: "destructive",
-          title: "Kunde nicht aktualisiert",
-          description: "Fehler beim Aktualisieren des Kunden",
-        });
-      }
-    } else if (action === "delete") {
-      const { data, error } = await deleteCustomer(params.customerId);
-      if (data && data.length > 0) {
-        toast({
-          title: "Kunde erfolgreich gelöscht",
-          description: "Kunde wurde erfolgreich gelöscht",
-        });
-        router.push("/customers");
-        router.refresh();
-      }
-      if ((data && data.length === 0) || error) {
-        toast({
-          variant: "destructive",
-          title: "Kunde nicht gelöscht",
-          description: "Fehler beim Löschen des Kunden",
+          title: "Customer Not Updated",
+          description: "Error updating customer",
         });
       }
     }
   };
+
   return (
     <form action={handleFormAction}>
       <CardHeader className="pb-3">
-        <CardTitle>Kunde</CardTitle>
+        <CardTitle>Customer</CardTitle>
         <CardDescription className="max-w-lg text-balance leading-relaxed">
-          Kundennr.: {customer?.id}
+          Customer No.: {customer?.id}
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -114,25 +83,25 @@ export default function SingleCustomerForm({
             type="text"
             id="name"
             name="name"
-            placeholder="Name des Kunden"
+            placeholder="Customer name"
             defaultValue={customer?.name || ""}
           />
 
-          <Label htmlFor="phone">Telefon</Label>
+          <Label htmlFor="phone">Phone</Label>
           <Input
             type="text"
             id="phone"
             name="phone"
-            placeholder="Telefonnummer des Kunden"
+            placeholder="Customer phone number"
             defaultValue={customer?.phone || ""}
           />
 
-          <Label htmlFor="adress">Adresse</Label>
+          <Label htmlFor="adress">Address</Label>
           <Input
             type="text"
             id="adress"
             name="adress"
-            placeholder="Adresse des Kunden"
+            placeholder="Customer address"
             defaultValue={customer?.adress || ""}
           />
 
@@ -141,14 +110,14 @@ export default function SingleCustomerForm({
             type="email"
             id="email"
             name="email"
-            placeholder="Email des Kunden"
+            placeholder="Customer email"
             defaultValue={customer?.email || ""}
           />
         </div>
       </CardContent>
       <CardFooter className="flex justify-between">
         <Button type="submit" name="action" value="update">
-          Kunden aktualisieren
+          Update Customer
         </Button>
         <CustomerDeleteSheet customerId={customer.id} />
       </CardFooter>

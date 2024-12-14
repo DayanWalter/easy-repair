@@ -29,9 +29,7 @@ export default function LoadingProductsOverview() {
             <Card>
               <CardHeader className="pb-3">
                 <Skeleton className="h-7 w-32" />
-                <CardDescription className="h-4 w-full max-w-lg">
-                  Loading...
-                </CardDescription>
+                <CardDescription className="h-4 w-full max-w-lg"></CardDescription>
               </CardHeader>
               <CardFooter>
                 <Skeleton className="h-10 w-32" />
@@ -58,9 +56,7 @@ export default function LoadingProductsOverview() {
               <Card>
                 <CardHeader className="px-7">
                   <Skeleton className="h-7 w-32" />
-                  <CardDescription className="h-4 w-full max-w-lg">
-                    Loading...
-                  </CardDescription>
+                  <CardDescription className="h-4 w-full max-w-lg"></CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="rounded-md border">
