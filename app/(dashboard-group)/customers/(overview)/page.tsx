@@ -1,28 +1,16 @@
 import Link from "next/link";
-import { File, ListFilter } from "lucide-react";
 
 // Global Components
 import { Button } from "@/components/ui/button";
 import {
   Card,
-  CardContent,
   CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 
-import { Tabs, TabsContent } from "@/components/ui/tabs";
-
-import { CustomerTable, readCustomers } from "@/features/customers";
+import { readCustomers } from "@/features/customers";
 
 import Header from "@/components/header/header";
 import CustomerTableExport from "@/features/customers/components/page/customer-table-export";

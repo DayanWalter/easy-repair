@@ -24,7 +24,6 @@ export default function OrderDetailsLoading() {
       <Header breadcrumbItems={breadcrumbItems} />
 
       <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
-        {/* Order Form Skeleton */}
         <div className="grid auto-rows-max items-start gap-4 md:gap-8 lg:col-span-2">
           <div className="flex justify-end gap-4">
             <Skeleton className="h-10 w-[120px]" />
@@ -47,7 +46,6 @@ export default function OrderDetailsLoading() {
           </div>
         </div>
 
-        {/* Messages Skeleton */}
         <Card>
           <CardHeader>
             <Skeleton className="h-6 w-[100px]" />

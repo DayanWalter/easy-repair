@@ -13,9 +13,7 @@ export default function ResetPassword() {
           </p>
         </div>
 
-        {/* form */}
         <ResetPasswordForm />
-        {/* end of form */}
 
         <div className="mt-4 text-center text-sm">
           Back to{" "}

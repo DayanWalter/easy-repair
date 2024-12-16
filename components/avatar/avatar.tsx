@@ -53,7 +53,6 @@ export default function Avatar() {
           size="icon"
           className="overflow-hidden rounded-full"
         >
-          {/* Placeholder or image */}
           <Image
             src={user?.user_metadata.avatar_url || "/btc.png"}
             width={36}
