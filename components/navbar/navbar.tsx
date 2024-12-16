@@ -1,7 +1,6 @@
 import Link from "next/link";
 import {
   Home,
-  LineChart,
   Package,
   Settings,
   ShoppingCart,
@@ -20,7 +19,6 @@ const navItems = [
   { href: "/orders", icon: ShoppingCart, label: "Orders" },
   { href: "/products", icon: Package, label: "Products" },
   { href: "/customers", icon: Users2, label: "Customers" },
-  // { href: "/analytics", icon: LineChart, label: "Analytics" },
 ];
 
 const NavItem = ({

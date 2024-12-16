@@ -13,9 +13,7 @@ export default function ForgotPassword() {
           </p>
         </div>
 
-        {/* form */}
         <ForgotPasswordForm />
-        {/* end of form */}
 
         <div className="mt-4 text-center text-sm">
           Back to{" "}

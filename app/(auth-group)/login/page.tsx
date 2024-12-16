@@ -3,6 +3,7 @@ import { LoginForm } from "@/features/login";
 import { Button } from "@/components/ui/button";
 import { createClient } from "@/utils/supabase/client";
 import Link from "next/link";
+import { AlertDialogDemoLogin } from "@/components/alert-dialog-login";
 
 export default function Login() {
   const supabase = createClient();
@@ -14,6 +15,7 @@ export default function Login() {
       },
     });
   };
+
   return (
     <div className="flex items-center justify-center py-12">
       <div className="mx-auto grid w-[350px] gap-6">
@@ -27,8 +29,11 @@ export default function Login() {
         <Button onClick={handleSignIn} variant="outline" className="w-full">
           Sign in with Github
         </Button>
+
+        <AlertDialogDemoLogin />
+
         <div className="mt-4 text-center text-sm">
-          Don&apos;t have an account?
+          Don&apos;t have an account?{" "}
           <Link href="/signup" className="underline">
             Sign up
           </Link>

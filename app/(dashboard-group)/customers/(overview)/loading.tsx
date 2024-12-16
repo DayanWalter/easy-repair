@@ -1,4 +1,4 @@
-import { Download, File, ListFilter } from "lucide-react";
+import { Download } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -8,10 +8,7 @@ import {
   CardFooter,
   CardHeader,
 } from "@/components/ui/card";
-import {
-  DropdownMenu,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+
 import { Skeleton } from "@/components/ui/skeleton";
 import { Tabs, TabsContent } from "@/components/ui/tabs";
 import SkeletonRow from "@/components/skeleton-row/skeleton-row";
@@ -19,7 +16,6 @@ import SkeletonRow from "@/components/skeleton-row/skeleton-row";
 export default function LoadingDashboard() {
   return (
     <>
-      {/* Header Skeleton */}
       <div className="flex items-center justify-between px-4 py-4 sm:px-6">
         <div className="flex items-center gap-2">
           <Skeleton className="h-6 w-24" />

@@ -3,6 +3,7 @@ import { SignupForm } from "@/features/signup";
 import { Button } from "@/components/ui/button";
 import { createClient } from "@/utils/supabase/client";
 import Link from "next/link";
+import { AlertDialogDemoLogin } from "@/components/alert-dialog-login";
 
 export default function Signup() {
   const supabase = createClient();
@@ -24,12 +25,11 @@ export default function Signup() {
           </p>
         </div>
 
-        {/* form */}
         <SignupForm />
-        {/* end of form */}
         <Button onClick={handleSignIn} variant="outline" className="w-full">
           Continue with Github
         </Button>
+        <AlertDialogDemoLogin />
         <div className="mt-4 text-center text-sm">
           Already have an account?{" "}
           <Link href="/login" className="underline">

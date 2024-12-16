@@ -16,7 +16,6 @@ import SkeletonRow from "@/components/skeleton-row/skeleton-row";
 export default function LoadingProductsOverview() {
   return (
     <>
-      {/* Header Skeleton */}
       <div className="flex items-center justify-between px-4 py-4 sm:px-6">
         <div className="flex items-center gap-2">
           <Skeleton className="h-6 w-24" />

@@ -17,7 +17,6 @@ export default function Settings() {
       <h1 className="mb-6 text-2xl font-bold">Settings</h1>
 
       <div className="space-y-6">
-        {/* Profile Settings */}
         <Card className="p-6">
           <h2 className="mb-4 text-xl font-semibold">Profile</h2>
           <div className="mb-6 flex items-center gap-4">
@@ -48,7 +47,6 @@ export default function Settings() {
           </div>
         </Card>
 
-        {/* Export Settings */}
         <Card className="p-6">
           <h2 className="mb-4 text-xl font-semibold">Data & Export</h2>
           <div className="space-y-4">
@@ -64,7 +62,6 @@ export default function Settings() {
           </div>
         </Card>
 
-        {/* Notifications */}
         <Card className="p-6">
           <h2 className="mb-4 text-xl font-semibold">Notifications</h2>
           <div className="space-y-4">
