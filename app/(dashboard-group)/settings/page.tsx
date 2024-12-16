@@ -1,16 +1,54 @@
 "use client";
 
 import { Card } from "@/components/ui/card";
-import Avatar from "@/components/avatar/avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useState } from "react";
-import { Checkbox } from "@/components/ui/checkbox";
+import { useState, useEffect } from "react";
 import { Label } from "@/components/ui/label";
+import { createClient } from "@/utils/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 export default function Settings() {
-  const [email, setEmail] = useState("user@example.com");
-  const [name, setName] = useState("Max Mustermann");
+  const supabase = createClient();
+  const { toast } = useToast();
+  const [email, setEmail] = useState("********");
+  const [name, setName] = useState("");
+
+  useEffect(() => {
+    const getUser = async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (user) {
+        setName(user.user_metadata.name || "");
+      }
+    };
+    getUser();
+  }, [supabase]);
+
+  const handleUpdateProfile = async () => {
+    const { data, error } = await supabase.auth.updateUser({
+      data: {
+        name,
+      },
+    });
+
+    if (error) {
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "Failed to update profile",
+      });
+      return;
+    }
+
+    if (data) {
+      toast({
+        title: "Success",
+        description: "Profile updated successfully",
+      });
+    }
+  };
 
   return (
     <div className="container mx-auto py-8">
@@ -19,10 +57,6 @@ export default function Settings() {
       <div className="space-y-6">
         <Card className="p-6">
           <h2 className="mb-4 text-xl font-semibold">Profile</h2>
-          <div className="mb-6 flex items-center gap-4">
-            <Avatar />
-            <Button variant="outline">Change Profile Picture</Button>
-          </div>
 
           <div className="space-y-4">
             <div>
@@ -31,7 +65,7 @@ export default function Settings() {
                 id="name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="max-w-md"
+                className="max-w-sm"
               />
             </div>
             <div>
@@ -40,39 +74,12 @@ export default function Settings() {
                 id="email"
                 type="email"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="max-w-md"
+                onChange={(e) => console.log(e.target.value)}
+                className="max-w-sm"
+                disabled
               />
             </div>
-          </div>
-        </Card>
-
-        <Card className="p-6">
-          <h2 className="mb-4 text-xl font-semibold">Data & Export</h2>
-          <div className="space-y-4">
-            <div>
-              <Button variant="outline" className="mr-3">
-                Export Products
-              </Button>
-              <Button variant="outline">Export Customers</Button>
-            </div>
-            <p className="text-sm text-muted-foreground">
-              Export your data in CSV format for use in other applications.
-            </p>
-          </div>
-        </Card>
-
-        <Card className="p-6">
-          <h2 className="mb-4 text-xl font-semibold">Notifications</h2>
-          <div className="space-y-4">
-            <div className="flex items-center space-x-2">
-              <Checkbox id="emailNotifications" />
-              <Label htmlFor="emailNotifications">Email Notifications</Label>
-            </div>
-            <div className="flex items-center space-x-2">
-              <Checkbox id="marketingEmails" />
-              <Label htmlFor="marketingEmails">Marketing Emails</Label>
-            </div>
+            <Button onClick={handleUpdateProfile}>Save Changes</Button>
           </div>
         </Card>
       </div>
