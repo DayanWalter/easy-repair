@@ -23,17 +23,20 @@ Easy-Repair is designed to help repair businesses manage their orders, customers
 - Easy cost calculation
 - Time tracking
 - Customer communication history
+- Order export
 
 ### Customer Management
 
 - Customer database
 - Contact information
+- Customer export
 
 ### Product Management
 
 - Product catalog
 - Inventory tracking
 - Price management
+- Product export
 
 ### Dashboard
 
