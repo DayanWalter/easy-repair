@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   title: "Easy Repair",
   description: "Let's repair stuff!",
   icons: {
-    icon: "/favicon.ico?v=2", // Version Query Parameter
+    icon: "/favicon.ico?v=3", // Version Query Parameter
   },
 };
 
