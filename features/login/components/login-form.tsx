@@ -44,7 +44,7 @@ export default function LoginForm() {
       toast({
         variant: "default",
         title: "Welcome!",
-        description: "You are being redirected.",
+        description: "You will be redirected.",
       });
       router.push("/");
     }
